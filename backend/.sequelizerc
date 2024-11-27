@@ -1,0 +1,15 @@
+/** Grab the current working directory. Built into Node. */
+const path = require('path');
+
+/** ### `backend/.sequelizerc`
+ *! Baseline File - DO NOT MODIFY !
+ *
+ *  Declares the path configurations that `npx sequelize init` will set the Sequelize app to read
+ *  from.
+**/
+module.exports = {
+  config: path.resolve('config', 'database.js'),
+  'models-path': path.resolve('db', 'models'),
+  'seeders-path': path.resolve('db', 'seeders'),
+  'migrations-path': path.resolve('db', 'migrations')
+};

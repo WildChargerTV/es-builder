@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+// * backend/bin/www
+// The entry point for the Express app. Connects & authenticates the database, then sets the app to
+// listen at the specified port.
+
+// Node Module Imports
+require('dotenv').config();
+// Local Module Imports
+const app = require('../app');
+const { environment, port } = require('../config');
+const { devLog, devErr } = require('../utils/devLogger');
+const db = require('../db/models');
+// Chalk Color Aliases
+const { green, red } = require('chalk');
+
+// Define the file path (for dev logger).
+const PATH = 'bin/www';
+
+// Determine if the current environment is development or production.
+const isProd = environment === 'production';
+console.log(`Initializing in \u001b[33m${environment}\u001b[0m environment...`);
+
+
+
+// Authenticate the database connection, then start the app. Catch and print any errors.
+// The app will listen for requests from the port as specified in the environment variables.
+// Log verbosity will be greater in development.
+db.sequelize.authenticate()
+  .then(() => {
+    isProd
+    ? console.log('Database connection authenticated.')
+    : devLog(PATH, 'Database connection authentication ' + green('SUCCESS'));
+
+    app.listen(port, () => console.log(`Listening on port \u001b[33m${port}\u001b[0m`));
+  })
+  .catch((err) => {
+    isProd
+    ? console.error(err)
+    : devErr(
+        PATH, 
+        'Database connection authentication ' + red('FAIL') + ' (or other error), see below for details', 
+        err
+    );
+  });
