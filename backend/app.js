@@ -1,3 +1,6 @@
+// * backend/app.js
+// The root of the Express app. All middlewares & routes ultimately lead here.
+
 // Node Module Imports
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -17,20 +20,21 @@ const isProd = environment === 'production';
 // Define the file path (for dev logger).
 const PATH = 'app.js';
 
-/** ### Express App Root
- *  @file `backend/app.js`
- *  @description The root of the Express app. All middlewares & routes ultimately lead here.
-**/
+/**
+ * The core Express app. It alone holds the entire database on its shoulders.
+ * @type {Express} 
+ */
 const app = express();
 
-/** Connect all of the necessary middlewares:
- *      1. `morgan`: Logs info about requests & responses.
- *      2. `cookie-parser`: Parses cookies.
- *      3. `express.json`: Parses JSON bodies of applicable requests.
- *      4. `cors`: Enables Cross-Origin Resource Sharing in development. In production, all app
- *                 resources will come from the same origin.
- *      5. `helmet`: Sets a variety of headers to better secure the app.
- *      6. `csurf`: Sets the _csrf token cookie and creates the `req.csrfToken` method.
+/** 
+ * Connect all of the necessary middlewares:
+ * 1. `morgan`: Logs info about requests & responses.
+ * 2. `cookie-parser`: Parses cookies.
+ * 3. `express.json`: Parses JSON bodies of applicable requests.
+ * 4. `cors`: Enables Cross-Origin Resource Sharing in development. In production, all app
+ *    resources will come from the same origin.
+ * 5. `helmet`: Sets a variety of headers to better secure the app.
+ * 6. `csurf`: Sets the _csrf token cookie and creates the `req.csrfToken` method.
  */
 app.use(morgan('dev'));
 app.use(cookieParser());

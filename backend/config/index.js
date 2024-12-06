@@ -1,13 +1,15 @@
-/** ### `backend/config/index.js`
- *! Baseline File - DO NOT MODIFY !
- *
- *  Acts as the bridge between the .env file and the rest of the backend, including the database
- *  and the Sequelize & Express apps.
-**/
+/**
+ * Acts as the bridge between the `.env` file and the rest of the backend, including the database
+ * and the Sequelize & Express apps.
+ */
 module.exports = {
+    /** Reads the current runtime environment from `.env`. If undefined, defaults to `development`. */
     environment: process.env.NODE_ENV || 'development',
+    /** Reads the listening port number from `.env`. If undefined, defaults to `8000`. */
     port: process.env.PORT || 8000,
+    /** Reads the path to the working database file from `.env`. */
     dbFile: process.env.DB_FILE,
+    /** Reads the JWT secret key and expiration time from `.env`. */
     jwtConfig: {
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRES_IN

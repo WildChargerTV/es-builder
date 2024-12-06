@@ -1,0 +1,77 @@
+/* Global Navbar Definitions */
+#site-nav {
+    align-items: center;
+    background-color: rgba(64, 64, 64, 0.5);
+    display: flex;
+    font-weight: 600;
+    justify-content: space-around;
+    position: sticky;
+        top: 0px;
+    text-transform: uppercase;
+    width: 100%;
+    z-index: 98;
+}
+
+/* Site Logo */
+#site-nav-logo {
+    align-items: flex-start;
+    display: flex;
+    margin: 15px 0;
+    height: 75px;
+}
+#site-nav-logo a { 
+    color: white;
+    font-size: 36pt;
+    letter-spacing: 3px;
+    text-decoration: none; 
+    text-shadow: 2px black;
+}
+#site-nav-logo img { max-height: 75px; }
+
+/* Site Navigation Links (including Profile Button) */
+#site-nav-links {
+    display: flex;
+    column-gap: 8%;
+    font-size: 22pt;
+    font-weight: 700;
+    justify-content: flex-end;
+    letter-spacing: 1px;
+    min-width: 390px;
+    padding-top: 3px;
+    width: 25%;
+}
+#site-nav-links button {
+    background: none;
+    border: none;
+    font-size: 22pt;
+    font-weight: 700;
+    height: fit-content;
+}
+#site-nav-profile-btn button {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+}
+#site-nav-profile-btn button span { 
+    font-size: 16pt;
+    margin-left: 5px;
+    padding-top: 5px; 
+}
+
+/* Site Profile Dropdown Menu */
+#site-nav-rel-container {
+    height: 0;
+    position: relative;
+        top: 5px;
+    width: 0;
+}
+#site-nav-profile-dropdown {
+    background-color: rgba(148, 180, 195, 0.2);
+    border: 3px solid rgba(148, 180, 195, 0.9);
+        border-radius: 5px;
+    padding: 3px 20px;
+    position: absolute;
+}
+#site-nav-btn-logout {
+    margin-left: 0;
+    padding-left: 0;
+}

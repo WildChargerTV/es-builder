@@ -1,14 +1,8 @@
-/** Grab the config variables. */
-const config = require('./index');
-
-/** ### `backend/config/database.js`
- *! Baseline File - DO NOT MODIFY !
- *
- *  Declares environment-specific database behaviors.
-**/
+// * backend/config/database.js
+// Declares & exports environment-specific database behaviors.
 module.exports = {
     development: {
-        storage: config.dbFile,
+        storage: require('./index').dbFile,
         dialect: 'sqlite',
         seederStorage: 'sequelize',
         logQueryParameters: true,

@@ -1,0 +1,18 @@
+/** frontend/src/components/Footer/Footer.css */
+
+#site-footer {
+    color: lightgray;
+    display: flex;
+    font-weight: 700;
+    justify-content: space-between;
+    padding: 0 5%;
+    text-align: center;
+}
+#site-footer-socials { 
+    font-size: 32pt; 
+    margin-top: 0;
+}
+
+.site-footer__text-icon {
+    font-size: x-large;
+}

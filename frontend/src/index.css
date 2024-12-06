@@ -1,0 +1,62 @@
+/* Font: Titillium Web */
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+/* 
+Colors:
+    Neutral Black: #181a1b
+    Neutral White: #e8e6e3
+EVERSPACE Colors:
+    Red: #ff5d51
+    Blue: #94b4c3
+    Yellow: #f9e2ad
+    Borders: #acdbf9 (Note varying border opacity!)
+Z-Index Directory:
+    98: #site-nav (Navigation.css)
+    99: #site-modal (Modal.css)
+*/
+
+a {
+    text-decoration: none;
+    color: #94b4c3;
+}
+a:disabled { opacity: 0.5; }
+a:hover { color: #f9e2ad; }
+
+body {
+    background-color: #181a1b;
+    color: #94b4c3;
+    font-family: 'Titillium Web', sans-serif;
+    margin: 0;
+}
+
+button {
+    background: none;
+    border: none;
+    color: #94b4c3;
+    cursor: pointer;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+button:active { cursor: default; }
+button:disabled { opacity: 0.5; }
+button:hover { color: #f9e2ad; }
+button:hover:disabled { 
+    color: #94b4c3;
+    cursor: default; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #f9e2ad;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+input { 
+    font-family: 'Titillium Web', sans-serif; 
+}
+
+p { font-weight: 600; }
+
+.site-text-icon { color: #ff5d51; }

@@ -1,0 +1,43 @@
+#site-landing {
+    background-image: url('https://images3.alphacoders.com/912/912237.jpg');
+    background-position: center;
+    height: 75%;
+    min-height: 1180px;
+    width: 100%;
+}
+
+#site-landing-bg {
+    background-color: rgba(0, 0, 0, 0.6);
+    min-height: inherit;
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+}
+
+#site-landing-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 4px solid rgba(148, 180, 195, 0.7);
+    border-radius: 5px;
+    margin-left: 7.5%;
+    margin-top: 100px;
+    padding: 0 2%;
+    position: absolute;
+    z-index: 1;
+}
+#site-landing-content button {
+    column-gap: 7px;
+    display: grid;
+    font-size: 20pt;
+    grid-template-columns: repeat(2, auto);
+}
+#site-landing-content button span { padding-top: 5px; }
+#site-landing-content h1 { 
+    font-size: 48pt; 
+    margin-top: 2%;
+    margin-bottom: 25px;
+}
+#site-landing-content p { 
+    font-size: 18pt; 
+    margin-top: 0;
+}
+#site-landing-content p span { color: #ff5d51; }

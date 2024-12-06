@@ -20,25 +20,21 @@ const PATH = 'bin/www';
 const isProd = environment === 'production';
 console.log(`Initializing in \u001b[33m${environment}\u001b[0m environment...`);
 
-
-
 // Authenticate the database connection, then start the app. Catch and print any errors.
 // The app will listen for requests from the port as specified in the environment variables.
 // Log verbosity will be greater in development.
-db.sequelize.authenticate()
-  .then(() => {
+db.sequelize.authenticate().then(() => {
     isProd
-    ? console.log('Database connection authenticated.')
-    : devLog(PATH, 'Database connection authentication ' + green('SUCCESS'));
+        ? console.log('Database connection authenticated.')
+        : devLog(PATH, 'Database connection authentication ' + green('SUCCESS'));
 
     app.listen(port, () => console.log(`Listening on port \u001b[33m${port}\u001b[0m`));
-  })
-  .catch((err) => {
+}).catch((err) => {
     isProd
-    ? console.error(err)
-    : devErr(
-        PATH, 
-        'Database connection authentication ' + red('FAIL') + ' (or other error), see below for details', 
-        err
-    );
-  });
+        ? console.error(err)
+        : devErr(PATH, 
+            'Database connection authentication ' + 
+            red('FAIL') + 
+            ' (or other error), see below for details', 
+        err);
+});

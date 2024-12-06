@@ -1,0 +1,75 @@
+/* --------------------[Global Modal Definitions]-------------------- */
+#site-modal {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+    z-index: 99;
+}
+  
+#site-modal-background {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    cursor: default;
+    position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+}
+  
+#site-modal-content {
+    background-color: rgba(148, 180, 195, 0.15);
+    border: 3px solid rgba(148, 180, 195, 0.9);
+    border-radius: 5px;
+    min-width: 425px;
+    padding: 20px;
+    position: absolute;
+    text-align: center;
+    width: 20%;
+}
+
+.modal-title {
+    color: #f9e2ad;
+    font-size: 48pt;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.modal-form {
+    display: grid;
+    margin: auto;
+    min-width: 350px;
+    row-gap: 6px;
+    width: 70%;
+}
+.modal-form input {
+    background: none;
+    border: 2px solid rgba(148, 180, 195, 0.9);
+    border-radius: 5px;
+    color: #94b4c3;
+    font-weight: 600;
+    letter-spacing: 0.75px;
+    padding: 3px 10px;
+}
+.modal-form button { 
+    background: none;
+    border: none;
+    column-gap: 6px;
+    display: grid;
+    font-size: 20pt;
+    grid-template-columns: repeat(2, auto);
+    letter-spacing: 2px;
+    margin-left: auto;
+    margin-top: 25px;
+    padding-right: 0;
+    width: fit-content;
+}
+.modal-form button:hover { color: #f9e2ad; }
+.modal-form button span { margin-top: 4px; }
