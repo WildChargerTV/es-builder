@@ -2,5 +2,6 @@
 *.db
 .DS_Store
 .env
+_assets/
 build/
 node_modules/
