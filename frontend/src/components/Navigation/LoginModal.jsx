@@ -9,7 +9,8 @@ import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 
 /**
- * Description placeholder
+ * Modal component to display a user login form. Closes itself once the login succeeds.
+ * @component LoginModal
  * @require {@linkcode useModal}
  * @require {@linkcode sessionActions.login}
  * @returns {ReactElement} The content of the Modal.
