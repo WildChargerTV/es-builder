@@ -4,6 +4,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa6';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
 import { NavLink } from 'react-router-dom';
 // Local Module Imports
 import LoginModal from './LoginModal';
@@ -23,6 +24,7 @@ import { logout } from '../../store/session';
 export default function ProfileButton({ sessionUser }) {
     // React Hooks
     const dispatch = useDispatch();
+    const location = useLocation();
     const btnWidthRef = useRef();
     const menuWidthRef = useRef();
     // Local State Values
@@ -36,9 +38,10 @@ export default function ProfileButton({ sessionUser }) {
     }
 
     /** Log out the current user. */
-    const userLogout = (e) => {
-        e.preventDefault();
-        dispatch(logout());
+    const userLogout = (event) => {
+        event.preventDefault();
+        dispatch(logout())
+            .then(() => setShowDropdown(!showDropdown));
     }
 
     /** Set the absolute position of the dropdown menu based on the width of the profile button. */
@@ -49,6 +52,9 @@ export default function ProfileButton({ sessionUser }) {
                 menuWidthRef.current.getBoundingClientRect().width
             );
     }, [sessionUser]);
+
+    /** Close the dropdown menu whenever the user navigates to a new page. */
+    useEffect(() => setShowDropdown(false), [location]);
 
     /** 
      * Return the appropriate profile button functionality based on the current session user state.
