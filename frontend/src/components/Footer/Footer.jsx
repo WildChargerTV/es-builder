@@ -27,6 +27,10 @@ export default function Footer({ isLoaded }) {
 
         {/* Credits: Site Technology */}
         <div id='site-footer-tech'>
+            <p>
+                Layout builder may not display properly on standard aspect ratios<br />
+                or lower screen resolutions. HD 720p and above is recommended.
+            </p>
             <p><span className='site-footer__text-icon'><DiReact /><DiJavascript1 /> </span> Powered by ReactJS</p>
             <p><span className='site-footer__text-icon'><DiPostgresql /> </span> Database built on PostgreSQL</p>
             <p><span className='site-footer__text-icon'><FaAws /> </span> Asset Delivery served via Amazon Web Services</p>
