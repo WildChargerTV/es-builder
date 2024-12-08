@@ -22,8 +22,8 @@ export const isProd = process.env.NODE_ENV === 'production';
 /** 
  * The Redux store, as assembled & configured by {@linkcode configureStore}. Managed by the
  * Provider element supplied by `react-redux`.
- * @requires {@linkcode configureStore}
  * @type {Store}
+ * @requires {@linkcode configureStore}
  */
 const store = configureStore();
 

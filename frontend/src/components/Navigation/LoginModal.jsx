@@ -84,10 +84,9 @@ export default function LoginModal() {
             />
 
             {/* Submit Button - disabled unless requirements (described above) are met */}
-            <button 
-                type='submit' 
-                disabled={disabled}
-            >Log In<span className='site-text-icon'><PiMouseLeftClickFill /></span></button>
+            <button type='submit' disabled={disabled}>
+                Log In <span className='site-text-icon'><PiMouseLeftClickFill /></span>
+            </button>
         </form>
     </>);
 }

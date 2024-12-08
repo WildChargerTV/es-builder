@@ -11,11 +11,13 @@ import OpenModal from '../Modal/OpenModal';
 import { logout } from '../../store/session';
 
 /**
- * Renders 
- *
- * @export
- * @param {{ sessionUser: object; }} param0
- * @param {object} param0.sessionUser
+ * Renders the "profile button", which is an interactive element that acts as the primary access
+ * point to user logins/logouts and profile actions.
+ * @component ProfileButton
+ * @requires {@linkcode LoginModal}
+ * @requires {@linkcode OpenModal}
+ * @requires {@linkcode logout}
+ * @param {{ sessionUser: object; }} sessionUser The session user provided in the Redux state.
  * @returns {ReactElement}
  */
 export default function ProfileButton({ sessionUser }) {
@@ -39,6 +41,7 @@ export default function ProfileButton({ sessionUser }) {
         dispatch(logout());
     }
 
+    /** Set the absolute position of the dropdown menu based on the width of the profile button. */
     useEffect(() => {
         if(btnWidthRef.current && menuWidthRef.current)
             setDropdownLeft(
@@ -47,6 +50,13 @@ export default function ProfileButton({ sessionUser }) {
             );
     }, [sessionUser]);
 
+    /** 
+     * Return the appropriate profile button functionality based on the current session user state.
+     * - Logged-out users are prompted with a login button. 
+     * - Logged-in users are shown a button with their username as the button text. Clicking the
+     *   button reveals a dropdown menu allowing access to their personal profile page and a
+     *   logout button.
+     */
     return sessionUser
     ? (<div id='site-nav-profile-btn' ref={btnWidthRef}>
         <button onClick={toggleDropdown}>

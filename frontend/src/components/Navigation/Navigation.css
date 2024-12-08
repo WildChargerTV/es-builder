@@ -1,4 +1,6 @@
-/* Global Navbar Definitions */
+/* * frontend/src/components/Navigation/Navigation.css */
+
+/* Site Navigation - Global Definitions */
 #site-nav {
     align-items: center;
     background-color: rgba(64, 64, 64, 0.5);
@@ -57,7 +59,7 @@
     padding-top: 5px; 
 }
 
-/* Site Profile Dropdown Menu */
+/* Site Navigation - Profile Dropdown Menu */
 #site-nav-rel-container {
     height: 0;
     position: relative;

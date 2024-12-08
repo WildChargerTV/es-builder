@@ -9,16 +9,17 @@ import './Navigation.css';
 
 /**
  * Renders the website's navbar. The navbar is sticky-positioned at a high Z-Index, ensuring it is
- * always visible reg
- *
- * @param {{ isLoaded: boolean; }} param0
- * @param {boolean} param0.isLoaded
+ * always visible regardless of any other elements on the page.
+ * @component Navigation
+ * @requires {@linkcode ProfileButton}
+ * @param {{ isLoaded: boolean; }} isLoaded Flag from `App.jsx` determining if the React app is currently loaded.
  * @returns {ReactElement}
  */
 export default function Navigation({ isLoaded }) {
     // React Hooks
     const sessionUser = useSelector((state) => state.session.user);
 
+    /** If the site is loaded, return the content of the navbar. */
     return isLoaded && (<header id='site-nav'>
         {/* Site Logo */}
         <div id='site-nav-logo'>
@@ -28,6 +29,8 @@ export default function Navigation({ isLoaded }) {
             /></NavLink>
             <NavLink to='/'>Builder</NavLink>
         </div>
+
+        {/* Nav Links & Profile Button */}
         <div id='site-nav-links'>
             <NavLink to='/loadouts'>Recent</NavLink>
             <NavLink to='/loadouts/random'>Random</NavLink>

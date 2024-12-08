@@ -6,6 +6,7 @@ import { useModal } from '../../context/Modal';
 /**
  * Component that creates & returns an interactive element to open a Modal. See parameter details 
  * below.
+ * @component OpenModal
  * @requires {@linkcode useModal}
  * @param {{ 
  *      element: 'button' | 'listitem'; 
