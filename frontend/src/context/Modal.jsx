@@ -19,15 +19,17 @@ const ModalContext = createContext();
  * 1. `modal-background`: A fullscreen "background" `<button>` that is designed to close the Modal
  *                        when clicked.
  * 2. `modal-content`: A `<div>` containing passed-in content for the Modal to display.
+ * @function useModal
  * @requires {@linkcode ModalContext}
- * @returns {any} The current value of the Modal context.
+ * @returns {() => useContext} The current value of the Modal context.
  * @example const { modalContent, setModalContent } = useModal();
  */
-export const useModal = () => useContext(ModalContext);
+export const useModal = () => useContext(ModalContext); //eslint-disable-line react-refresh/only-export-components
 
 /**
  * Provider for the Modal context. Applied in `frontend/src/main.jsx`. **Should not be used
  * anywhere else.**
+ * @component ModalProvider
  * @requires {@linkcode ModalContext}
  * @param {{children: ReactElement}} children The children of the returned element. See `main.jsx`.
  * @returns {ReactElement} The elements to be rendered on the webpage.
@@ -62,6 +64,7 @@ export function ModalProvider({ children }) {
 /**
  * Component to render a Modal on a webpage. Only one Modal can exist at a time. Applied in
  * `frontend/src/main.jsx`. **Should not be used anywhere else.**
+ * @component Modal
  * @requires {@linkcode ModalContext}
  * @returns {ReactPortal} The rendered modal, as assigned by the `ModalProvider`.
  */
