@@ -50,7 +50,7 @@
     width: 70%;
 }
 .modal-form input {
-    background: none;
+    background-color: rgba(0, 0, 0, 0.6);
     border: 2px solid rgba(148, 180, 195, 0.9);
     border-radius: 5px;
     color: #94b4c3;
