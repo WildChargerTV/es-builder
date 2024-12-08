@@ -9,6 +9,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import LandingPage from './components/Landing/Landing';
 import RecentLoadouts from './components/Loadouts/Recents';
+import UserProfile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
 import * as sessionActions from './store/session';
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
             {
                 path: '/loadouts',
                 element: <RecentLoadouts />
+            },
+            {
+                path: '/profile',
+                element: <UserProfile />
             }
         ]
     }
