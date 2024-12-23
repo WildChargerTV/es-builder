@@ -1,3 +1,5 @@
+// * backend/config/index.js
+
 /**
  * Acts as the bridge between the `.env` file and the rest of the backend, including the database
  * and the Sequelize & Express apps.
@@ -13,5 +15,11 @@ module.exports = {
     jwtConfig: {
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRES_IN
+    },
+    /** Reads the AWS user key & secret to make S3 bucket calls. */
+    awsConfig: {
+        accessKeyId: process.env.AWS_USER_KEY,
+        bucket: process.env.AWS_BUCKET,
+        secretAccessKey: process.env.AWS_USER_SECRET
     }
 };

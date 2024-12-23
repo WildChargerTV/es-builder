@@ -17,12 +17,12 @@ const isProd = environment === 'production';
 // Define the file path (for dev logger).
 const PATH = 'utils/auth.js';
 
-/** ### `setTokenCookie`
- *  @file `backend/utils/auth.js`
- *  @description
- *  When a user logs in or signs up, a JWT (JSON Web Token) cookie must be set in the browser.
- *  Given response data and the session user data, this function creates a JWT based on the
- *  app's secret key. This JWT is then set as an HTTP-only browser cookie named `token`.
+/** 
+ * When a user logs in or signs up, a JWT (JSON Web Token) cookie must be set in the browser.
+ * Given response data and the session user data, this function creates a JWT based on the
+ * app's secret key. This JWT is then set as an HTTP-only browser cookie named `token`.
+ * @function setTokenCookie
+ * @param res 
 **/
 const setTokenCookie = (res, user) => {
     // Create the token.
@@ -48,14 +48,12 @@ const setTokenCookie = (res, user) => {
     return token;
 }
 
-/** ### `restoreUser`
- *  @file `backend/utils/auth.js`
- *  @description
- *  Certain authenticated routes will require the identity of the current session user. This
- *  middleware parses the JWT cookie and inserts the necessary data into `req.user`. Also useful
- *  for maintaining session data between website visits.
- * 
- *  See `requireSessionAuth` for functionality regarding non-user-specific authentication.
+/** 
+ * Certain authenticated routes will require the identity of the current session user. This
+ * middleware parses the JWT cookie and inserts the necessary data into `req.user`. Also useful
+ * for maintaining session data between website visits.
+ * @function restoreUser
+ * @see {@linkcode requireSessionAuth} for functionality regarding session authentication.
 **/
 const restoreUser = (req, res, next) => {
     // Grab the cookie from which the data will be parsed.
@@ -69,7 +67,9 @@ const restoreUser = (req, res, next) => {
         // If an error was encountered, move on to the next middleware.
         // * Typically this is triggered if no JWT token exists yet.
         if(err) {
-            devWarn(PATH, 'User restoration ' + red('failed') + '. See below for details', err);
+            if(err.message === 'jwt must be provided')
+                devLog(PATH, 'User restoration ' + red('failed') + ' due to nonexistent token');
+            else devWarn(PATH, 'User restoration ' + red('failed') + '. See below for details', err);
             return next();
         }
 
@@ -86,26 +86,17 @@ const restoreUser = (req, res, next) => {
             res.clearCookie('token');
         }
 
-        // If no user was found, clear the token cookie.
-        // TODO try to run the server without this code block, as this may be redundant
-        // if(!req.user) {
-        //     res.clearCookie('token');
-        //     devWarn(PATH, 'User restoration ' + red('failed') + ', clearing token');
-        // }
-
         // Move on to the next middleware.
         return next();
-    })
+    });
 }
 
-/** ### `requireSessionAuth`
- *  @file `backend/utils/auth.js`
- *  @description
- *  Session authentication requires that *any user* be logged into the app. This middleware
- *  function ensures this is the case. If no user is logged in, an error is thrown. Session
- *  authentication outcome is logged in development.
+/**
+ * Session authentication requires that *any user* be logged into the app. This middleware
+ * function ensures this is the case. If no user is logged in, an error is thrown. Session
+ * authentication outcome is logged in development.
  * 
- *  See `restoreUser` for functionality related to the data of the specific current user.
+ * @see {@linkcode restoreUser} for functionality related to the data of the specific current user.
 **/
 const requireSessionAuth = (req, _res, next) => {
     if(!req.user) {

@@ -18,6 +18,9 @@ export default defineConfig(({ mode }) => ({
     "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   },
   server: {
-    proxy: { '/api': 'http://localhost:8000' }
+    proxy: { 
+        '/api': 'http://localhost:8000',
+        '/assets': 'http://localhost:8000'
+    }
   }
 }));

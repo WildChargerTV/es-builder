@@ -9,6 +9,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import LandingPage from './components/Landing/Landing';
 import RecentLoadouts from './components/Loadouts/Recents';
+import LoadoutBuilderMain from './components/LoadoutBuilder/LoadoutBuilder';
 import UserProfile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
 import * as sessionActions from './store/session';
@@ -63,6 +64,19 @@ const router = createBrowserRouter([
             {
                 path: '/loadouts',
                 element: <RecentLoadouts />
+            },
+            {
+                path: '/loadouts/new',
+                element: <LoadoutBuilderMain mode='create' />
+
+            },
+            {
+                path: '/loadouts/:loadoutId',
+                element: <LoadoutBuilderMain mode='view' />
+            },
+            {
+                path: '/loadouts/:loadoutId/edit',
+                element: <LoadoutBuilderMain mode='edit' />
             },
             {
                 path: '/profile',

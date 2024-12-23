@@ -1,5 +1,10 @@
 // * backend/routes/index.js
 
+// Node Module Imports
+const AWS = require('aws-sdk');
+// Local Module Imports
+const { accessKeyId, bucket, secretAccessKey } = require('../config').awsConfig;
+
 // Determine if the current environment is development or production.
 const isProd = require('../config').environment === 'production';
 
@@ -11,9 +16,10 @@ const isProd = require('../config').environment === 'production';
  * 1. `/api` - Head branch for all API calls.
  * 
  * Includes the following routes:
- * 1. GET `/favicon.ico`: Browser Backend Safety Net
- * 2. GET `/`: React Frontend Root Route
- * 3. GET `/!api`: Additional React Frontend Routes (Covers all routes not starting with `/api`)
+ * 1. GET `/assets/*`: AWS Asset Service Route
+ * 2. GET `/favicon.ico`: Browser Backend Safety Net
+ * 3. GET `/`: React Frontend Root Route
+ * 4. GET `/!api`: Additional React Frontend Routes (Covers all routes not starting with `/api`)
  */
 const router = require('express').Router();
 
@@ -22,6 +28,26 @@ const router = require('express').Router();
  * ? `/api/csrf/restore` is contained here.
  */
 router.use('/api', require('./api'));
+
+/**
+ * For all backend routes beginning with `/assets`, serve assets from the AWS bucket.
+ * ! AWS-SDK v2 is due for deprecation on September 8, 2025. Consider migrating to v3.
+ */
+router.get('/assets/*', async (req, res, next) => {
+    // Refresh IAM user credentials and connect to the S3 bucket.
+    AWS.config.update({ accessKeyId, secretAccessKey, region: 'ap-southeast-2' });
+    const S3 = new AWS.S3();
+
+    // Isolate the file path from the request path.
+    const assetFile = req.path.split('assets/')[1];
+
+    // Retrieve and send a securely signed URL to the requested asset. Expires in 1 day.
+    S3.getSignedUrlPromise('getObject', { Bucket: bucket, Key: assetFile, Expires: 86400 })
+        .then(
+            (url) => res.send({ url }),
+            (err) => next(err)
+        );
+});
 
 /**
  * This catches the browser request to get a favicon when directly accessing a backend route. The

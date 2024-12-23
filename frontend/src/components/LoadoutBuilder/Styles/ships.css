@@ -1,0 +1,53 @@
+/** frontend/src/components/LoadoutBuilder/Styles/ships.css */
+/** Loadout Builder: Ship Selector */
+
+/* Ship Selector: Button List */
+#builder-ship-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    max-width: 50%;
+    row-gap: 10px;
+}
+#builder-ship-grid button {
+    align-items: center;
+    aspect-ratio: 15 / 2.5;
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    display: flex;
+    font-size: clamp(16pt, 1.65vw, 32pt);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    width: 100%;
+    padding: 10px 5px;
+    text-align: left;
+}
+#builder-ship-grid button.active { color: #f9e2ad; }
+#builder-ship-grid button.active:disabled { opacity: 1; }
+#builder-ship-grid img { 
+    margin-right: 10px;
+    max-height: 100%;
+}
+
+/* Ship Selector: Info Panel */
+#builder-ship-info {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    overflow: scroll;
+    overflow-x: hidden;
+    padding: 0.5% 1%;
+    width: 40%;
+}
+#builder-ship-info button {
+    background-color: rgba(148, 180, 195, 0.4);
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    border-radius: 5px;
+    font-size: clamp(16pt, 1.65vw, 32pt);
+    width: 100%;
+}
+#builder-ship-info h2 {
+    font-size: clamp(18pt, 1.65vw, 36pt);
+    margin: 0;
+}
+#builder-ship-info p {
+    font-size: clamp(12pt, 1.25vw, 20pt);
+    margin: 3px 0 10px 0;
+}

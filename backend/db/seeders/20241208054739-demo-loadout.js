@@ -1,0 +1,39 @@
+'use strict';
+// * backend/db/seeders/20241208054739-demo-loadout.js
+// * Sequelize: Loadouts Seed File
+
+const { Loadout } = require('../models');
+
+/** In production, ensure Sequelize refers to the schema in the .env file. */
+let options = {};
+if(process.env.NODE_ENV === 'production') options.schema = process.env.SCHEMA;
+
+/** 
+ * Export the seeder.
+ * @type {import('sequelize-cli').Migration} 
+ */
+module.exports = {
+    /** Forward Seed: Add Data to 'Loadouts' Table */
+    async up (queryInterface, Sequelize) {
+        await Loadout.bulkCreate([
+            {
+                userId: 1,
+                name: "PREPPED FOR ANYTHING",
+                shipId: 0,
+                enhancements: "{\"0\":19,\"1\":20,\"2\":22}",
+                primaryWeapons: "{\"0\":{\"id\":11},\"1\":{\"id\":6},\"2\":null}",
+                secondaryWeapons: "{\"0\":\"0x1\",\"1\":\"1x7\",\"2\":\"7x6\"}",
+                devices: "{\"0\":{\"id\":59},\"1\":{\"id\":14},\"2\":{\"id\":26},\"3\":{\"id\":45},\"4\":null}",
+                consumables: "{\"0\":\"16x2\",\"1\":\"11x4\",\"2\":\"13x1\",\"3\":\"14x1\",\"4\":null}"
+            }
+        ], { validate: true });
+    },
+
+    /** Backward Seed: Remove Data from 'Loadouts' Table */
+    async down (queryInterface, Sequelize) {
+        options.tableName = 'Loadouts';
+        return queryInterface.bulkDelete(options, {
+            userId: { [Sequelize.Op.in]: [1] }
+        }, {});
+    }
+};

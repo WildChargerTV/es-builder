@@ -15,6 +15,9 @@ EVERSPACE Colors:
 Z-Index Directory:
     0: #site-landing-bg (Landing.css)
     1: #site-landing-content (Landing.css)
+    2: .builder-equip-row (LoadoutBuilder.css)
+    3: .builder-equip-row img (LoadoutBuilder.css)
+    4: .builder-equip-row h4 (LoadoutBuilder.css)
     98: #site-nav (Navigation.css)
     99: #site-modal (Modal.css)
 */
@@ -50,6 +53,12 @@ button:hover:disabled {
     color: #94b4c3;
     cursor: default; 
 }
+button img, button p { pointer-events: none; }
+
+div:disabled { 
+    opacity: 0.5;
+    pointer-events: none;
+}
 
 h1, h2, h3, h4, h5, h6 {
     color: #f9e2ad;
@@ -57,6 +66,12 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 1.5px;
     text-transform: uppercase;
 }
+
+html {
+    max-width: 100%;
+}
+
+img { font-size: 0; }
 
 input { 
     font-family: 'Titillium Web', sans-serif; 

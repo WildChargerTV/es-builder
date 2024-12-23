@@ -9,6 +9,9 @@ import {
     compose } from 'redux';
 import thunk from 'redux-thunk';
 // Local Module Imports
+import awsReducer from './aws';
+import builderReducer from './builder';
+import loadoutReducer from './loadout';
 import sessionReducer from './session';
 
 /** 
@@ -17,6 +20,9 @@ import sessionReducer from './session';
  * @type {Reducer}
 **/
 const rootReducer = combineReducers({
+    aws: awsReducer,
+    builder: builderReducer,
+    loadout: loadoutReducer,
     session: sessionReducer
 });
 

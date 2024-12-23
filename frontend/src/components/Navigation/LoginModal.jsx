@@ -2,7 +2,7 @@
 
 // Node Module Imports
 import { useEffect, useState } from 'react';
-import { PiMouseLeftClickFill } from "react-icons/pi";
+import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch } from 'react-redux';
 // Local Module Imports
 import { useModal } from '../../context/Modal';
