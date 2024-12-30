@@ -32,14 +32,18 @@ function EnhancementInfo() {
 function EnhancementGroup() {
     const dispatch = useDispatch();
     const { shipId, enhancements } = useSelector((state) => state.builder);
-    const groupData = useMemo(() => []);
+    const groupData = useMemo(() => {
+        const res = [];
+        for(let i in enhancements) {
+            if(i === 'selected') continue;
+            const id = enhancements[i];
+            if(id === null) res.push({ i, id: null });
+            else res.push({ i, id });
+        }
+        return res;
+    }, [enhancements]);
 
-    for(let i in enhancements) {
-        if(i === 'selected') continue;
-        const id = enhancements[i];
-        if(id === null) groupData.push({ i, id: null })
-        else groupData.push({ i, id })
-    }
+
 
     useEffect(() => {
         if(!groupData) return;
