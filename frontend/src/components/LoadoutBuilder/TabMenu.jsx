@@ -39,13 +39,12 @@ export default function LoadoutTabMenu({ isLoaded }) {
         document.getElementById(`builder-tab-${tabId}`).className = 'active';
     }, [tabId, isLoaded]);
 
-    const enhancementsDisabled = mode === 'create' && shipId === null;
-    const equipmentDisabled = mode === 'create' && shipPreset === null;
+    const disabled = mode === 'create' && (shipId === null || shipPreset === null);
     
     /** Return tab menu content. Enhancement/Equipment tabs are disabled until a ship is chosen. */
     return isLoaded && (<div id='builder-tabs'>
         <button id='builder-tab-0' onClick={onClick}>Ships</button>
-        <button id='builder-tab-1' onClick={onClick} disabled={enhancementsDisabled}>Enhancements</button>
-        <button id='builder-tab-2' onClick={onClick} disabled={equipmentDisabled}>Equipment</button>
+        <button id='builder-tab-1' onClick={onClick} disabled={disabled}>Enhancements</button>
+        <button id='builder-tab-2' onClick={onClick} disabled={disabled}>Equipment</button>
     </div>);
 }

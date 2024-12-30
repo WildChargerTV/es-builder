@@ -71,13 +71,14 @@ loadouts.get('/:loadoutId', async (req, res, next) => {
  * POST /api/loadouts
  */
 loadouts.post('/', requireSessionAuth, async (req, res, next) => {
-    const { shipId, enhancements, primaryWeapons, secondaryWeapons, devices, consumables } = req.body;
+    const { name, shipId, enhancements, primaryWeapons, secondaryWeapons, devices, consumables } = req.body;
     delete enhancements.selected;
 
     let loadout;
     try {
         loadout = await Loadout.create({
             userId: req.user.id,
+            name,
             shipId,
             enhancements: JSON.stringify(enhancements),
             primaryWeapons: JSON.stringify(primaryWeapons),
@@ -99,7 +100,6 @@ loadouts.post('/', requireSessionAuth, async (req, res, next) => {
  */
 loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     const { loadoutId } = req.params;
-    console.log(req.body);
     const { name, shipId, enhancements, primaryWeapons, secondaryWeapons, devices, consumables } = req.body;
 
     let loadout;

@@ -30,7 +30,7 @@ export default function Footer({ isLoaded }) {
         {/* Credits: Site Technology */}
         <div id='site-footer-tech'>
             <p>
-                The layout builder has been built to be compatible with the widescreen<br />
+                The loadout builder has been built to be compatible with the widescreen<br />
                 (16:9) aspect ratio, tested at the minimum resolution of HD 720p up to<br />
                 a resolution of 2K 1440p. Screen resolutions above or below this are not<br />
                 guaranteed to display properly.

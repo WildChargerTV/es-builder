@@ -27,7 +27,6 @@ export default function LoadoutBuilderMain({ mode }) {
     const [pageTitle, setPageTitle] = useState('');
 
     const checkName = (event) => {
-        console.log(event.target.innerText);
         const nameLength = event.target.innerText.split('\n')[0].length;
         if(nameLength < 4 || nameLength > 30)
             event.target.style.color = '#ff5d51';
@@ -55,7 +54,7 @@ export default function LoadoutBuilderMain({ mode }) {
             dispatch(builderActions.bulkUpdateState(loadoutData));
             setIsLoaded(true);
         });
-    }, [dispatch, mode]);
+    }, [dispatch, mode, params.loadoutId]);
 
     return isLoaded && (<main id='site-loadout-builder'>
         <div id='loadout-builder-head'>

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BucketImage from '../../Bucket/BucketImage';
 import enhancementData from '../../../data/enhcancements';
-import { changeEnhancement } from '../../../store/builder';
+import { changeEnhancement, changePrimary, changeSecondary } from '../../../store/builder';
 
 const CATEGORIES = [
     'Navigation', 'Damage and Repair', 'Defense', 'Devices', 
@@ -30,7 +30,7 @@ function EnhancementGroup({ category }) {
 
 function SingleEnhancement({ data }) {
     const dispatch = useDispatch();
-    const { mode, shipId, enhancements } = useSelector((state) => state.builder);
+    const { mode, shipId, enhancements, primaryWeapons, secondaryWeapons } = useSelector((state) => state.builder);
 
     const onClick = (event) => {
         event.stopPropagation();
@@ -38,6 +38,17 @@ function SingleEnhancement({ data }) {
         if(!enhancements[0]) dispatch(changeEnhancement(0, data.id));
         else if(!enhancements[1]) dispatch(changeEnhancement(1, data.id));
         else if(!enhancements[2]) dispatch(changeEnhancement(2, data.id));
+
+        if(data.id === 2) {
+            for(const key in primaryWeapons) {
+                key == 0
+                ? dispatch(changePrimary(key, 0, null))
+                : dispatch(changePrimary(key, null, null));
+            }
+            for(const key in secondaryWeapons)
+                dispatch(changeSecondary(key, null, null));
+        }
+            
     }
 
     const disabled = () => {

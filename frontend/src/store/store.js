@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 // Local Module Imports
 import awsReducer from './aws';
 import builderReducer from './builder';
+import customEquippableReducer from './customEquippable';
 import loadoutReducer from './loadout';
 import sessionReducer from './session';
 
@@ -22,6 +23,7 @@ import sessionReducer from './session';
 const rootReducer = combineReducers({
     aws: awsReducer,
     builder: builderReducer,
+    customEquippable: customEquippableReducer,
     loadout: loadoutReducer,
     session: sessionReducer
 });

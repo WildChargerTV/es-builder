@@ -1,0 +1,194 @@
+/* Loadout Builder: Equipment Selector */
+#builder-equipment-list {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    column-gap: 25px;
+    display: flex;
+        justify-content: space-around;
+    overflow: scroll;
+    padding: 10px 25px;
+    width: 69%;
+}
+
+.builder-equipment-list-col { 
+    height: 100%; 
+    width: 21%;
+}
+
+.builder-equip-col-title {
+    color: #acdbf9;
+    font-size: clamp(12pt, 1.25vw, 24pt);
+    font-weight: 600;
+    margin-top: 0;
+    text-align: center;
+}
+.builder-equip-col-slots {
+    display: grid;
+    height: fit-content;
+    padding-left: 0;
+    row-gap: 10px;
+}
+
+.builder-equip-row {
+    aspect-ratio: 20 / 12;
+    border: 1px solid rgba(148, 180, 195, 0.5);
+    cursor: pointer;
+    display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-end;
+    list-style-type: none;
+    overflow: auto;
+    position: relative;
+    z-index: 2;
+}
+.builder-equip-icon img {
+    aspect-ratio: 13 / 9;
+    margin: 0 auto 0 auto;
+    position: absolute;
+        top: 5%;
+        left: 18%;
+    width: 65%;
+    z-index: 3;
+}
+.builder-equip-name { 
+    height: 25%;
+    position: absolute;
+        bottom: 0;
+    width: 90%; 
+    z-index: 4;
+}
+.builder-equip-name h2 {
+    color: #acdbf9;
+    font-weight: 600;
+    height: 100%;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+}
+.builder-equip-controls {
+    display: flex;
+    flex-direction: row-reverse;
+    position: absolute;
+        right: 2px;
+        top: 2px;
+    z-index: 5;
+}
+.builder-equip-controls button {
+    aspect-ratio: 1 / 1;
+    height: clamp(16px, 2.7vh, 40px);
+    padding: 0;
+}
+.builder-equip-controls button img {
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    padding: 0;
+}
+.builder-equip-quantity {
+    font-weight: 600;
+    position: absolute;
+        left: 4px;
+        top: -1px;
+    z-index: 5;
+}
+.builder-equip-quantity button {
+    font-weight: 600;
+    font-size: clamp(8pt, 1vw, 20pt);
+    padding: 0;
+}
+.builder-equip-quantity button:disabled { opacity: 1; }
+.builder-equip-mod-squares {
+    display: flex;
+        flex-direction: column;
+        justify-content: center;
+    height: 100%;
+    margin-left: 5px;
+    pointer-events: none;
+    position: absolute;
+        left: 0;
+    row-gap: clamp(6px, 0.5vh, 10px);
+    width: clamp(4%, 0.7vw, 5%);
+}
+.builder-mod-square {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+}
+.builder-mod-square.active { background-color: rgba(148, 180, 195, 1); }
+.builder-mod-square.inactive { background-color: rgba(148, 180, 195, 0.6); }
+
+/* Loadout Builder: Equipment Info */
+#builder-equipment-info {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    max-width: calc(30% - 20px);
+    min-width: calc(30% - 20px);
+    overflow-y: scroll;
+    padding: 10px 10px;
+}
+#builder-equipment-info h2 { 
+    letter-spacing: 0.75px;
+    line-height: 2;
+    margin: 0; 
+    text-align: center;
+    white-space: nowrap;
+}
+@media screen and (min-width: 1280px) { #builder-equipment-info h2 { font-size: 14pt; } }
+@media screen and (min-width: 1920px) { #builder-equipment-info h2 { font-size: 22pt; } }
+#builder-equipment-info h3 { 
+    color: #acdbf9;
+    letter-spacing: 0.5px;
+    margin: 0; 
+    text-align: center;
+    white-space: nowrap;
+}
+@media screen and (min-width: 1280px) { #builder-equipment-info h3 { font-size: 10pt; } }
+@media screen and (min-width: 1920px) { #builder-equipment-info h3 { font-size: 16pt; } }
+#builder-equipment-info h4 { margin: 0; }
+#builder-equipment-info button {
+    width: 100%;
+}
+#equip-info-desc {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    font-size: large;
+    letter-spacing: 0.35px;
+    margin: 10px auto;
+    padding: 8px 10px;
+    width: 90%;
+}
+#equip-info-mods {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    display: grid;
+        grid-template-columns: 20% 80%;
+    letter-spacing: 0.65px;
+    line-height: 1;
+    margin: 10px auto;
+    padding: 12px 10px;
+    width: 90%;
+}
+#equip-info-mods ul { 
+    display: grid;
+        row-gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    text-align: right;
+}
+#equip-info-stats {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    display: grid;
+    letter-spacing: 0.65px;
+    margin: 10px auto;
+    padding: 8px 10px;
+    row-gap: 5px;
+    width: 90%;
+}
+.equip-info-single-stat {
+    display: inline-flex;
+        justify-content: space-between;
+}
+.equip-info-single-stat p {
+    margin: 0;
+    text-transform: uppercase;
+}

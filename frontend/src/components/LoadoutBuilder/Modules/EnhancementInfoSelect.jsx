@@ -1,12 +1,12 @@
 // * frontend/src/components/LoadoutBuilder/Modules/EnhancementInfoSelect.jsx
 // TODO docs && clearer naming
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BucketImage from '../../Bucket/BucketImage';
 import enhancementData from '../../../data/enhcancements';
 import shipData from '../../../data/ships';
-import { changeEnhancement } from '../../../store/builder';
+import { changeEnhancement, changePrimary } from '../../../store/builder';
 
 export default function EnhancementInfoSelect() {
     return (<div id='builder-enhancement-info-select'>
@@ -32,7 +32,7 @@ function EnhancementInfo() {
 function EnhancementGroup() {
     const dispatch = useDispatch();
     const { shipId, enhancements } = useSelector((state) => state.builder);
-    const groupData = [];
+    const groupData = useMemo(() => []);
 
     for(let i in enhancements) {
         if(i === 'selected') continue;
@@ -71,8 +71,14 @@ function SingleEnhancement({ id }) {
             if(btnList[i] === event.target) {
                 if(mode === 'view')
                     dispatch(changeEnhancement('selected', id));
-                else dispatch(changeEnhancement(i, null));
+                else {
+                    dispatch(changeEnhancement(i, null));
+                    dispatch(changeEnhancement('selected', null));
+                }
             }
+        
+        if(id === 2)
+            dispatch(changePrimary(0, null, null));
     }
 
     return <button className='builder-enhancement-list__single selected' onClick={onClick} disabled={id === null}>

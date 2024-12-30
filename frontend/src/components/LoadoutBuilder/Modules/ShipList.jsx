@@ -2,9 +2,7 @@
 // TODO documentation
 
 import { useDispatch, useSelector } from 'react-redux';
-import { ModalWarnShipSwitch } from '../Modals/MessageModal';
 import BucketImage from '../../Bucket/BucketImage';
-import { shipData } from '../../../data';
 import { changeShip, changeShipPreset, resetSlice } from '../../../store/builder';
 
 export default function ShipList() {

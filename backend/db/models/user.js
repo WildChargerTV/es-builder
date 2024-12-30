@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'CASCADE',
                 hooks: true
             });
+            User.hasMany(models.CustomEquippable, {
+                foreignKey: 'userId',
+                sourceKey: 'id',
+                onDelete: 'CASCADE',
+                hooks: true
+            });
         }
     }
 

@@ -22,7 +22,7 @@ export default function BucketImage({ dir }) {
             return;
         else 
             setUrl(bucket[dir].url);
-    }, [dispatch, bucket]);
+    }, [dispatch, bucket, dir]);
     
     // Return the image.
     return <img src={url} alt={`bucketimage-${dir}`} />;

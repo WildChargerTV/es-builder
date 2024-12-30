@@ -9,7 +9,7 @@ import { useModal } from '../../context/Modal';
  * @component OpenModal
  * @requires {@linkcode useModal}
  * @param {{ 
- *      element: 'button' | 'listitem'; 
+ *      element: 'button' | 'checkbox'; 
  *      elementText: string | ReactElement; 
  *      modalComponent: ReactElement; 
  *      onModalOpen?: function; 
@@ -50,9 +50,8 @@ export default function OpenModal({
     switch(element) {
         case 'button':
             return <button onClick={onClick}>{elementText}</button>;
-        case 'listitem':
-            // ! Accessibility Notice: aria-hidden makes this element invisible to screen readers.
-            return <li onClick={onClick} aria-hidden>{elementText}</li>;
+        case 'checkbox':
+            return (<label onClick={onClick}><input type='checkbox' onChange={onClick} aria-hidden /><h4>{elementText}</h4></label>);
         default:
             console.error('Please provide a valid element type!');
             return <button onClick={onClick}>{elementText}</button>;

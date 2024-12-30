@@ -29,7 +29,6 @@ export const createLoadout = (loadout) => async () => {
 };
 
 export const getLoadout = (id) => async (dispatch) => {
-    console.log(id);
     const res = await csrfFetch(`/api/loadouts/${id}`);
 
     if(res.ok) {
@@ -48,7 +47,7 @@ export const getRecentLoadouts = () => async (dispatch) => {
     return res;
 };
 
-export const updateLoadout = (id, loadout) => async (dispatch) => {
+export const updateLoadout = (id, loadout) => async () => {
     console.log('hi');
     const res = await csrfFetch(`/api/loadouts/${id}`, {
         method: 'PUT',

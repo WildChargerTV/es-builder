@@ -1,5 +1,4 @@
 /* Preset Loadout Modal */
-
 .modal-ship-preset {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
@@ -55,8 +54,77 @@
 
 /* Select Equipment/Mod Modal */
 #site-modal-content.item-select-menu {
-
-    
+    display: flex;
+        align-items: center;
+        flex-direction: column;
     width: 65%;
         max-width: 1280px;
+}
+
+.modal-equip-list {
+    backdrop-filter: brightness(50%);
+    border: 1px solid rgba(148, 180, 195, 0.7);
+    column-gap: 0.8%;
+    display: grid;
+        grid-template-columns: repeat(6, 16%);
+    padding: 10px;
+    row-gap: 10px;
+    width: 95%;
+}
+.modal-single-equip {
+    aspect-ratio: 20 / 12;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(148, 180, 195, 0.7);
+    cursor: pointer;
+    display: flex;
+        justify-content: center;
+    position: relative;
+    white-space: nowrap;
+}
+.modal-single-equip.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.modal-equip-name {
+    position: absolute;
+        bottom: 0;
+    width: 90%; 
+}
+.modal-equip-name h4 { 
+    color: #abcdf9;
+    margin: 0;
+}
+.modal-equip-icon {
+    aspect-ratio: 13 / 9;
+    height: 80%;
+}
+.modal-equip-icon img { width: 100%; }
+
+/* Enhance Primary/Device Modal */
+#site-modal-content.equip-enhance-modal {
+    backdrop-filter: brightness(20%);
+    width: 40%;
+        min-width: 875px;
+}
+
+#enhance-stats-form {
+    backdrop-filter: brightness(40%);
+    border: 1px solid rgba(148, 180, 195, 0.7);
+    padding: 20px;
+}
+.modal-form-equip-title {
+    display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+}
+.modal-form-equip-title h2, .modal-form-equip-title h4 { color: #abcdf9; margin: 0 0 10px 0; }
+.modal-form-stat {
+    display: flex;
+        justify-content: space-between;
+    font-size: larger;
+    text-align: left;
+}
+
+#enhance-stats-controls {
+    margin-top: 20px;
 }

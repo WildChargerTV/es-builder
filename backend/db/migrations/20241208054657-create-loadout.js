@@ -1,4 +1,7 @@
 'use strict';
+// * backend/db/migrations/20241208054657-create-loadout.js
+// * Sequelize: Loadouts Migration File
+// ? As a reminder, this is a representation of the data actually inserted into the table.
 
 /** In production, ensure Sequelize refers to the schema in the .env file. */
 let options = {};
@@ -10,7 +13,7 @@ if(process.env.NODE_ENV === 'production') options.schema = process.env.SCHEMA;
  * @type {import('sequelize-cli').Migration} 
  */
 module.exports = {
-    /** Forward Migration: Create Table 'Users' */
+    /** Forward Migration: Create Table 'Loadouts' */
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('Loadouts', {
             id: {
@@ -61,8 +64,10 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
                 type: Sequelize.DATE
             }
-        });
+        }, options);
     },
+
+    /** Backward Migration: Drop 'Loadouts' Table */
     async down(queryInterface, _Sequelize) {
         options.tableName = 'Loadouts';
         return queryInterface.dropTable(options);

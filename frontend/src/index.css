@@ -34,6 +34,7 @@ body {
     background-color: #181a1b;
     color: #94b4c3;
     font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
     margin: 0;
 }
 
@@ -67,17 +68,17 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
 }
 
-html {
-    max-width: 100%;
-}
+html { max-width: 100%; }
 
 img { font-size: 0; }
 
-input { 
-    font-family: 'Titillium Web', sans-serif; 
-}
+input { font-family: 'Titillium Web', sans-serif; }
+
+label { text-transform: uppercase; }
+
+li { text-transform: uppercase; }
 
 p { font-weight: 600; }
 
 /* Global Site Class Definitions */
-.site-text-icon { color: #ff5d51; }
+.red, .site-text-icon { color: #ff5d51; }

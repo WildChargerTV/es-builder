@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFitText from 'use-fit-text';
 import ChangeQuantityModal from '../Modals/ChangeQuantityModal';
 import SelectEquipModal from '../Modals/SelectEquipModal';
+import SelectModModal from '../Modals/SelectModModal';
 import BucketImage from '../../Bucket/BucketImage';
 import OpenModal from '../../Modal/OpenModal';
 import { 
@@ -15,61 +16,43 @@ import {
     secondaryWeaponData, 
     shipData } from '../../../data';
 import { 
-    // changeConsumable,
-    // changeDevice,
-    // changeSecondary,
+    changeConsumable,
+    changeDevice,
+    changeSecondary,
     changeFocusEquip, 
     changePrimary,
      } from '../../../store/builder';
-
+import { getCustomEquippable } from '../../../store/customEquippable';
 
 
 export default function EquipmentList() {
-    const dispatch = useDispatch();
     const builder = useSelector((state) => state.builder);
-    const [isLoaded, setIsLoaded] = useState(true);
-
     const currShip = (builder.shipId >= 0) && shipData[builder.shipId];
+    const [ancientWeaponEquipped, setAncientWeaponEquipped] = useState(false);
 
-    // useEffect(() => {
-    //     
+    useEffect(() => {
+        console.log(builder.enhancements)
+        for(let key in builder.enhancements) {
+            if(key === 'selected') continue;
+            if(builder.enhancements[key] === 2)
+                return setAncientWeaponEquipped(true);
+        }
+        return setAncientWeaponEquipped(false);
+    }, [builder.enhancements]);
 
-    //     const primaryWeapons = {};
-    //     for(let i = 0; i < currShip.primary_weapons - 1; i++)
-    //         dispatch(changePrimary(i, null));
-
-    //     const secondaryWeapons = {};
-    //     for(let i = 0; i < currShip.secondary_weapons - 1; i++)
-    //         secondaryWeapons[i] = null;
-
-    //     const devices = {};
-    //     for(let i = 0; i < currShip.devices - 1; i++)
-    //         devices[i] = null;
-
-    //     const consumables = {};
-    //     for(let i = 0; i < currShip.consumables - 1; i++)
-    //         consumables[i] = null;
-
-
-    // }, [ship]);
-
-    // useEffect(() => {
-    //     if(enhancements.keys().indexOf(2) === -1)
-    // }, [enhancements]);
-
-    return isLoaded && (<div id='builder-equipment-list'>
-        <EquipmentColumn name='Primary' slots={currShip.primary_weapons} data={builder.primaryWeapons} />
-        <EquipmentColumn name='Secondary' slots={currShip.secondary_weapons} data={builder.secondaryWeapons} />
+    return (<div id='builder-equipment-list'>
+        <EquipmentColumn name='Primary' slots={ancientWeaponEquipped ? 1 : currShip.primary_weapons} data={builder.primaryWeapons} />
+        <EquipmentColumn name='Secondary' slots={ancientWeaponEquipped ? 0 : currShip.secondary_weapons} data={builder.secondaryWeapons} />
         <EquipmentColumn name='Devices' slots={currShip.devices} data={builder.devices} />
         <EquipmentColumn name='Consumables' slots={currShip.consumables} data={builder.consumables} />
     </div>);
 }
 
 function EquipmentColumn({ name, slots, data }) {
+
     const dataArr = [];
     for(let i = 0; i < slots; i++)
         dataArr[i] = data[i];
-
     
     let keyCounter = 0;
     const key = () => {
@@ -133,15 +116,50 @@ function SingleEquipment({ type, id, mods, quantity, index }) {
     const dispatch = useDispatch();
     const { fontSize, ref } = useFitText();
     const { mode } = useSelector((state) => state.builder);
+    const [data, setData] = useState(null);
+    const [moddable, setModdable] = useState(false);
 
-    const data = (() => {
+    useEffect(() => {
         switch(type) {
-            case 'Primary': return primaryWeaponData[id];
-            case 'Secondary': return secondaryWeaponData[id];
-            case 'Devices': return deviceData[id];
-            case 'Consumables': return consumableData[id];
+            case 'Primary': {
+                console.log(id);
+                if(typeof id === 'number' || id === null)
+                    return setData(primaryWeaponData[id]);
+                
+                const customId = Number(id.split('c')[1]);
+                dispatch(getCustomEquippable(customId))
+                    .then((customEquippable) => {
+                        const clone = structuredClone(primaryWeaponData[customEquippable.equippableId]);
+                        clone.enhanced = true;
+                        clone.stats = customEquippable.stats;
+                        return setData(clone);
+                    });
+                return;
+            } case 'Secondary':
+                return setData(secondaryWeaponData[id]);
+            case 'Devices': {
+                if(typeof id === 'number' || id === null)
+                    return setData(deviceData[id]);
+                
+                const customId = Number(id.split('c')[1]);
+                dispatch(getCustomEquippable(customId))
+                    .then((customEquippable) => {
+                        const clone = structuredClone(deviceData[customEquippable.equippableId]);
+                        clone.enhanced = true;
+                        clone.stats = customEquippable.stats;
+                        return setData(clone);
+                    });
+                return;
+            } case 'Consumables':
+                return setData(consumableData[id]);
+            default:
+                return setData('something went wrong');
         }
-    })();
+    }, [dispatch, type, id]);
+
+    useEffect(() => {
+        setModdable(data && (type === 'Primary' || (type === 'Devices' && (data?.allowed_mods[0] !== -1))));
+    }, [data, type]);
 
     const modArr = (() => {
         const res = [];
@@ -152,13 +170,18 @@ function SingleEquipment({ type, id, mods, quantity, index }) {
 
     const showInfo = (event) => {
         event.stopPropagation();
-        dispatch(changeFocusEquip(type, id))
+        data
+        ? dispatch(changeFocusEquip(type, id, index))
+        : changeFocusEquip('reset');
     };
 
     const deleteEquip = (event) => {
         event.stopPropagation();
         switch(type) {
-            case 'Primary': return dispatch(changePrimary(index, null))
+            case 'Primary': return dispatch(changePrimary(index, null, null));
+            case 'Secondary': return dispatch(changeSecondary(index, null, null));
+            case 'Devices': return dispatch(changeDevice(index, null, null));
+            case 'Consumables': return dispatch(changeConsumable(index, null, null));
         }
     }
     
@@ -177,22 +200,22 @@ function SingleEquipment({ type, id, mods, quantity, index }) {
             {data && <BucketImage dir={data?.icon} />}
         </div>
         <div className='builder-equip-name' ref={ref} style={{ fontSize }}>
-            <h2>{data?.name}</h2>
+            <h2>
+                {['Primary', 'Devices'].includes(type) && typeof id === 'string' && '★ '}
+                {data?.name}
+            </h2>
         </div>
-        {mode !== 'view' && <div className='builder-equip-controls'>
+        {mode !== 'view' && !(type === 'Primary' && id === 0) && <div className='builder-equip-controls'>
             {data
-            ? <OpenModal
-                elementText={<BucketImage dir='/menu-remove-equip.png' />}
-                modalComponent={<SelectEquipModal currEquip={{type, id, mods, index}} />}
-            />
+            ? <button onClick={deleteEquip}><BucketImage dir='/menu-remove-equip.png' /></button>
             : <OpenModal
-            elementText={<BucketImage dir='/menu-add-equip.png' />}
-            modalComponent={<SelectEquipModal currEquip={{type, id, mods, index}} />}
+                elementText={<BucketImage dir='/menu-add-equip.png' />}
+                modalComponent={<SelectEquipModal currEquip={{index, type}} />}
             />}
-            {(data && (type === 'Primary' || type === 'Devices')) && 
+            {moddable && modArr.includes(null) &&
             <OpenModal
                 elementText={<BucketImage dir='/menu-add-mod.png' />}
-                modalComponent={<SelectEquipModal currEquip={{type, id, mods, index}} />}
+                modalComponent={<SelectModModal currEquip={{eIndex: index, eType: type}} />}
             />}
         </div>}
         {(data && (type === 'Secondary' || type === 'Consumables')) &&
@@ -203,7 +226,7 @@ function SingleEquipment({ type, id, mods, quantity, index }) {
                 modalComponent={<ChangeQuantityModal data={{type, equipId: id, currQuantity: quantity, index}} />}
             />
         </div>}
-        {(data && (type === 'Primary' || type === 'Devices')) &&
+        {moddable && 
         <div className='builder-equip-mod-squares'>
             {modArr.map((modData) => <ModSquare key={crypto.randomUUID()} data={modData} />)}
         </div>}

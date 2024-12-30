@@ -14,7 +14,7 @@ if(process.env.NODE_ENV === 'production') options.schema = process.env.SCHEMA;
  */
 module.exports = {
     /** Forward Seed: Add Data to 'Loadouts' Table */
-    async up (queryInterface, Sequelize) {
+    async up (_queryInterface, _Sequelize) {
         await Loadout.bulkCreate([
             {
                 userId: 1,
@@ -25,6 +25,16 @@ module.exports = {
                 secondaryWeapons: "{\"0\":\"0x1\",\"1\":\"1x7\",\"2\":\"7x6\"}",
                 devices: "{\"0\":{\"id\":59},\"1\":{\"id\":14},\"2\":{\"id\":26},\"3\":{\"id\":45},\"4\":null}",
                 consumables: "{\"0\":\"16x2\",\"1\":\"11x4\",\"2\":\"13x1\",\"3\":\"14x1\",\"4\":null}"
+            },
+            {
+                userId: 4,
+                name: "IT'S ENHANCED",
+                shipId: 3,
+                enhancements: "{\"0\":4,\"1\":18,\"2\":8}",
+                primaryWeapons: "{\"0\":{\"id\":\"c1\",\"mods\":{\"0\":5,\"1\":15,\"2\":null,\"3\":null}}}",
+                secondaryWeapons: "{\"0\":\"2x12\",\"1\":\"9x10\"}",
+                devices: "{\"0\":{\"id\":62,\"mods\":{\"0\":32,\"1\":32,\"2\":33,\"3\":33}},\"1\":{\"id\":26,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"2\":{\"id\":80,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"3\":{\"id\":53,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"4\":{\"id\":73,\"mods\":{\"0\":30,\"1\":30,\"2\":30,\"3\":30}},\"5\":{\"id\":14,\"mods\":{\"0\":28,\"1\":28,\"2\":28,\"3\":30}}}",
+                consumables: "{\"0\":\"11x4\",\"1\":\"6x4\",\"2\":\"13x1\",\"3\":\"23x1\"}"
             }
         ], { validate: true });
     },

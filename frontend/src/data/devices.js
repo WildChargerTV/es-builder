@@ -9,6 +9,7 @@ const deviceData = [
         "icon": "/devices/adaptive-armor.png",
         "description": "Increases the ship's armor by a small percentage, effectively reducing any incoming damage.",
         "manufacturer": "Ancile",
+        "conflicts": [1, 2],
         "allowed_ships": [0, 1, 2],
         "allowed_mods": [-1],
         "stats": {
@@ -23,6 +24,7 @@ const deviceData = [
         "icon": "/devices/adaptive-armor.png",
         "description": "Increases the ship's armor by a small percentage, effectively reducing any incoming damage.",
         "manufacturer": "Ancile",
+        "conflicts": [0, 2],
         "allowed_ships": [0, 1, 2],
         "allowed_mods": [-1],
         "stats": {
@@ -37,6 +39,7 @@ const deviceData = [
         "icon": "/devices/adaptive-armor.png",
         "description": "Increases the ship's armor by a small percentage, effectively reducing any incoming damage.",
         "manufacturer": "Ancile",
+        "conflicts": [0, 1],
         "allowed_ships": [0, 1, 2],
         "allowed_mods": [-1],
         "stats": {
@@ -51,6 +54,7 @@ const deviceData = [
         "icon": "/devices/cloak.png",
         "description": "Will cloak your ship for a certain amount of time, rendering you hidden on enemy radars. When firing your weapons enemies may spot you again.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [4, 5],
         "allowed_ships": [1],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -66,6 +70,7 @@ const deviceData = [
         "icon": "/devices/cloak.png",
         "description": "Will cloak your ship for a certain amount of time, rendering you hidden on enemy radars. When firing your weapons enemies may spot you again.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [3, 5],
         "allowed_ships": [1],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -81,6 +86,7 @@ const deviceData = [
         "icon": "/devices/cloak.png",
         "description": "Will cloak your ship for a certain amount of time, rendering you hidden on enemy radars. When firing your weapons enemies may spot you again.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [4, 5],
         "allowed_ships": [1],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -96,6 +102,7 @@ const deviceData = [
         "icon": "/devices/damage-converter.png",
         "description": "Converts a percentage of incoming damage, both shield and hull, into usable energy at a certain ratio.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [7, 8],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 18,
@@ -110,6 +117,7 @@ const deviceData = [
         "icon": "/devices/damage-converter.png",
         "description": "Converts a percentage of incoming damage, both shield and hull, into usable energy at a certain ratio.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [6, 8],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 28,
@@ -124,6 +132,7 @@ const deviceData = [
         "icon": "/devices/damage-converter.png",
         "description": "Converts a percentage of incoming damage, both shield and hull, into usable energy at a certain ratio.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [6, 7],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 32,
@@ -138,6 +147,7 @@ const deviceData = [
         "icon": "/devices/decoy-generator.png",
         "description": "Creates two holographic projections of your ship that may trick enemies into attacking them instead of you.",
         "manufacturer": null,
+        "conflicts": [10, 11],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 35,
@@ -152,6 +162,7 @@ const deviceData = [
         "icon": "/devices/decoy-generator.png",
         "description": "Creates two holographic projections of your ship that may trick enemies into attacking them instead of you.",
         "manufacturer": null,
+        "conflicts": [9, 11],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 40,
@@ -166,6 +177,7 @@ const deviceData = [
         "icon": "/devices/decoy-generator.png",
         "description": "Creates two holographic projections of your ship that may trick enemies into attacking them instead of you.",
         "manufacturer": null,
+        "conflicts": [9, 10],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 50,
@@ -180,6 +192,7 @@ const deviceData = [
         "icon": "/devices/drone-disassembler.png",
         "description": "Dismantles drones into tech resources, destroying them instantly.",
         "manufacturer": "Vohs Space Industries",
+        "conflicts": [13, 14],
         "allowed_mods": [28, 30],
         "stats": {
             "Energy Consumption": 20,
@@ -196,6 +209,7 @@ const deviceData = [
         "icon": "/devices/drone-disassembler.png",
         "description": "Dismantles drones into tech resources, destroying them instantly.",
         "manufacturer": "Vohs Space Industries",
+        "conflicts": [12, 14],
         "allowed_mods": [28, 30],
         "stats": {
             "Energy Consumption": 24,
@@ -212,6 +226,7 @@ const deviceData = [
         "icon": "/devices/drone-disassembler.png",
         "description": "Dismantles drones into tech resources, destroying them instantly.",
         "manufacturer": "Vohs Space Industries",
+        "conflicts": [12, 13],
         "allowed_mods": [28, 30],
         "stats": {
             "Energy Consumption": 32,
@@ -228,6 +243,7 @@ const deviceData = [
         "icon": "/devices/emp-generator.png",
         "description": "Creates a huge electromagnetic pulse around your ship that temporarily disables all targets in the vicinity, leaving them floating through space uncontrollably. Should be kept clear from hard drives.",
         "manufacturer": "Shiva Systems",
+        "conflicts": [16, 17],
         "allowed_ships": [3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -244,6 +260,7 @@ const deviceData = [
         "icon": "/devices/emp-generator.png",
         "description": "Creates a huge electromagnetic pulse around your ship that temporarily disables all targets in the vicinity, leaving them floating through space uncontrollably. Should be kept clear from hard drives.",
         "manufacturer": "Shiva Systems",
+        "conflicts": [15, 17],
         "allowed_ships": [3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -260,6 +277,7 @@ const deviceData = [
         "icon": "/devices/emp-generator.png",
         "description": "Creates a huge electromagnetic pulse around your ship that temporarily disables all targets in the vicinity, leaving them floating through space uncontrollably. Should be kept clear from hard drives.",
         "manufacturer": "Shiva Systems",
+        "conflicts": [15, 16],
         "allowed_ships": [3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -276,6 +294,7 @@ const deviceData = [
         "icon": "/devices/emergency-shield.png",
         "description": "Automatically activates a temporary, impenetrable shield around the ship once the hull integrity is lost. Gets destroyed after usage.",
         "manufacturer": "Ancile",
+        "conflicts": [19, 20],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 14,
@@ -289,6 +308,7 @@ const deviceData = [
         "icon": "/devices/emergency-shield.png",
         "description": "Automatically activates a temporary, impenetrable shield around the ship once the hull integrity is lost. Gets destroyed after usage.",
         "manufacturer": "Ancile",
+        "conflicts": [18, 20],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 18,
@@ -302,6 +322,7 @@ const deviceData = [
         "icon": "/devices/emergency-shield.png",
         "description": "Automatically activates a temporary, impenetrable shield around the ship once the hull integrity is lost. Gets destroyed after usage.",
         "manufacturer": "Ancile",
+        "conflicts": [18, 19],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 24,
@@ -315,6 +336,7 @@ const deviceData = [
         "icon": "/devices/energized-boost.png",
         "description": "Instantly increases your ship's boost for a short amount of time. Shuts down your shield when activated.",
         "manufacturer": "Benca",
+        "conflicts": [22, 23],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 22,
@@ -330,6 +352,7 @@ const deviceData = [
         "icon": "/devices/energized-boost.png",
         "description": "Instantly increases your ship's boost for a short amount of time. Shuts down your shield when activated.",
         "manufacturer": "Benca",
+        "conflicts": [21, 23],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 28,
@@ -345,6 +368,7 @@ const deviceData = [
         "icon": "/devices/energized-boost.png",
         "description": "Instantly increases your ship's boost for a short amount of time. Shuts down your shield when activated.",
         "manufacturer": "Benca",
+        "conflicts": [21, 22],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 34,
@@ -360,6 +384,7 @@ const deviceData = [
         "icon": "/devices/energy-core-extension.png",
         "description": "Increases your energy core's capacity. Can be installed multiple times.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [],
         "allowed_mods": [-1],
         "allow_multi_install": true,
         "stats": { "Effect": 20 }
@@ -371,6 +396,7 @@ const deviceData = [
         "icon": "/devices/energy-core-extension.png",
         "description": "Greatly increases your energy core's capacity. Can be installed multiple times.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [],
         "allowed_mods": [-1],
         "allow_multi_install": true,
         "stats": { "Effect": 30 }
@@ -382,6 +408,7 @@ const deviceData = [
         "icon": "/devices/energy-core-extension.png",
         "description": "Strikingly increases your energy core's capacity. Can be installed multiple times.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [],
         "allowed_mods": [-1],
         "allow_multi_install": true,
         "stats": { "Effect": 40 }
@@ -393,6 +420,7 @@ const deviceData = [
         "icon": "/devices/energy-discharger.png",
         "description": "Discharges the ship's remaining energy to create a radial blast around it. Base damage is increased by the available energy. Shuts down shield if available.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [28, 29],
         "allowed_ships": [0, 2, 3],
         "allowed_mods": [28],
         "stats": {
@@ -410,6 +438,7 @@ const deviceData = [
         "icon": "/devices/energy-discharger.png",
         "description": "Discharges the ship's remaining energy to create a radial blast around it. Base damage is increased by the available energy. Shuts down shield if available.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [27, 29],
         "allowed_ships": [0, 2, 3],
         "allowed_mods": [28],
         "stats": {
@@ -427,6 +456,7 @@ const deviceData = [
         "icon": "/devices/energy-discharger.png",
         "description": "Discharges the ship's remaining energy to create a radial blast around it. Base damage is increased by the available energy. Shuts down shield if available.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [27, 28],
         "allowed_ships": [0, 2, 3],
         "allowed_mods": [28],
         "stats": {
@@ -444,6 +474,7 @@ const deviceData = [
         "icon": "/devices/energy-diverter.png",
         "description": "Instantly transfers a certain amount of shield energy into your energy core.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [31, 32],
         "allowed_ships": [0, 3],
         "allowed_mods": [-1],
         "stats": {
@@ -458,6 +489,7 @@ const deviceData = [
         "icon": "/devices/energy-diverter.png",
         "description": "Instantly transfers a certain amount of shield energy into your energy core.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [30, 32],
         "allowed_ships": [0, 3],
         "allowed_mods": [-1],
         "stats": {
@@ -472,6 +504,7 @@ const deviceData = [
         "icon": "/devices/energy-diverter.png",
         "description": "Instantly transfers a certain amount of shield energy into your energy core.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [30, 31],
         "allowed_ships": [0, 3],
         "allowed_mods": [-1],
         "stats": {
@@ -486,6 +519,7 @@ const deviceData = [
         "icon": "/devices/engine-booster.png",
         "description": "Temporarily increases the ships maneuverability, perfect for evading enemy fire.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [34, 35],
         "allowed_ships": [2, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -502,6 +536,7 @@ const deviceData = [
         "icon": "/devices/engine-booster.png",
         "description": "Temporarily increases the ships maneuverability, perfect for evading enemy fire.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [33, 35],
         "allowed_ships": [2, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -518,6 +553,7 @@ const deviceData = [
         "icon": "/devices/engine-booster.png",
         "description": "Temporarily increases the ships maneuverability, perfect for evading enemy fire.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [33, 34],
         "allowed_ships": [2, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -534,6 +570,7 @@ const deviceData = [
         "icon": "/devices/front-shield-generator.png",
         "description": "Creates an impenetrable shield in front of your ship for a certain amount of time.",
         "manufacturer": "Ancile",
+        "conflicts": [37, 38],
         "allowed_ships": [2],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -549,6 +586,7 @@ const deviceData = [
         "icon": "/devices/front-shield-generator.png",
         "description": "Creates an impenetrable shield in front of your ship for a certain amount of time.",
         "manufacturer": "Ancile",
+        "conflicts": [36, 38],
         "allowed_ships": [2],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -564,6 +602,7 @@ const deviceData = [
         "icon": "/devices/front-shield-generator.png",
         "description": "Creates an impenetrable shield in front of your ship for a certain amount of time.",
         "manufacturer": "Ancile",
+        "conflicts": [36, 37],
         "allowed_ships": [2],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -579,6 +618,7 @@ const deviceData = [
         "icon": "/devices/turret-gatling.png",
         "description": "Mounted turret that automatically shoots at enemies within range, dealing high amounts of hull damage.",
         "manufacturer": "Baron Nova Gunnery Ltd.",
+        "conflicts": [40, 47],
         "allowed_ships": [2],
         "allowed_mods": [9, 10, 11, 13, 14, 15, 16, 17, 18, 28, 29, 30],
         "stats": {
@@ -601,6 +641,7 @@ const deviceData = [
         "icon": "/devices/turret-laser.png",
         "description": "Mounted turret that automatically shoots at enemies within range, dealing high amounts of shield damage.",
         "manufacturer": "Baron Nova Gunnery Ltd.",
+        "conflicts": [39, 47],
         "allowed_ships": [2],
         "allowed_mods": [9, 10, 11, 13, 14, 15, 16, 17, 18, 28, 29, 30],
         "stats": {
@@ -623,6 +664,7 @@ const deviceData = [
         "icon": "/devices/mainframe-override.png",
         "description": "Overrides the target ship's control unit and makes them fight on your side. Enemy resistance to these attacks varies and you can only have one active target at a time.",
         "manufacturer": "Alioth Electronics",
+        "conflicts": [42, 43],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 40,
@@ -639,6 +681,7 @@ const deviceData = [
         "icon": "/devices/mainframe-override.png",
         "description": "Overrides the target ship's control unit and makes them fight on your side. Enemy resistance to these attacks varies and you can only have one active target at a time. Requires more energy than the MK1 version but comes with a greater override probability.",
         "manufacturer": "Alioth Electronics",
+        "conflicts": [41, 43],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 50,
@@ -655,6 +698,7 @@ const deviceData = [
         "icon": "/devices/mainframe-override.png",
         "description": "Overrides the target ship's control unit and makes them fight on your side. Enemy resistance to these attacks varies and you can only have one active target at a time. Requires more energy than the MK2 version but has greater override probability.",
         "manufacturer": "Alioth Electronics",
+        "conflicts": [41, 42],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 60,
@@ -671,6 +715,7 @@ const deviceData = [
         "icon": "/devices/missile-defense-system.png",
         "description": "Destroys all missiles within a certain range when activated.",
         "manufacturer": "Ancile",
+        "conflicts": [45, 46],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 28,
@@ -687,6 +732,7 @@ const deviceData = [
         "icon": "/devices/missile-defense-system.png",
         "description": "Destroys all missiles within a certain range when activated.",
         "manufacturer": "Ancile",
+        "conflicts": [44, 46],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 36,
@@ -703,6 +749,7 @@ const deviceData = [
         "icon": "/devices/missile-defense-system.png",
         "description": "Destroys all missiles within a certain range when activated.",
         "manufacturer": "Ancile",
+        "conflicts": [44, 45],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Energy Consumption": 42,
@@ -719,6 +766,7 @@ const deviceData = [
         "icon": "/devices/turret-missile.png",
         "description": "Mounted missile turret that automatically shoots at enemies within range, dealing high amounts of damage.",
         "manufacturer": "Baron Nova Gunnery Ltd.",
+        "conflicts": [39, 40],
         "allowed_ships": [2],
         "allowed_mods": [9, 10, 11, 13, 14, 15, 16, 17, 18, 28, 29, 30],
         "stats": {
@@ -741,6 +789,7 @@ const deviceData = [
         "icon": "/devices/remote-energy-discharger.png",
         "description": "Forces the target's energy core to discharge and create a damaging blast around them.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [49, 50],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [28, 30],
         "stats": {
@@ -759,6 +808,7 @@ const deviceData = [
         "icon": "/devices/remote-energy-discharger.png",
         "description": "Forces the target's energy core to discharge and create a damaging blast around them.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [48, 50],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [28, 30],
         "stats": {
@@ -777,6 +827,7 @@ const deviceData = [
         "icon": "/devices/remote-energy-discharger.png",
         "description": "Forces the target's energy core to discharge and create a damaging blast around them.",
         "manufacturer": "First Aeronautics",
+        "conflicts": [48, 49],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [28, 30],
         "stats": {
@@ -795,6 +846,7 @@ const deviceData = [
         "icon": "/devices/sensor-relay.png",
         "description": "Increases the ship's sensor range by a small percentage.",
         "manufacturer": "Primesense Instruments",
+        "conflicts": [52, 53],
         "allowed_mods": [-1],
         "stats": {
             "Range": 0.4,
@@ -808,6 +860,7 @@ const deviceData = [
         "icon": "/devices/sensor-relay.png",
         "description": "Increases the ship's sensor range by a medium percentage.",
         "manufacturer": "Primesense Instruments",
+        "conflicts": [51, 53],
         "allowed_mods": [-1],
         "stats": {
             "Range": 0.8,
@@ -821,6 +874,7 @@ const deviceData = [
         "icon": "/devices/sensor-relay.png",
         "description": "Increases the ship's sensor range by a large percentage.",
         "manufacturer": "Primesense Instruments",
+        "conflicts": [51, 52],
         "allowed_mods": [-1],
         "stats": {
             "Range": 1.2,
@@ -834,6 +888,7 @@ const deviceData = [
         "icon": "/devices/shield.png",
         "description": "Protects your hull from taking damage when not depleted. Constantly recharges but stops recharging for a small amount of time after every hit. When depleted the shield shuts down for a certain amount of time before recharging again.",
         "manufacturer": "Ancile",
+        "conflicts": [58, 59, 60, 61, 62, 63, 64, 65],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -851,6 +906,7 @@ const deviceData = [
         "icon": "/devices/shield-disruptor.png",
         "description": "Disables the target's shield for a few seconds. Some enemies are resistant to this attack.",
         "manufacturer": "Ancile",
+        "conflicts": [56, 57],
         "allowed_ships": [0, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -867,6 +923,7 @@ const deviceData = [
         "icon": "/devices/shield-disruptor.png",
         "description": "Disables the target's shield for a few seconds. Some enemies are resistant to this attack.",
         "manufacturer": "Ancile",
+        "conflicts": [55, 57],
         "allowed_ships": [0, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -883,6 +940,7 @@ const deviceData = [
         "icon": "/devices/shield-disruptor.png",
         "description": "Disables the target's shield for a few seconds. Some enemies are resistant to this attack.",
         "manufacturer": "Ancile",
+        "conflicts": [55, 56],
         "allowed_ships": [0, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -899,6 +957,7 @@ const deviceData = [
         "icon": "/devices/shield.png",
         "description": "Protects your hull from taking damage when not depleted. Constantly recharges but stops recharging for a small amount of time after every hit. When depleted the shield shuts down for a certain amount of time before recharging again.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 59, 60, 61, 62, 63, 64, 65],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -916,6 +975,7 @@ const deviceData = [
         "icon": "/devices/shield.png",
         "description": "Protects your hull from taking damage when not depleted. Constantly recharges but stops recharging for a small amount of time after every hit. When depleted the shield shuts down for a certain amount of time before recharging again.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 58, 60, 61, 62, 63, 64, 65],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -933,6 +993,7 @@ const deviceData = [
         "icon": "/devices/shield-st.png",
         "description": "The \"Superior Titanium\" edition of the shield comes with a huge capacity at the cost of reduced recharge rate and higher operational delays.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 58, 59, 61, 62, 63, 64, 65],
         "allowed_ships": [3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -950,6 +1011,7 @@ const deviceData = [
         "icon": "/devices/shield-st.png",
         "description": "The \"Superior Titanium\" edition of the shield comes with a huge capacity at the cost of reduced recharge rate and higher operational delays.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 58, 59, 60, 62, 63, 64, 65],
         "allowed_ships": [3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -967,6 +1029,7 @@ const deviceData = [
         "icon": "/devices/shield-st.png",
         "description": "The \"Superior Titanium\" edition of the shield comes with a huge capacity at the cost of reduced recharge rate and higher operational delays.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 58, 59, 60, 61, 63, 64, 65],
         "allowed_ships": [3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -984,6 +1047,7 @@ const deviceData = [
         "icon": "/devices/shield-xc.png",
         "description": "The \"Extra Charge\" edition of the shield has an increased recharge rate and shorter shutdown delays at the cost of maximum capacity.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 58, 59, 60, 61, 62, 64, 65],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -1001,6 +1065,7 @@ const deviceData = [
         "icon": "/devices/shield-xc.png",
         "description": "The \"Extra Charge\" edition of the shield has an increased recharge rate and shorter shutdown delays at the cost of maximum capacity.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 58, 59, 60, 61, 62, 63, 65],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -1018,6 +1083,7 @@ const deviceData = [
         "icon": "/devices/shield-xc.png",
         "description": "The \"Extra Charge\" edition of the shield has an increased recharge rate and shorter shutdown delays at the cost of maximum capacity.",
         "manufacturer": "Ancile",
+        "conflicts": [54, 58, 59, 60, 61, 62, 63, 64],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [31, 32, 33],
         "stats": {
@@ -1035,6 +1101,7 @@ const deviceData = [
         "icon": "/devices/static-discharger.png",
         "description": "Attacks surrounding hostiles with electric discharges for a certain amount of time.",
         "manufacturer": "Shiva Systems",
+        "conflicts": [67, 68],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -1054,6 +1121,7 @@ const deviceData = [
         "icon": "/devices/static-discharger.png",
         "description": "Attacks surrounding hostiles with electric discharges for a certain amount of time.",
         "manufacturer": "Shiva Systems",
+        "conflicts": [66, 68],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -1073,6 +1141,7 @@ const deviceData = [
         "icon": "/devices/static-discharger.png",
         "description": "Attacks surrounding hostiles with electric discharges for a certain amount of time.",
         "manufacturer": "Shiva Systems",
+        "conflicts": [66, 67],
         "allowed_ships": [0, 1, 3],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -1092,6 +1161,7 @@ const deviceData = [
         "icon": "/devices/target-decelerator.png",
         "description": "Reduces your currently locked target's speed by a certain percentage, making them easier to hit.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [70, 71],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 24,
@@ -1105,6 +1175,7 @@ const deviceData = [
         "icon": "/devices/target-decelerator.png",
         "description": "Reduces your currently locked target's speed by a certain percentage, making them easier to hit.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [69, 71],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 26,
@@ -1118,6 +1189,7 @@ const deviceData = [
         "icon": "/devices/target-decelerator.png",
         "description": "Reduces your currently locked target's speed by a certain percentage, making them easier to hit.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [69, 70],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 34,
@@ -1131,6 +1203,7 @@ const deviceData = [
         "icon": "/devices/teleporter.png",
         "description": "Teleports your ship forward.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [73, 74],
         "allowed_ships": [1, 3],
         "allowed_mods": [30],
         "stats": {
@@ -1145,6 +1218,7 @@ const deviceData = [
         "icon": "/devices/teleporter.png",
         "description": "Teleports your ship forward.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [72, 74],
         "allowed_ships": [1, 3],
         "allowed_mods": [30],
         "stats": {
@@ -1159,6 +1233,7 @@ const deviceData = [
         "icon": "/devices/teleporter.png",
         "description": "Teleports your ship forward.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [72, 73],
         "allowed_ships": [1, 3],
         "allowed_mods": [30],
         "stats": {
@@ -1173,6 +1248,7 @@ const deviceData = [
         "icon": "/devices/time-extender.png",
         "description": "Slows down time for a few seconds but leaves your ship unaffected.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [76, 77],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Cool Down Duration": 44,
@@ -1187,6 +1263,7 @@ const deviceData = [
         "icon": "/devices/time-extender.png",
         "description": "Slows down time for a few seconds but leaves your ship unaffected.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [75, 77],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Cool Down Duration": 38,
@@ -1201,6 +1278,7 @@ const deviceData = [
         "icon": "/devices/time-extender.png",
         "description": "Slows down time for a few seconds but leaves your ship unaffected.",
         "manufacturer": "Adumbratech Quantum Technologies PLC",
+        "conflicts": [75, 76],
         "allowed_mods": [28, 29, 30],
         "stats": {
             "Cool Down Duration": 32,
@@ -1215,6 +1293,7 @@ const deviceData = [
         "icon": "/devices/tractor-beam.png",
         "description": "Increases your ship range for collecting pickups.",
         "manufacturer": "Federal Arms & Crafts",
+        "conflicts": [79, 80],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 8,
@@ -1228,6 +1307,7 @@ const deviceData = [
         "icon": "/devices/tractor-beam.png",
         "description": "Greatly increases your ship range for collecting pickups.",
         "manufacturer": "Federal Arms & Crafts",
+        "conflicts": [78, 80],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 14,
@@ -1241,6 +1321,7 @@ const deviceData = [
         "icon": "/devices/tractor-beam.png",
         "description": "Strikingly increases your ship range for collecting pickups.",
         "manufacturer": "Federal Arms & Crafts",
+        "conflicts": [78, 79],
         "allowed_mods": [-1],
         "stats": {
             "Energy Allocation": 20,
@@ -1254,6 +1335,7 @@ const deviceData = [
         "icon": "/devices/weapon-overdrive.png",
         "description": "Increases your weapon's fire rate and damage for some seconds. Decreases your weapon's energy consumption at the same time.",
         "manufacturer": "Alioth Electronics",
+        "conflicts": [82, 83],
         "allowed_ships": [0],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -1272,6 +1354,7 @@ const deviceData = [
         "icon": "/devices/weapon-overdrive.png",
         "description": "Increases your weapon's fire rate and damage for some seconds. Decreases your weapon's energy consumption at the same time.",
         "manufacturer": "Alioth Electronics",
+        "conflicts": [81, 83],
         "allowed_ships": [0],
         "allowed_mods": [28, 29, 30],
         "stats": {
@@ -1290,6 +1373,7 @@ const deviceData = [
         "icon": "/devices/weapon-overdrive.png",
         "description": "Increases your weapon's fire rate and damage for some seconds. Decreases your weapon's energy consumption at the same time.",
         "manufacturer": "Alioth Electronics",
+        "conflicts": [81, 82],
         "allowed_ships": [0],
         "allowed_mods": [28, 29, 30],
         "stats": {

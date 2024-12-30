@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
-import { resolvePath, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // Local Module Imports
 import PresetLoadoutModal from './Modals/PresetLoadoutModal';
 import OpenModal from '../Modal/OpenModal';
@@ -38,13 +38,13 @@ function SubmitLoadoutButton() {
     const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
-        if(!primaryWeapons[0]) return;
+        if(!primaryWeapons[0] && !secondaryWeapons[0]) return;
 
         const isValidNameLength = name.length >= 4 && name.length <= 30;
         
         const hasOnePrimary = (() => {
             for(let key in primaryWeapons)
-                if(primaryWeapons[key] !== null) return true;
+                if(primaryWeapons[key].id !== null) return true;
             return false;
         })();
         const hasOneSecondary = (() => {
@@ -55,6 +55,8 @@ function SubmitLoadoutButton() {
 
         setDisabled(!(shipId >= 0 && isValidNameLength && (hasOnePrimary || hasOneSecondary)));
     }, [name, shipId, primaryWeapons, secondaryWeapons]);
+
+    
 
     const onClick = (event) => {
         event.stopPropagation();
@@ -125,7 +127,7 @@ function PresetLoadoutButton() {
             .getElementById('builder-ctrl-preset')
             .firstChild
             .disabled = mode !== 'create' || (shipId === null || shipPreset !== null);
-    }, [tabId, shipId, shipPreset]);
+    }, [mode, tabId, shipId, shipPreset]);
 
     return tabId === 0 && <div id='builder-ctrl-preset'>
         <OpenModal

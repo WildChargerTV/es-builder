@@ -28,7 +28,8 @@ if(require('../../config').environment !== 'production') api.get('/csrf/restore'
 /** Ensure that the user is restored for all remaining API routes. */
 api.use(restoreUser);
 
-/** Attach the `/loadouts`, `/session`, and `/users` route branches. */
+/** Attach the `/custom-equippables`, `/loadouts`, `/session`, and `/users` route branches. */
+api.use('/custom-equippables', require('./customEquippables.js'));
 api.use('/loadouts', require('./loadouts.js'));
 api.use('/session', require('./session.js'));
 api.use('/users', require('./users.js'));

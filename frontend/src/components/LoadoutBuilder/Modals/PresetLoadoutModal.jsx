@@ -1,6 +1,5 @@
 // * frontend/src/components/LoadoutBuilder/Modals/PresetLoadoutModal.jsx
 
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BucketImage from '../../Bucket/BucketImage';
 import { useModal } from '../../../context/Modal';
@@ -92,16 +91,30 @@ function SinglePreset({ data, preset, onClick }) {
         <h3>Preset {preset}</h3>
         <div className='modal-preset-grid'>
             <ul className='modal-preset-grid-column'>
-                {data.primary.map((weapon) => weapon.id && <PresetTile key={crypto.randomUUID()} url={primaryWeaponData[weapon.id].icon} />)}
+                {data.primary.map((weapon) => weapon.id && <PresetTile 
+                    key={crypto.randomUUID()} 
+                    url={primaryWeaponData[weapon.id].icon} 
+                />)}
             </ul>
             <ul className='modal-preset-grid-column'>
-                {secondaryList.map((weapon) => weapon.id && <PresetTile key={crypto.randomUUID()} url={secondaryWeaponData[weapon.id].icon} quantity={weapon.quantity} />)}
+                {secondaryList.map((weapon) => weapon.id && <PresetTile 
+                    key={crypto.randomUUID()} 
+                    url={secondaryWeaponData[weapon.id].icon} 
+                    quantity={weapon.quantity} 
+                />)}
             </ul>
             <ul className='modal-preset-grid-column'>
-                {data.device.map((device) => device.id && <PresetTile key={crypto.randomUUID()} url={deviceData[device.id].icon} />)}
+                {data.device.map((device) => device.id && <PresetTile 
+                    key={crypto.randomUUID()} 
+                    url={deviceData[device.id].icon} 
+                />)}
             </ul>
             <ul className='modal-preset-grid-column'>
-                {consumableList.map((consumable) => consumable.id && <PresetTile key={crypto.randomUUID()} url={consumableData[consumable.id].icon} quantity={consumable.quantity} />)}
+                {consumableList.map((consumable) => consumable.id && <PresetTile 
+                    key={crypto.randomUUID()} 
+                    url={consumableData[consumable.id].icon} 
+                    quantity={consumable.quantity} 
+                />)}
             </ul>
         </div>
     </button>);

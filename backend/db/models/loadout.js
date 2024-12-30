@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             Loadout.belongsTo(models.User, {
                 foreignKey: 'userId'
+            });
+            Loadout.hasMany(models.CustomEquippable, {
+                foreignKey: 'equippableId',
+                constraints: false
             })
         }
     }

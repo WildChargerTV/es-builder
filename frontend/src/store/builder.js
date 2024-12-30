@@ -24,7 +24,7 @@ const setName = (name) => ({ type: SET_NAME, payload: name });
 const setShip = (shipId) => ({ type: SET_SHIP, payload: shipId });
 const setPreset = (presetId) => ({ type: SET_SHIP_PRESET, payload: presetId });
 const setEnhancement = (index, enhanceId) => ({ type: SET_ENHANCE, payload: { index, enhanceId } });
-const setFocusedEquipment = (category, id) => ({ type: SET_FOCUS_EQUIP, payload: { category, id } });
+const setFocusedEquipment = (category, id, index) => ({ type: SET_FOCUS_EQUIP, payload: { category, id, index } });
 const setPrimaryWeapon = (index, weaponId, mods) => ({ type: SET_PRIMARY_WEAPON, payload: { index, weaponId, mods } });
 const setSecondaryWeapon = (index, weaponId, quantity) => ({ type: SET_SECONDARY_WEAPON, payload: { index, weaponId, quantity } });
 const setDevice = (index, deviceId, mods) => ({ type: SET_DEVICE, payload: { index, deviceId, mods } });
@@ -115,16 +115,17 @@ export const changeEnhancement = (index, enhanceId) => (dispatch) => {
  * in the `EquipmentInfo` component.
  * @param {'Primary' | 'Secondary' | 'Devices' | 'Consumables'} category
  * @param {number} id
+ * @param {number} index
  * @returns {(dispatch) => void}
  */
-export const changeFocusEquip = (category, id) => (dispatch) => {
+export const changeFocusEquip = (category, id, index) => (dispatch) => {
     const VALID_CATEGORIES = ['Primary', 'Secondary', 'Devices', 'Consumables'];
     if(category === 'reset') 
         dispatch(setFocusedEquipment(null, null))
-    else if(VALID_CATEGORIES.indexOf(category) !== -1 && id >= 0) 
-        dispatch(setFocusedEquipment(category, id));
-    else 
-        throw new Error('One or both values passed in to changeFocusEquip are missing or invalid');
+    else if(VALID_CATEGORIES.indexOf(category) !== -1 && (String(id).startsWith('c') || id >= 0)) 
+        dispatch(setFocusedEquipment(category, id, index));
+    else  
+        throw new Error(`One or both values passed in to changeFocusEquip are missing or invalid: ${category}, ${id}, ${index}`);
 };
 
 /**
@@ -138,7 +139,7 @@ export const changeFocusEquip = (category, id) => (dispatch) => {
 export const changePrimary = (index, weaponId, mods) => (dispatch) => {
     if(index === 'reset') 
         dispatch(setPrimaryWeapon('reset', null, null));
-    else if((index >= 0 && index <= 3) && ((weaponId >= 0 && weaponId <= 23) || weaponId === null))
+    else if((index >= 0 && index <= 3) && (String(weaponId).startsWith('c') || (weaponId >= 0 && weaponId <= 23) || weaponId === null))
         dispatch(setPrimaryWeapon(index, weaponId, mods));
     else 
         throw new RangeError('One or both values passed into changePrimary are invalid');
@@ -220,7 +221,7 @@ const initialState = {
     shipId: null,
     shipPreset: null,
     enhancements: { selected: null, 0: null, 1: null, 2: null },
-    focusedEquipment: { category: null, id: null },
+    focusedEquipment: { category: null, id: null, index: null },
     primaryWeapons: {},
     secondaryWeapons: {},
     devices: {},
@@ -316,7 +317,7 @@ export default function builderReducer(state=initialState, action) {
 
             // Clone the current state and set the index to the appropriate values.
             const clone = structuredClone(state.secondaryWeapons);
-            clone[index] = `${weaponId}x${quantity}`;
+            clone[index] = weaponId ? `${weaponId}x${quantity}` : null;
 
             // Return the new state, alongside an updated equipment focus.
             return { 
@@ -366,7 +367,7 @@ export default function builderReducer(state=initialState, action) {
 
             // Clone the current state and set the index to the appropriate value.
             const clone = structuredClone(state.consumables);
-            clone[index] = `${consumableId}x${quantity}`;
+            clone[index] = consumableId ? `${consumableId}x${quantity}` : null;
 
             // Return the new state, alongside an updated equipment focus.
             return { 

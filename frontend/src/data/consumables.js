@@ -65,7 +65,7 @@ const consumableData = [
         "type": "Consumable",
         "icon": "/consumables/damage-limiter.png",
         "description": "Reduces any incoming damage for a short amount of time.",
-        "manufacturer": "ANCILE",
+        "manufacturer": "Ancile",
         "stack_size": 4,
         "stats": {
             "Effect": -0.4,
@@ -78,7 +78,7 @@ const consumableData = [
         "type": "Consumable",
         "icon": "/consumables/damage-limiter.png",
         "description": "Reduces any incoming damage for a short amount of time.",
-        "manufacturer": "ANCILE",
+        "manufacturer": "Ancile",
         "stack_size": 4,
         "stats": {
             "Effect": -0.5,
@@ -91,7 +91,7 @@ const consumableData = [
         "type": "Consumable",
         "icon": "/consumables/damage-limiter.png",
         "description": "Reduces any incoming damage for a short amount of time.",
-        "manufacturer": "ANCILE",
+        "manufacturer": "Ancile",
         "stack_size": 4,
         "stats": {
             "Effect": -0.6,
@@ -185,7 +185,7 @@ const consumableData = [
         "type": "Consumable",
         "icon": "/consumables/nano-injector.png",
         "description": "Instantly repairs a certain amount of hull hitpoints. The exact amount depends on the ship's nano bot efficiency.",
-        "manufacturer": "ANCILE",
+        "manufacturer": "Ancile",
         "stack_size": 2,
         "stats": { "Effect": 270 }
     },
@@ -195,7 +195,7 @@ const consumableData = [
         "type": "Consumable",
         "icon": "/consumables/nano-injector.png",
         "description": "Instantly repairs a certain amount of hull hitpoints. The exact amount depends on the ship's nano bot efficiency.",
-        "manufacturer": "ANCILE",
+        "manufacturer": "Ancile",
         "stack_size": 2,
         "stats": { "Effect": 315 }
     },
@@ -205,7 +205,7 @@ const consumableData = [
         "type": "Consumable",
         "icon": "/consumables/nano-injector.png",
         "description": "Instantly repairs a certain amount of hull hitpoints. The exact amount depends on the ship's nano bot efficiency.",
-        "manufacturer": "ANCILE",
+        "manufacturer": "Ancile",
         "stack_size": 2,
         "stats": { "Effect": 360 }
     },
