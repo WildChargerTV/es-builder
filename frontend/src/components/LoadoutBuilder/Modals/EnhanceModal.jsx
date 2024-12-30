@@ -26,6 +26,7 @@ export default function EnhanceModal() {
 
     const onSubmit = (event) => {
         event.stopPropagation();
+        console.log(category);
 
         const customEquippableData = {
             equippableType: category,

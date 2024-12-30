@@ -71,7 +71,7 @@ export default function ProfileButton({ sessionUser }) {
         </button>
         <div id='site-nav-rel-container'>
             {showDropdown && <div id='site-nav-profile-dropdown' ref={menuWidthRef} style={{'left': dropdownLeft}}>
-                <NavLink to='/profile'>Profile</NavLink><br />
+                {/* TODO <NavLink to='/profile'>Profile</NavLink><br /> */}
                 <NavLink id='site-nav-btn-logout' onClick={userLogout}>Logout</NavLink>
             </div>}
         </div>

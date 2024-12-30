@@ -30,7 +30,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.STRING,
             validate: {
-                isIn: ['Primary', 'Devices']
+                isIn: {
+                    args: [['Primary', 'Devices']],
+                    msg: 'Custom equippable must be a Primary Weapon or Device'
+                }
             }
         },
         equippableId: {

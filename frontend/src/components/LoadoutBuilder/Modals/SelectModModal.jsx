@@ -46,7 +46,7 @@ export default function SelectModModal({ currEquip }) {
     return (<>
         <h2 className='modal-title'>Add {title}</h2>
         <div className='modal-equip-list'>
-            {presetData.map((mod) => <SingleMod key={`${title}-${eIndex}`} data={{eIndex, eType, eData, mIndex, mData: mod}} />)}
+            {presetData.map((mod) => <SingleMod key={`${title.split(' ').join('-')}-${mod.id}`} data={{eIndex, eType, eData, mIndex, mData: mod}} />)}
         </div>
     </>);
 }
@@ -57,9 +57,13 @@ function SingleMod({ data }) {
     const { ref, fontSize } = useFitText();
     const { closeModal } = useModal();
     
+    const id = typeof eData.id === 'string'
+    ? eData.id.split('c')[1]
+    : eData.id;
+
     const pData = eType === 'Primary'
-    ? dataFiles.primaryWeaponData[eData.id]
-    : dataFiles.deviceData[eData.id];
+    ? dataFiles.primaryWeaponData[id]
+    : dataFiles.deviceData[id];
 
     const dir = mData.id < 28
     ? '/weapon-mod.png'

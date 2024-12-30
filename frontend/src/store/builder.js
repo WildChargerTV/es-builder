@@ -173,10 +173,10 @@ export const changeSecondary = (index, weaponId, quantity) => (dispatch) => {
 export const changeDevice = (index, deviceId, mods) => (dispatch) => {
     if(index === 'reset')
         dispatch(setDevice('reset', null, null));
-    else if((index >= 0 && index <= 5) && ((deviceId >= 0 && deviceId <= 83) || deviceId === null)) 
+    else if((index >= 0 && index <= 5) && (String(deviceId).startsWith('c') || (deviceId >= 0 && deviceId <= 83) || deviceId === null)) 
         dispatch(setDevice(index, deviceId, mods));
     else 
-        throw new RangeError('One or both values passed into changeDevice are invalid');
+        throw new RangeError(`One or both values passed into changeDevice are invalid: ${index}, ${deviceId}, ${mods}`);
 };
 
 /**
