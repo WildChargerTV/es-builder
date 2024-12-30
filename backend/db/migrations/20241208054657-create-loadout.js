@@ -40,19 +40,19 @@ module.exports = {
             },
             primaryWeapons: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING(512)
             },
             secondaryWeapons: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING(512)
             },
             devices: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING(512)
             },
             consumables: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING(512)
             },
             createdAt: {
                 allowNull: false,
