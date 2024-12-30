@@ -177,7 +177,7 @@ export const changeDevice = (index, deviceId, mods) => (dispatch) => {
         dispatch(setDevice(index, deviceId, mods));
     else 
         throw new RangeError(`One or both values passed into changeDevice are invalid: ${index}, ${deviceId}, ${mods}`);
-};
+}; 
 
 /**
  * Thunk middleware to change one of the currently selected **Consumables** and its quantity, or
