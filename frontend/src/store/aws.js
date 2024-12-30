@@ -17,7 +17,7 @@ export const retrieveAsset = (dir) => async (dispatch) => {
     dispatch(addEntry(dir));
 
     // Send a `GET` request to the appropriate asset directory. Decode the response.
-    const res = await csrfFetch(`/assets${dir}`);
+    const res = await csrfFetch(`/img-assets${dir}`);
     const data = await res.json();
 
     // Dispatch the `setUrl` thunk action and return the `csrfFetch` response.

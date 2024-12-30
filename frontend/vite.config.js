@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: { 
         '/api': 'http://localhost:8000',
-        '/assets': 'http://localhost:8000'
+        '/img-assets': 'http://localhost:8000'
     }
   }
 }));

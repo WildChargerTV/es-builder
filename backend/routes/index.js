@@ -16,7 +16,7 @@ const isProd = require('../config').environment === 'production';
  * 1. `/api` - Head branch for all API calls.
  * 
  * Includes the following routes:
- * 1. GET `/assets/*`: AWS Asset Service Route
+ * 1. GET `/img-assets/*`: AWS Asset Service Route
  * 2. GET `/favicon.ico`: Browser Backend Safety Net
  * 3. GET `/`: React Frontend Root Route
  * 4. GET `/!api`: Additional React Frontend Routes (Covers all routes not starting with `/api`)
@@ -30,10 +30,10 @@ const router = require('express').Router();
 router.use('/api', require('./api'));
 
 /**
- * For all backend routes beginning with `/assets`, serve assets from the AWS bucket.
+ * For all backend routes beginning with `/img-assets`, serve assets from the AWS bucket.
  * ! AWS-SDK v2 is due for deprecation on September 8, 2025. Consider migrating to v3.
  */
-router.get('/assets/*', async (req, res, next) => {
+router.get('/img-assets/*', async (req, res, next) => {
     // Refresh IAM user credentials and connect to the S3 bucket.
     AWS.config.update({ accessKeyId, secretAccessKey, region: 'ap-southeast-2' });
     const S3 = new AWS.S3();
