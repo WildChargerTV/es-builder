@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import LoadoutTabMenu from './TabMenu';
 import ShipsTab from './ShipsTab';
 import EnhancementsTab from './EnhancementsTab';
-import EquipmentSelector from './EquipmentTab';
+import EquipmentTab from './EquipmentTab';
 import BuilderControls from './BuilderControls';
 import * as builderActions from '../../store/builder';
 import { getLoadout } from '../../store/loadout';
@@ -73,7 +73,7 @@ export default function LoadoutBuilderMain({ mode }) {
             <div id='builder-content'>
                 {tabId == 0 && <ShipsTab isLoaded={isLoaded} />}
                 {tabId == 1 && <EnhancementsTab isLoaded={isLoaded} />}
-                {tabId == 2 && <EquipmentSelector isLoaded={isLoaded} />}
+                {tabId == 2 && <EquipmentTab isLoaded={isLoaded} />}
             </div>
             {['create', 'edit'].includes(mode) && <BuilderControls isLoaded={isLoaded} />}
         </div>
