@@ -15,6 +15,18 @@ export default function EquipmentInfo() {
     const { category, id } = builder.focusedEquipment;
     const modsArr = [...dataFile.weaponMods, ...dataFile.deviceMods];
 
+    /** If there is no data, return default information. */
+    if(id === null) return (<div id='builder-equipment-info'>
+        <h2>Select Equipment</h2>
+        <p>If you have selected a preset loadout, it should appear here.</p>
+        <p>
+            Use the <InlineBucketImage dir='/menu-add-equip.png' /> button 
+            to add a new piece of equipment on an empty slot, and use 
+            the <InlineBucketImage dir='/menu-remove-equip.png' /> button 
+            to remove an existing piece of equipment.
+        </p>
+    </div>);
+
     const focusData = (() => {
         
 
@@ -65,17 +77,7 @@ export default function EquipmentInfo() {
         }
     })();
     
-    /** If there is no data, return default information. */
-    if(id === null) return (<div id='builder-equipment-info'>
-        <h2>Select Equipment</h2>
-        <p>If you have selected a preset loadout, it should appear here.</p>
-        <p>
-            Use the <InlineBucketImage dir='/menu-add-equip.png' /> button 
-            to add a new piece of equipment on an empty slot, and use 
-            the <InlineBucketImage dir='/menu-remove-equip.png' /> button 
-            to remove an existing piece of equipment.
-        </p>
-    </div>);
+    
 
     return focusData && (<div id='builder-equipment-info'>
         <h2>
