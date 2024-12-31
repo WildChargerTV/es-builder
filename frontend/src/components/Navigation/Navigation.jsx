@@ -10,7 +10,7 @@ import './Navigation.css';
 /**
  * Renders the website's navbar. The navbar is sticky-positioned at a high Z-Index, ensuring it is
  * always visible regardless of any other elements on the page.
- * @component Navigation
+ * @component `Navigation`
  * @requires {@linkcode ProfileButton}
  * @param {{ isLoaded: boolean; }} isLoaded Flag from `App.jsx` determining if the React app is currently loaded.
  * @returns {ReactElement}

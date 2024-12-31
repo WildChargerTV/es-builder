@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 // Local Module Imports
-import LoadoutTabMenu from './TabMenu';
+import BuilderTabMenu from './BuilderTabMenu';
 import ShipsTab from './ShipsTab';
 import EnhancementsTab from './EnhancementsTab';
 import EquipmentTab from './EquipmentTab';
@@ -69,7 +69,7 @@ export default function LoadoutBuilderMain({ mode }) {
         </div>
         
         <div id='loadout-builder-container'>
-            <LoadoutTabMenu isLoaded={isLoaded} />
+            <BuilderTabMenu isLoaded={isLoaded} />
             <div id='builder-content'>
                 {tabId == 0 && <ShipsTab isLoaded={isLoaded} />}
                 {tabId == 1 && <EnhancementsTab isLoaded={isLoaded} />}

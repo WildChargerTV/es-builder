@@ -124,6 +124,7 @@ loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
 
 /**
  * DELETE /api/loadouts/:loadoutId
+ * TODO USER authentication needed
  */
 loadouts.delete('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     const { loadoutId } = req.params;
