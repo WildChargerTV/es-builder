@@ -48,6 +48,7 @@ function SingleEquipment({ index, type, data }) {
     const { ref, fontSize } = useFitText();
     const { closeModal } = useModal();
     const { shipId, devices } = useSelector((state) => state.builder);
+    const { loadedIds } = useSelector((state) => state.customEquippable);
 
     /** Do not create a tile for the Ancient Weapon, as it is tied to enhancement. */
     if(data.name === 'Ancient Weapon') return null;
@@ -80,7 +81,9 @@ function SingleEquipment({ index, type, data }) {
         const deviceConflicts = type === 'Devices' && (() => {
             if(data.allow_multi_install) return false;
             for(let key in devices) {
-                const deviceId = devices[key].id;
+                const deviceId = typeof devices[key].id === 'string'
+                ? loadedIds[devices[key].id.split('c')[1]].equippableId
+                : devices[key].id;
                 if(!deviceId) continue;
                 if(data.conflicts.includes(deviceId) || deviceId === data.id) return true;
             }

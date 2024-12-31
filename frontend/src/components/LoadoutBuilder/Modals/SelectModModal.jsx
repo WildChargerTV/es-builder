@@ -56,9 +56,11 @@ function SingleMod({ data }) {
     const dispatch = useDispatch();
     const { ref, fontSize } = useFitText();
     const { closeModal } = useModal();
+    const { loadedIds } = useSelector((state) => state.customEquippable);
+    
     
     const id = typeof eData.id === 'string'
-    ? eData.id.split('c')[1]
+    ? loadedIds[eData.id.split('c')[1]].equippableId
     : eData.id;
 
     const pData = eType === 'Primary'
