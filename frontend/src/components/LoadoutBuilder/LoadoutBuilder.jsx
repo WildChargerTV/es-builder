@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 // Local Module Imports
 import LoadoutTabMenu from './TabMenu';
-import ShipSelector from './ShipsTab';
+import ShipsTab from './ShipsTab';
 import EnhancementsTab from './EnhancementsTab';
 import EquipmentSelector from './EquipmentTab';
 import BuilderControls from './BuilderControls';
@@ -71,7 +71,7 @@ export default function LoadoutBuilderMain({ mode }) {
         <div id='loadout-builder-container'>
             <LoadoutTabMenu isLoaded={isLoaded} />
             <div id='builder-content'>
-                {tabId == 0 && <ShipSelector isLoaded={isLoaded} />}
+                {tabId == 0 && <ShipsTab isLoaded={isLoaded} />}
                 {tabId == 1 && <EnhancementsTab isLoaded={isLoaded} />}
                 {tabId == 2 && <EquipmentSelector isLoaded={isLoaded} />}
             </div>
