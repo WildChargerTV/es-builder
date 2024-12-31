@@ -217,7 +217,7 @@ export const clearState = (mode) => (dispatch) => {
 const initialState = { 
     mode: null,
     tabId: 0,
-    name: 'Loadout Name',
+    name: 'LOADOUT NAME HERE',
     shipId: null,
     shipPreset: null,
     enhancements: { selected: null, 0: null, 1: null, 2: null },
