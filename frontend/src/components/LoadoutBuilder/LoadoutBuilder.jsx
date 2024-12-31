@@ -47,7 +47,7 @@ export default function LoadoutBuilderMain({ mode }) {
             setPageTitle('Create New Loadout');
             return; 
         }
-
+        console.log(mode);
         setPageTitle(mode === 'edit' ? 'Modify Loadout': 'View Loadout');
         dispatch(getLoadout(params.loadoutId))
         .then((loadoutData) => {

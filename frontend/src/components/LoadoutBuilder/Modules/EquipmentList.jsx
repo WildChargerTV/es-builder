@@ -186,6 +186,7 @@ function SingleEquipment({ type, id, mods, quantity, index }) {
     }
     
     useEffect(() => {
+        console.log(mode);
         if(mode !== 'view') return;
         const equips = document.getElementsByClassName('builder-equip-quantity');
         for(let i = 0; i < equips.length; i++) {
@@ -219,7 +220,7 @@ function SingleEquipment({ type, id, mods, quantity, index }) {
             />}
         </div>}
         {(data && (type === 'Secondary' || type === 'Consumables')) &&
-        <div className='builder-equip-quantity' disabled={mode === 'view'} aria-hidden>
+        <div className='builder-equip-quantity' aria-hidden>
             <OpenModal
                 element='button'
                 elementText={`${quantity}/${data.stack_size}`}

@@ -34,7 +34,7 @@ export default function Navigation({ isLoaded }) {
         <div id='site-nav-links'>
             {sessionUser && <NavLink to='/loadouts/new'>Create</NavLink>}
             <NavLink to='/loadouts'>Recent</NavLink>
-            <NavLink to='/loadouts/random'>Random</NavLink>
+            {/* <NavLink to='/loadouts/random'>Random</NavLink> */}
             <ProfileButton sessionUser={sessionUser} />
         </div>
     </header>);
