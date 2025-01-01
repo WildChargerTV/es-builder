@@ -29,11 +29,10 @@ export default function BuilderTabs({ isLoaded }) {
     const dispatch = useDispatch();
     const { mode, shipId, shipPreset, tabId } = useSelector((state) => state.builder);
 
-    /** When one of the inactive tabs is clicked, make that tab active. */
+    /** When one of the inactive tabs is clicked, change the ID in the Redux store. */
     const onClick = (event) => {
         const currId = Number(event.target.id.split('-')[2]);
-        if(currId !== tabId)
-            dispatch(changeTab(currId));
+        currId !== tabId && dispatch(changeTab(currId));
     }
 
     /** Set the active tab to the one defined in the Redux store. */
