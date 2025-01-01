@@ -11,35 +11,28 @@
 }
 
 #loadout-builder-head {
-    display: inline-flex;
-        align-items: flex-end;
-    margin: 25px 0 25px 50px;
-    width: 90%;
+    display: grid;
+        grid-template-columns: 25% 50% 25%;
+    margin: auto;
+        margin-bottom: 25px;
+        margin-top: 25px;
+    width: calc(500%/6);
 }
 
-#loadout-builder-head h1 {
-    border: 3px solid #acdbf9;
-        border-radius: 5px;
-    backdrop-filter: brightness(20%);
-    font-size: clamp(18pt, 2.5vw, 36pt);
-    margin: 0;
-        margin-right: 20px;
-    padding: 0 15px;
-    width: max-content;
-}
-#loadout-builder-head h2 {
+#builder-page-title, #builder-loadout-name, #builder-owner-name {
     backdrop-filter: brightness(20%);
     border: 3px solid #acdbf9;
         border-radius: 5px;
-    color: #f9e2ad;
     font-size: clamp(14pt, 1.85vw, 28pt);
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin: 0;
+    margin: auto;
     padding: 0 10px;
-    text-transform: uppercase;
+    white-space: nowrap;
     width: fit-content;
 }
+#builder-page-title { margin-left: 0; }
+#builder-loadout-name { color: #acdbf9; }
+#builder-loadout-name br { display: none; }
+#builder-owner-name { margin-right: 0; }
 
 /* Loadout Builder: Outer Container */
 #loadout-builder-body {

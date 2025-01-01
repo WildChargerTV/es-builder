@@ -84,7 +84,7 @@ export default function LoadoutBuilderMain({ mode }) {
         // ? Because the other two modes require pseudo-asynchronous dispatch calls, it's easier to 
         // ? return early here if in create mode.
         if(mode === 'create') {
-            setPageTitle('Create New Loadout');
+            setPageTitle('Create Loadout');
             setIsLoaded(true); 
             return; 
         }
@@ -96,6 +96,9 @@ export default function LoadoutBuilderMain({ mode }) {
         // page to render.
         dispatch(getLoadout(params.loadoutId))
         .then((loadoutData) => {
+            delete loadoutData.userId;
+            delete loadoutData.createdAt;
+            delete loadoutData.updatedAt;
             dispatch(builderActions.bulkUpdateState(loadoutData));
             setIsLoaded(true);
         });
@@ -103,9 +106,9 @@ export default function LoadoutBuilderMain({ mode }) {
 
     /** Return the Loadout Builder. */
     return isLoaded && (<main id='site-loadout-builder'>
-        {/* Header: Page Title, Loadout Name */}
+        {/* Header: Page Title, Loadout Name, Link to Creator's Profile */}
         <div id='loadout-builder-head'>
-            <h1>{pageTitle}</h1>
+            <h1 id='builder-page-title'>{pageTitle}</h1>
             <LoadoutName contentEditable={mode !== 'view'} />
             {User?.username && <h3 id='builder-owner-name'>
                 <Link to={`/users/${User.id}`}>{User.username}</Link>
@@ -136,36 +139,41 @@ function LoadoutName({ contentEditable }) {
     // React Hooks
     const dispatch = useDispatch();
     const { name } = useSelector((state) => state.builder);
+    // Local State Values
+    const [localName, setLocalName] = useState('');
 
-    /** On focus loss, apply the new name to the Redux store, if eligible. Otherwise, revert.
-     *  To qualify, it must be different from the previous name and be within the length limits. */
+    /** On focus loss, apply the new name to the Redux store, if eligible. Otherwise, revert. */
     const onBlur = (event) => {
-        const newName = event.target.innerText;
-        if(name !== newName && (newName.length >= 4 && newName.length <= 30))
-            dispatch(builderActions.changeName(newName));
-        else {
-            event.target.innerText = name;
-            event.target.style.color = '#f9e2ad';
-        }    
+        // Get the current name & its length.
+        const [currName, length] = [event.target.innerText, event.target.innerText.length];
+
+        // If the current name is different and is within the length limits, dispatch to Redux.
+        if(name !== currName && (length > 3 && length < 31))
+            dispatch(builderActions.changeName(currName));
     }
 
-    /** Dynamically change the color of the text depending on the length as the user types.
-     *  Color is red for an invalid name, and yellow for a valid name. */
-    const onKeyUp = (event) => {
-        const nameLength = event.target.innerText.length;
-        if(nameLength < 4 || nameLength > 30)
-            event.target.style.color = '#ff5d51';
-        else
-            event.target.style.color = '#f9e2ad';
+    /** Implement maximum length restriction & color indication onto the h2 field. */
+    const onInput = (event) => {
+        // Get the current name & its length.
+        const [currName, length] = [event.target.innerText, event.target.innerText.length];
+
+        // Update the local state value if the length is below the maximum.
+        length < 31 && setLocalName(currName);
+
+        // Make the text red if it is too short.
+        event.target.style.color = length < 4 ? '#ff5d51' : '#acdbf9';
+
+        // If the text has become too long, snap it back down.
+        length > 30 && (event.target.innerText = localName);
     }
 
     /** Return the input field. */
     return <h2
-        id='loadout-builder-name'
+        id='builder-loadout-name'
         contentEditable={contentEditable} 
         suppressContentEditableWarning
         onBlur={onBlur}
-        onKeyUp={onKeyUp}
+        onInput={onInput}
         aria-hidden
     >{name}</h2>;
 }
