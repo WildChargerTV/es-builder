@@ -3,7 +3,7 @@
 // Node Module Imports
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 // Local Module Imports
 import BuilderTabs from './BuilderTabs';
 import ShipsTab from './ShipsTab';
@@ -60,8 +60,7 @@ export default function LoadoutBuilderMain({ mode }) {
     // React Hooks
     const dispatch = useDispatch();
     const params = useParams();
-    const { tabId } = useSelector((state) => state.builder);
-    
+    const { tabId, User } = useSelector((state) => state.builder);    
     // Local State Values
     const [isLoaded, setIsLoaded] = useState(false);
     const [pageTitle, setPageTitle] = useState('');
@@ -108,6 +107,9 @@ export default function LoadoutBuilderMain({ mode }) {
         <div id='loadout-builder-head'>
             <h1>{pageTitle}</h1>
             <LoadoutName contentEditable={mode !== 'view'} />
+            {User?.username && <h3 id='builder-owner-name'>
+                <Link to={`/users/${User.id}`}>{User.username}</Link>
+            </h3>}
         </div>
         
         {/* Body: Tab Menu, Content Box, Control Buttons */}
