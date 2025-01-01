@@ -51,8 +51,9 @@ loadouts.get('/:loadoutId', async (req, res, next) => {
 
     let loadout;
     try {
-        loadout = await Loadout.findByPk(loadoutId)
-            .then((result) => result.toJSON());
+        loadout = await Loadout.findByPk(loadoutId, {
+            include: [{ model: User }]
+        }).then((result) => result.toJSON());
         devLog(PATH, `Loadout ${loadoutId} found ` + green('successfully'));
 
         for(let key in loadout)
