@@ -196,10 +196,17 @@ export const changeConsumable = (index, consumableId, quantity) => (dispatch) =>
         throw new RangeError('One or more values passed into changeConsumable are invalid');
 };
 
+/**
+ * Thunk middleware to bulk load data into the Loadout Builder. This is the only way to modify
+ * multiple slices of this state at once, and is only intended for use in the `LoadoutBuilderMain`
+ * component, which only calls this middleware in the `'create'` & `'edit'` modes. **DO NOT CALL
+ * THIS ANYWHERE ELSE.**
+ * @param {object} data 
+ * @returns {(dispatch) => void}
+ */
 export const bulkUpdateState = (data) => (dispatch) => {
-    // TODO add checks to ensure state data is all valid
-    const { name, shipId, enhancements, primaryWeapons, secondaryWeapons, devices, consumables } = data;
-    dispatch(bulkSetState({ name, shipId, enhancements, primaryWeapons, secondaryWeapons, devices, consumables }));
+    // TODO maybe add checks to ensure state data is all valid
+    dispatch(bulkSetState(data));
 }
 
 export const resetSlice = (sliceName) => (dispatch) => {
@@ -208,9 +215,15 @@ export const resetSlice = (sliceName) => (dispatch) => {
             dispatch(resetStateSlice(sliceName));
 };
 
-export const clearState = (mode) => (dispatch) => {
-    dispatch(resetState(mode));
-};
+/**
+ * Thunk middleware to reset the state of the Loadout Builder back to default values and change the
+ * mode. This is the only way to modify the current builder mode, and is only intended for use in
+ * the `LoadoutBuilderMain` component, which also confirms whether the mode is valid or not. **DO
+ * NOT CALL THIS ANYWHERE ELSE.**
+ * @param {'create' | 'view' | 'edit'} mode 
+ * @returns {(dispatch) => void}
+ */
+export const clearState = (mode) => (dispatch) => { dispatch(resetState(mode)); };
 
 //* --------------------[Initial State]-------------------- *//
 /** The initial state for `builder`. */

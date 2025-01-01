@@ -42,7 +42,7 @@
 }
 
 /* Loadout Builder: Outer Container */
-#loadout-builder-container {
+#loadout-builder-body {
     aspect-ratio: 16 / 9;
     backdrop-filter: brightness(20%);
     border-bottom: 6px solid #acdbf9;
