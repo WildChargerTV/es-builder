@@ -2,7 +2,6 @@
 // TODO complete documentation
 
 //* --------------------[Thunk Action Identifiers]-------------------- *//
-const SET_MODE = 'builder/setMode';
 const SET_TAB = 'builder/setTab';
 const SET_NAME = 'builder/setName';
 const SET_SHIP = 'builder/setShip';
@@ -15,10 +14,8 @@ const SET_DEVICE = 'builder/setDevice';
 const SET_CONSUMABLE = 'builder/setConsumable';
 const BULK_SET_STATE = 'builder/bulkSetState';
 const RESET_STATE = 'builder/resetState';
-const RESET_SLICE = 'builder/resetStateSlice';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
-const setMode = (mode) => ({ type: SET_MODE, payload: mode });
 const setTab = (tabId) => ({ type: SET_TAB, payload: tabId });
 const setName = (name) => ({ type: SET_NAME, payload: name });
 const setShip = (shipId) => ({ type: SET_SHIP, payload: shipId });
@@ -31,24 +28,11 @@ const setDevice = (index, deviceId, mods) => ({ type: SET_DEVICE, payload: { ind
 const setConsumable = (index, consumableId, quantity) => ({ type: SET_CONSUMABLE, payload: { index, consumableId, quantity } });
 const bulkSetState = (data) => ({ type: BULK_SET_STATE, payload: data });
 const resetState = (mode) => ({ type: RESET_STATE, payload: mode });
-const resetStateSlice = (sliceName) => ({ type: RESET_SLICE, payload: sliceName })
 
 //* --------------------[Thunk Middlewares]-------------------- *//
 /**
- * Thunk middleware to change the current builder mode.
- * @param {'create' | 'edit' | 'view'} mode
- * @returns {(dispatch: any) => void}
- */
-export const changeMode = (mode) => async (dispatch) => {
-    const VALID_MODES = ['create', 'edit', 'view'];
-    if(VALID_MODES.includes(mode)) 
-        dispatch(setMode(mode));
-    else 
-        throw new TypeError(`Invalid loadout builder type ${mode}`);
-};
-
-/**
- * Thunk middleware to change the current loadout builder tab.
+ * Thunk middleware to change the currently selected Loadout Builder tab ID. Value must be between
+ * 0 and 2, inclusive.
  * @param {0 | 1 | 2} tabId
  * @returns {(dispatch) => void}
  */
@@ -56,20 +40,29 @@ export const changeTab = (tabId) => (dispatch) => {
     if(tabId >= 0 && tabId <= 2) 
         dispatch(setTab(tabId));
     else 
-        throw new RangeError(`Invalid loadout builder tab number ${tabId}`);
+        throw new RangeError(`Invalid loadout builder tab number: ${tabId}`);
 };
 
 /**
- * Thunk middleware to change the name of the current loadout. Must be between 4 and 30 characters.
+ * Thunk middleware to change the name of the current loadout in the Loadout Builder. Name length 
+ * must be between 4 and 30 characters, inclusive.
  * @param {string} name
  * @returns {(dispatch) => void}
  */
 export const changeName = (name) => (dispatch) => {
-    dispatch(setName(name));
+    if(name.length >= 4 && name.length <= 30)
+        dispatch(setName(name));
+    else
+        throw new RangeError(`Invalid name length: ${name.length}`);
 }
 
 /**
- * Thunk middleware to change the currently equipped ship.
+ * Thunk middleware to change the currently equipped ship ID in the Loadout Builder. Should only
+ * ever be called in Create mode, as changing the ship should not ever be possible after initial
+ * submission. Value must be between 0 and 3, inclusive.
+ * 
+ * **WARNING: This middleware will RESET the following slices:** `shipPreset`, `focusedEquipment`,
+ * `primaryWeapons`, `secondaryWeapons`, `devices`, `consumables`.
  * @param {0 | 1 | 2 | 3} shipId
  * @returns {(dispatch) => void}
  */
@@ -77,7 +70,7 @@ export const changeShip = (shipId) => (dispatch) => {
     if(shipId >= 0 && shipId <= 3)
         dispatch(setShip(shipId));
     else 
-        throw new RangeError(`Invalid loadout ship ID number ${shipId}`);
+        throw new RangeError(`Invalid ship ID number ${shipId}`);
 };
 
 /**
@@ -121,7 +114,7 @@ export const changeEnhancement = (index, enhanceId) => (dispatch) => {
 export const changeFocusEquip = (category, id, index) => (dispatch) => {
     const VALID_CATEGORIES = ['Primary', 'Secondary', 'Devices', 'Consumables'];
     if(category === 'reset') 
-        dispatch(setFocusedEquipment(null, null))
+        dispatch(setFocusedEquipment(null, null, null))
     else if(VALID_CATEGORIES.indexOf(category) !== -1 && (String(id).startsWith('c') || id >= 0)) 
         dispatch(setFocusedEquipment(category, id, index));
     else  
@@ -209,12 +202,6 @@ export const bulkUpdateState = (data) => (dispatch) => {
     dispatch(bulkSetState(data));
 }
 
-export const resetSlice = (sliceName) => (dispatch) => {
-    for(const slice in initialState)
-        if(slice === sliceName) 
-            dispatch(resetStateSlice(sliceName));
-};
-
 /**
  * Thunk middleware to reset the state of the Loadout Builder back to default values and change the
  * mode. This is the only way to modify the current builder mode, and is only intended for use in
@@ -245,32 +232,29 @@ const initialState = {
 /**
  * The thunk reducer for the `builder` state, which manages and stores all loadout data loaded into
  * the site's loadout builder, whether to view, edit, or create.
- * @param {{ 
- *      mode: string; 
- *      tabId: number; 
- *      name: string;
- *      shipId: number; 
- *      shipPreset: string | null; 
- *      enhancements: { selected: number; 0: number; 1: number; 2: number; }; 
- *      focusedEquipment: { category: string; id: number; }; 
- *      primaryWeapons: {}; 
- *      secondaryWeapons: {}; 
- *      devices: {}; 
- *      consumables: {}; 
- * }} [state=initialState]
+ * @param {initialState} [state=initialState]
  * @param {object} action
- * @returns {({ ...; } | ... 5 more ... | { ...; })}
+ * @returns {object}
  */
 export default function builderReducer(state=initialState, action) {
     switch(action.type) {
-        case SET_MODE:
-            return { ...state, mode: action.payload };
         case SET_TAB:
             return { ...state, tabId: action.payload };
         case SET_NAME:
             return { ...state, name: action.payload };
-        case SET_SHIP:
-            return { ...state, shipId: action.payload };
+        case SET_SHIP: {
+            const clone = structuredClone(state);
+            clone.shipId = action.payload;
+            clone.shipPreset = initialState.shipPreset;
+            clone.focusedEquipment = initialState.focusedEquipment;
+            clone.primaryWeapons = initialState.primaryWeapons;
+            clone.secondaryWeapons = initialState.secondaryWeapons;
+            clone.devices = initialState.devices;
+            clone.consumables = initialState.consumables;
+        }
+            return { ...state, 
+                shipId: action.payload 
+            };
         case SET_SHIP_PRESET:
             return { ...state, shipPreset: action.payload };
         case SET_ENHANCE: {
@@ -403,11 +387,6 @@ export default function builderReducer(state=initialState, action) {
         case RESET_STATE: {
             const clone = structuredClone(initialState);
             clone.mode = action.payload;
-            return clone;
-        }
-        case RESET_SLICE: {
-            const clone = structuredClone(state);
-            clone[action.payload] = initialState[action.payload];
             return clone;
         }
         default:
