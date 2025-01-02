@@ -1,62 +1,64 @@
 // * frontend/src/components/LoadoutBuilder/Modules/ShipSelectorGrid.jsx
 // TODO documentation
 
+// Node Module Imports
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useFitText from 'use-fit-text';
+// Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
-import { changeShip, changeShipPreset, resetSlice } from '../../../store/builder';
+import { shipData } from '../../../data';
+import { changeShip } from '../../../store/builder';
 
+/**
+ * Renders a 2x2 grid of buttons, allowing the user to select one of EVERSPACE's four available
+ * ships. Selecting any one of the ships will load that ship's ID into the Redux state. This
+ * component is directly reliant on its parent component `ShipsTab`.
+ * 
+ * See {@linkcode shipData} for more information about the ships in EVERSPACE.
+ * @component `ShipList`
+ * @requires {@linkcode BucketImage}, {@linkcode shipData}, {@linkcode changeShip}
+ * @returns {ReactElement}
+ */
 export default function ShipList() {
+    // React Hooks
     const dispatch = useDispatch();
-    const { mode } = useSelector((state) => state.builder);
+    const { ref, fontSize } = useFitText();
+    const { mode, shipId } = useSelector((state) => state.builder);
 
-    /** When one of the ships is clicked, make that ship the current selection. */
+    /** 
+     * When one of the inactive ships is clicked, change the ID in the Redux store. 
+     * ? The Redux store will clear all equipment data alongside this change.
+     */
     const onClick = (event) => {
-        event.stopPropagation();
-        if(mode !== 'create') return;
-        const currentActive = document.getElementsByClassName('active')[2];
-        if(currentActive === event.target) return;
-
-        const btnNum = Number(event.target.id.split('-')[2]);
-        dispatch(changeShip(btnNum));
-        dispatch(changeShipPreset('reset'));
-        dispatch(resetSlice('primaryWeapons'));
-        dispatch(resetSlice('secondaryWeapons'));
-        dispatch(resetSlice('devices'));
-        dispatch(resetSlice('consumables'));
+        const currId = Number(event.target.id.split('-')[2]);
+        currId !== shipId && dispatch(changeShip(currId));
     }
 
+    /** Set the active ship to the one defined in the Redux store. */
+    useEffect(() => {
+        // Iterate through the four ship buttons, and set their active status accordingly.
+        for(const btn of Object.values(document.getElementById('builder-ship-select').children)) {
+            const currId = Number(btn.id.split('-')[2]);
+            btn.className = currId === shipId ? 'ship-active' : '';
+        }
+    }, [shipId]);
 
-
-    // TODO consolidate this eventually into maybe a map function?
-    // TODO make title larger than class
-    return (<div id='builder-ship-grid'>
-        <button id='builder-ship-0' onClick={onClick} disabled={mode !== 'create'}>
-            <BucketImage dir='/ships/ship0-top.png' />
-            <p>
-                Colonial Interceptor<br />
-                Medium Fighter Class
-            </p>
-        </button>
-        <button id='builder-ship-1' onClick={onClick} disabled={mode !== 'create'}>
-            <BucketImage dir='/ships/ship1-top.png' />
-            <p>
-                Colonial Scout<br />
-                Light Fighter Class
-            </p>
-        </button>
-        <button id='builder-ship-2' onClick={onClick} disabled={mode !== 'create'}>
-            <BucketImage dir='/ships/ship2-top.png' />
-            <p>
-                Colonial Gunship<br />
-                Heavy Fighter Class
-            </p>
-        </button>
-        <button id='builder-ship-3' onClick={onClick} disabled={mode !== 'create'}>
-            <BucketImage dir='/ships/ship3-top.png' />
-            <p>
-                Colonial Sentinel<br />
-                Medium Fighter Class
-            </p>
-        </button>
-    </div>)
+    /** Return the button grid. */
+    return (<div id='builder-ship-select'>
+        {/* Ship Buttons */}
+        {Object.values(shipData).map((ship) => (
+            <button key={`ship-${ship.id}`} id={`builder-ship-${ship.id}`} ref={ref} onClick={onClick} disabled={mode !== 'create'}>
+                {/* Ship Name */}
+                <h2 className='builder-ship-name' style={{fontSize}} >{ship.name}</h2>
+                {/* Ship Graphic - Contains Top & Front Views */}
+                <div className='builder-ship-graphic'>
+                    <BucketImage dir={`/ships/ship${ship.id}-top.png`} />
+                    <BucketImage dir={`/ships/ship${ship.id}-front.png`} />
+                </div>
+                {/* Ship Class Name */}
+                <h3 className='builder-ship-class' style={{fontSize: `calc(${fontSize} * 0.66)`}} >{ship.class}</h3>
+            </button>
+        ))}
+    </div>);
 }
