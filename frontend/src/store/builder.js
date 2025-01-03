@@ -1,6 +1,9 @@
 // * frontend/src/store/builder.js
 // TODO complete documentation
 
+// Local Module Imports
+import { shipData } from "../data";
+
 //* --------------------[Thunk Action Identifiers]-------------------- *//
 const SET_TAB = 'builder/setTab';
 const SET_NAME = 'builder/setName';
@@ -18,7 +21,7 @@ const RESET_STATE = 'builder/resetState';
 //* --------------------[Thunk Action Creators]-------------------- *//
 const setTab = (tabId) => ({ type: SET_TAB, payload: tabId });
 const setName = (name) => ({ type: SET_NAME, payload: name });
-const setShip = (shipId) => ({ type: SET_SHIP, payload: shipId });
+const setShip = (shipId, pSlots, sSlots, dSlots, cSlots) => ({ type: SET_SHIP, payload: { shipId, pSlots, sSlots, dSlots, cSlots } });
 const setPreset = (presetId) => ({ type: SET_SHIP_PRESET, payload: presetId });
 const setEnhancement = (index, enhanceId) => ({ type: SET_ENHANCE, payload: { index, enhanceId } });
 const setFocusedEquipment = (category, id, index) => ({ type: SET_FOCUS_EQUIP, payload: { category, id, index } });
@@ -61,15 +64,37 @@ export const changeName = (name) => (dispatch) => {
  * ever be called in Create mode, as changing the ship should not ever be possible after initial
  * submission. Value must be between 0 and 3, inclusive.
  * 
- * **WARNING: This middleware will RESET the following slices:** `shipPreset`, `focusedEquipment`,
- * `primaryWeapons`, `secondaryWeapons`, `devices`, `consumables`.
+ * **WARNING: This middleware will RESET the following slices:** `shipPreset`, `focusedEquipment`.
+ * The `primaryWeapons`, `secondaryWeapons`, `devices`, & `consumables` slices will be cleared &
+ * set to the appropriate size.
  * @param {0 | 1 | 2 | 3} shipId
  * @returns {(dispatch) => void}
  */
 export const changeShip = (shipId) => (dispatch) => {
-    if(shipId >= 0 && shipId <= 3)
-        dispatch(setShip(shipId));
-    else 
+    if(shipId >= 0 && shipId <= 3) {
+        const { primary_weapons, secondary_weapons, devices, consumables } = shipData[shipId];
+        const pSlots = ((res={}) => {
+            for(let i = 0; i < primary_weapons; i++)
+                res[i] = { id: null, mods: null }
+            return res;
+        })();
+        const sSlots = ((res={}) => {
+            for(let i = 0; i < secondary_weapons; i++)
+                res[i] = null;
+            return res;
+        })();
+        const dSlots = ((res={}) => {
+            for(let i = 0; i < devices; i++)
+                res[i] = { id: null, mods: null }
+            return res;
+        })();
+        const cSlots = ((res={}) => {
+            for(let i = 0; i < consumables; i++)
+                res[i] = null;
+            return res;
+        })();
+        dispatch(setShip(shipId, pSlots, sSlots, dSlots, cSlots));
+    } else 
         throw new RangeError(`Invalid ship ID number ${shipId}`);
 };
 
@@ -243,18 +268,19 @@ export default function builderReducer(state=initialState, action) {
         case SET_NAME:
             return { ...state, name: action.payload };
         case SET_SHIP: {
+            // Deconstruct the payload.
+            const { shipId, pSlots, sSlots, dSlots, cSlots } = action.payload;
             const clone = structuredClone(state);
-            clone.shipId = action.payload;
+            clone.shipId = shipId;
             clone.shipPreset = initialState.shipPreset;
             clone.focusedEquipment = initialState.focusedEquipment;
-            clone.primaryWeapons = initialState.primaryWeapons;
-            clone.secondaryWeapons = initialState.secondaryWeapons;
-            clone.devices = initialState.devices;
-            clone.consumables = initialState.consumables;
+            clone.primaryWeapons = pSlots;
+            clone.secondaryWeapons = sSlots;
+            clone.devices = dSlots;
+            clone.consumables = cSlots;
+
+            return clone;
         }
-            return { ...state, 
-                shipId: action.payload 
-            };
         case SET_SHIP_PRESET:
             return { ...state, shipPreset: action.payload };
         case SET_ENHANCE: {

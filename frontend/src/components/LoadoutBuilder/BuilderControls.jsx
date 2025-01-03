@@ -81,29 +81,8 @@ function StartBlankButton() {
     const dispatch = useDispatch();
     const { mode, tabId, shipId, shipPreset } = useSelector((state) => state.builder);
 
-    const onClick = (event) => {
-        event.stopPropagation();
-        const { primary_weapons, secondary_weapons, devices, consumables, max_mods } = shipData[shipId];
+    const onClick = () => {
         dispatch(builder.changeShipPreset(false));
-        for(let i = 0; i < primary_weapons; i++)
-            dispatch(builder.changePrimary(i, null, (() => {
-                const res = {};
-                for(let j = 0; j < max_mods; j++)
-                    res[j] = null;
-                return res;
-            })()));
-        for(let i = 0; i < secondary_weapons; i++)
-            dispatch(builder.changeSecondary(i, null, null));
-        for(let i = 0; i < devices; i++)
-            dispatch(builder.changeDevice(i, null, (() => {
-                const res = {};
-                for(let j = 0; j < max_mods; j++)
-                    res[j] = null;
-                console.log(res);
-                return res;
-            })()));
-        for(let i = 0; i < consumables; i++)
-            dispatch(builder.changeConsumable(i, null, null));
         dispatch(builder.changeFocusEquip('reset'));
     }
 
