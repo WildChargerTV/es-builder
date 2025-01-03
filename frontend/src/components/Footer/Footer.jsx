@@ -24,7 +24,7 @@ export default function Footer({ isLoaded }) {
                 src='https://classic.everspace-game.com/wp-content/uploads/2015/07/Rockfish_logo_RGB_weiss_1_300dpi.png'
                 alt='rockfish logo'
             /></Link>
-            <p>© 2017-2024 ROCKFISH Games GmbH. All rights reserved.</p> 
+            <p>© 2017-2025 ROCKFISH Games GmbH. All rights reserved.</p> 
         </div>
 
         {/* Credits: Site Technology */}
