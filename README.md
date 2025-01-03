@@ -1,20 +1,17 @@
 # EVERSPACE™ Builder (ESBuilder)
 
-**Shoot. Loot. Share.**  
-https://esbuilder.onrender.com/  
-Created by WildCharger  
-\-\-\-\[|| [Twitter/X](https://x.com/wildchargergame) || [YouTube](https://www.youtube.com/@WildCharger) || [LinkedIn](https://www.linkedin.com/in/ethan-guan-ba453a2a0/) ||\]\-\-\-
 
+◄♦ **Shoot. Loot. Share.** ♦♦ https://esbuilder.onrender.com/ ♦►  
+◄♦ **Developed by WildCharger** ♦♦ [Twitter/X](https://x.com/wildchargergame) ♦♦ [YouTube](https://www.youtube.com/@WildCharger) ♦♦ [LinkedIn](https://www.linkedin.com/in/ethan-guan-ba453a2a0/) ♦► 
+
+## About
 EVERSPACE™ Builder (shorthand ESBuilder) is an online platform that allows users to create, manage, & share customized loadouts for the game EVERSPACE™, a deep space combat simulation with roguelike & story-based elements released in 2017 by ROCKFISH Games GmbH. This application serves as a tool for players to assemble their own ship, enhancement, & equipment configurations, using a GUI that reflects the menus in the game itself as closely as possible. This makes it possible for players to do things such as record in-game loadouts they have created in the past, plan for loadouts they may seek to build in the future, or create loadouts to help other players, among other possibilities.
 
 Learn more about EVERSPACE™ on its [official website](https://classic.everspace-game.com/game/), or purchase it on [Steam](https://store.steampowered.com/app/396750/EVERSPACE/) or [GOG](https://www.gog.com/en/game/everspace).
 
-This web application is currently in _**early beta**_. Functionality is present, but significant bugs are likely to be present, and many edge case scenarios have likely not yet been caught. Testers are encouraged to use the Issues board to submit problems with the application as needed.
+ESBuilder is currently in _**early beta**_. Functionality is present, but significant bugs are likely to be present, and many edge case scenarios have likely not yet been caught. Testers are encouraged to use the Issues board to submit problems with the application as needed.
 
 The loadout builder has been built to be compatible with the widescreen (16:9) aspect ratio, tested at the minimum resolution of HD 720p up to a resolution of 2K 1440p. Screen resolutions above or below this are not guaranteed to display properly.
-
-## Installation
-Due to ESBuilder's reliance on image asset delivery, it is not currently possible to fully install with complete functionality. Local installation is still possible for the technically inclined; however, most images & icons will not display properly, and as a result may cause issues with style layout. At present, a local application version of ESBuilder is not planned; however, anyone is welcome to clone this repository and use it for reference in your own project(s).
 
 ## Roadmap
 The current goal is to make ESBuilder proficient at its core functionalities, as well as their accuracy to the original game. Features that require completion in order to achieve this currently take top priority, including:
@@ -50,6 +47,6 @@ As with many applications, ESBuilder was built on a foundation of many other pac
 * Special thanks to [use-fit-text](https://github.com/saltycrane/use-fit-text) for allowing text all around the site to dynamically scale based on current screen size.
 
 ### And, of course...
-Credit belongs to ROCKFISH Games for creating EVERSPACE™. I've been playing their games ever since the original Galaxy on Fire on iOS - and it was Galaxy on Fire 2 that led me to being a big part of one of the greatest internet communities I could have ever asked to join. 
-
-Almost all of the website's image assets are sourced from EVERSPACE™ itself, and its UX was the basis for the design of the loadout builder.
+* Credit belongs to ROCKFISH Games for creating EVERSPACE™. I've been playing their games ever since the original Galaxy on Fire on iOS - and it was Galaxy on Fire 2 that led me to being a big part of one of the greatest internet communities I could have ever asked to join. Almost all of the website's image assets are sourced from EVERSPACE™ itself, and its UX was the basis for the design of the loadout builder.
+* The idea to create this can be attributed to [PD2 Builder](https://pd2builder.netlify.app/), a loadout builder for the game PAYDAY 2.
+* ESBuilder itself was created over the course of many sleepless nights by me, WildCharger. I hope you enjoy using it.
