@@ -1,69 +1,117 @@
-// * frontend/src/components/LoadoutBuilder/Modules/EnhancementGroup.jsx
-// TODO docs
+// * frontend/src/components/LoadoutBuilder/Modules/EnhancementList.jsx
 
-import { useEffect } from 'react';
+// Node Module Imports
 import { useDispatch, useSelector } from 'react-redux';
+// Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import enhancementData from '../../../data/enhcancements';
 import { changeEnhancement, changePrimary, changeSecondary } from '../../../store/builder';
 
+/** List of all valid Enhancement Categories. */
 const CATEGORIES = [
-    'Navigation', 'Damage and Repair', 'Defense', 'Devices', 
-    'Sensors', 'Crafting', 'Weapons', 'Movement', 'Energy' 
+    'Navigation', 'Damage and Repair', 'Defense', 'Devices', 'Sensors', 'Crafting', 'Weapons', 
+    'Movement', 'Energy' 
 ];
 
+/**
+ * Renders the Enhancement Selector, styled almost exactly as it is in-game. The only exception is
+ * that the enhancements within each category are ordered alphabetically, rather than retaining
+ * their original order.
+ * 
+ * Component consists of a collection of sub-components assembled into a grid layout.
+ * @component `EnhancementList`
+ * @requires {@linkcode CATEGORIES}, {@linkcode EnhancementGroup}
+ * @returns {ReactElement}
+ */
 export default function EnhancementList() {
-    return (<div id='builder-enhancement-list'>
+    /** Return the list of `EnhancementGroup`s. */
+    return (<div id='builder-enhancement-select'>
         {CATEGORIES.map((catName) => <EnhancementGroup key={CATEGORIES.indexOf(catName)} category={catName} />)}
     </div>);
 }
 
+/**
+ * Sub-component of `EnhancementList` that renders a single group of enhancements from one of the
+ * seven valid categories.
+ * @component `EnhancementGroup`
+ * @requires {@linkcode SingleEnhancement}, {@linkcode enhancementData}
+ * @param {{category: string}}  
+ * @returns {ReactElement}
+ */
 function EnhancementGroup({ category }) {
+    /** Filter the list of enhancements down to the ones that apply to the current category. */
     const res = enhancementData.filter((enhancement) => enhancement.category === category);
-    return (<div id={`builder-enhancements-${CATEGORIES.indexOf(category)}`} className='builder-enhancement-list__group-container'>
-        <p className='builder-enhancement-list__group-title'>{category}</p>
-        <div className='builder-enhancement-list__group'>
-            {res.map((enhancement) => <SingleEnhancement key={enhancement.id} data={enhancement} />)}
+
+    /** Return the Enhancement Group, as well as its child `SingleEnhancement`s. */
+    return (<div id={`builder-enhancements-${CATEGORIES.indexOf(category)}`} className='builder-enhancement-group'>
+        {/* Group Title */}
+        <p className='enhancement-group-title'>{category}</p>
+        {/* Group List */}
+        <div className='enhancement-group-list'>
+            {res.map((enhancement) => <EnhancementCell key={enhancement.id} data={enhancement} />)}
         </div>
     </div>);
 }
 
-function SingleEnhancement({ data }) {
+/**
+ * Sub-component of `EnhancementGroup` that renders a single enhancement cell based on the provided
+ * data. When selected in Create/Edit mode, the enhancement is added to the loadout, and its cell
+ * on this list becomes disabled until the enhancement is removed or otherwise cleared from the 
+ * loadout. See `EnhancementInfo.jsx` for more information on removing enhancements. All
+ * Enhancement List cells are disabled in View mode.
+ * 
+ * If the **Ancient Weapon** is selected, the loadout's existing Primary and Secondary Weapons are
+ * wiped, and the Ancient Weapon is automatically installed into the first Primary Weapon slot with
+ * no mods.
+ * @component `EnhancementCell`
+ * @requires {@linkcode BucketImage}
+ * @param {{data: object}} 
+ * @returns {ReactElement}
+ */
+function EnhancementCell({ data }) {
+    // React Hooks
     const dispatch = useDispatch();
-    const { mode, shipId, enhancements, primaryWeapons, secondaryWeapons } = useSelector((state) => state.builder);
+    const { mode, shipId, enhancements } = useSelector((state) => state.builder);
 
-    const onClick = (event) => {
-        event.stopPropagation();
+    /** When an enhancement is selected, add it to the selected enhancements. */
+    const onClick = () => {
+        // Set the currently selected enhancement to the current one.
         dispatch(changeEnhancement('selected', data.id));
-        if(!enhancements[0]) dispatch(changeEnhancement(0, data.id));
-        else if(!enhancements[1]) dispatch(changeEnhancement(1, data.id));
-        else if(!enhancements[2]) dispatch(changeEnhancement(2, data.id));
 
-        if(data.id === 2) {
-            for(const key in primaryWeapons) {
-                key == 0
-                ? dispatch(changePrimary(key, 0, null))
-                : dispatch(changePrimary(key, null, null));
+        // Iterate through the enhancements state. If a null index is found, equip the enhancement
+        // to it. If the Ancient Weapon was equipped, modify the Primary & Secondary Weapons states
+        // accordingly.
+        // TODO Ancient Weapon testing needed
+        for(const key in enhancements) {
+            if(enhancements[key] === null && key !== 'selected') {
+                dispatch(changeEnhancement(key, data.id));
+                if(data.id === 2) {
+                    dispatch(changePrimary('reset', null, null));
+                    dispatch(changeSecondary('reset', null, null));
+                    dispatch(changePrimary(0, 0, null));
+                }
+                return;
             }
-            for(const key in secondaryWeapons)
-                dispatch(changeSecondary(key, null, null));
-        }
-            
-    }
+        }   
+    };
 
+    /**
+     * Disable the cell if:
+     * 1. The Loadout Builder is currently in View mode.
+     * 2. The current enhancement is already equipped.
+     * 3. The current enhancement is not legal to equip on the currently selected ship.
+     */
     const disabled = () => {
         if(mode === 'view') return true;
-        for(let i in enhancements) {
-            if(i === 'selected') continue;
-            if(enhancements[i] === data.id) return true;
+        for(let key in enhancements) {
+            if(enhancements[key] === data.id && key !== 'selected') 
+                return true;
         }
-        return (data.allowed_ships && (!shipId || data.allowed_ships.indexOf(shipId) === -1))
-    }
-
-    /** Force a re-render when the current ship changes. Mainly refreshes button disabled status. */
-    useEffect(() => {}, [shipId]);
+        return (data.allowed_ships && (!shipId || data.allowed_ships.indexOf(shipId) === -1));
+    };
     
-    return <button className='builder-enhancement-list__single' onClick={onClick} disabled={disabled()}>
+    /** Return the enhancement cell. */
+    return <button className='enhancement-group-cell' title={data.name} onClick={onClick} disabled={disabled()}>
         <BucketImage dir={data.icon} />
-    </button>
+    </button>;
 }

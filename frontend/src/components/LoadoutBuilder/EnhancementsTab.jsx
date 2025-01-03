@@ -1,7 +1,7 @@
 // * frontend/src/components/LoadoutBuilder/EnhancementsTab.jsx
 
 // Local Module Imports
-import EnhancementInfoSelect from './Modules/EnhancementInfoSelect';
+import EnhancementInfo from './Modules/EnhancementInfo';
 import EnhancementList from './Modules/EnhancementList';
 import './Styles/enhancements.css';
 
@@ -17,6 +17,6 @@ export default function EnhancementsTab({ isLoaded }) {
     /** If the loadout builder has successfully loaded, render the child components. */
     return isLoaded && (<>
         <EnhancementList />
-        <EnhancementInfoSelect />
+        <EnhancementInfo />
     </>);
 }

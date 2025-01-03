@@ -1,16 +1,50 @@
-/* Loadout Builder: Enhancements Selector */
-#builder-enhancement-list {
+/** frontend/src/components/LoadoutBuilder/Styles/enhancements.css */
+/** Loadout Builder: Enhancements Tab */
+
+/* Enhancements Tab: Enhancement Group (Shared) */
+.builder-enhancement-group { 
+    height: fit-content; 
+    width: fit-content; 
+}
+.enhancement-group-title { 
+    font-size: clamp(16px, 1.25vw, 24px);
+    letter-spacing: 0.6px;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+ }
+.enhancement-group-list {
+    backdrop-filter: brightness(30%);
     border: 2px solid rgba(148, 180, 195, 0.7);
-    column-gap: 25px;
+    display: flex;
+        column-gap: 10px;
+    padding: clamp(7px, 0.5vw, 20px);
+    width: min-content;
+}
+.enhancement-group-cell {
+    aspect-ratio: 1 / 1;
+    border: 2px solid rgba(148, 180, 195, 0.7);
+        border-radius: 5px;
+    padding: 5px;
+    width: clamp(50px, 4vw, 125px);
+}
+.enhancement-group-cell img { 
+    pointer-events: none;
+    width: 100%; 
+}
+
+/* Enhancements Tab: Enhancement Selector */
+#builder-enhancement-select {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
     display: grid;
-    grid-template-areas:
-        'a b b b b b b'
-        'c d d e e f f'
-        'g h h h i i i';
-    overflow-x: hidden;
-    overflow-y: scroll;
+        column-gap: 25px;
+        grid-template-areas:
+            'a b b b b b b'
+            'c d d e e f f'
+            'g h h h i i i';
+    overflow: hidden;
     padding: 25px;
-    width: 69%;
+    width: 100%;
 }
 #builder-enhancements-0 { grid-area: a; }
 #builder-enhancements-1 { grid-area: b; }
@@ -22,38 +56,68 @@
 #builder-enhancements-7 { grid-area: h; }
 #builder-enhancements-8 { grid-area: i; }
 
+/* Enhancements Tab: Currently Selected Enhancements */
 #builder-enhancement-info-select {
-    align-items: center;
     border: 2px solid rgba(148, 180, 195, 0.7);
-    display: flex;
-        flex-direction: column;
+    box-sizing: border-box;
+    font-size: clamp(18pt, 1.65vw, 32pt);
     overflow-y: scroll;
-    padding: 25px 10px;
-    width: calc(30% - 20px);
+    padding: 10px;
+        padding-top: 25px;
+    width: 100%;
 }
 
-.builder-enhancement-list__group-container { height: fit-content; width: fit-content; }
-.builder-enhancement-list__group-title { 
-    font-size: clamp(16px, 1.25vw, 24px);
-    letter-spacing: 0.6px;
-    margin-bottom: 5px;
-    margin-top: 0;
+#builder-selected-enhancements { margin: auto; }
+
+/* Enhancements Tab: Enhancement Information */
+#builder-enhancement-info {
+    margin-top: 20px;
+    width: 100%;
+}
+#enhancement-info-name {
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+#enhancement-info-desc {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    letter-spacing: 0.35px;
+    margin: 10px auto;
+    padding: 8px 10px;
+    width: 90%;
+}
+#enhancement-info-effect-pos, #enhancement-info-effect-neg {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    display: grid;
+        column-gap: 15px;
+        grid-template-columns: 32px calc(100% - 47px);
+    letter-spacing: 0.35px;
+    margin: 10px auto;
+    padding-right: 10px;
+    width: 90%;
+}
+#enhancement-info-effect-pos { margin: 20px auto 10px auto; }
+#enhancement-info-effect-pos img, #enhancement-info-effect-neg img {
+    position: relative;
+        left: 5px;
+        top: calc(50% - 16px);
+}
+#enhancement-info-effect-pos p, #enhancement-info-effect-neg p { margin: 10px 0; }
+#enhancement-info-allowed-ships {
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    display: grid;
+        column-gap: 15px;
+        grid-template-columns: 32px calc(100% - 47px);
+    margin: 10px auto;
+    padding: 8px 10px;
+    width: 90%;
+}
+#enhancement-info-allowed-ships p {
+    margin: 0; 
     text-transform: uppercase;
- }
-.builder-enhancement-list__group {
-    border: 2px solid rgba(148, 180, 195, 0.7);
-    column-gap: 10px;
-    display: flex;
-    padding: clamp(7px, 0.5vw, 20px);
-    width: min-content;
+    white-space: nowrap;
 }
-.builder-enhancement-list__single {
-    aspect-ratio: 1 / 1;
-    border: 2px solid rgba(148, 180, 195, 0.7);
-    border-radius: 5px;
-    padding: 5px;
-    width: clamp(50px, 4vw, 125px);
-}
-.builder-enhancement-list__single img {
-    max-width: 100%;
-}
+#enhancement-info-allowed-ships .enhancement-ship-name { text-align: right; }
