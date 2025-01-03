@@ -3,6 +3,7 @@
 **Shoot. Loot. Share.**  
 https://esbuilder.onrender.com/  
 Created by WildCharger
+\-\-\-\[|| [Twitter/X](https://x.com/wildchargergame) || [YouTube](https://www.youtube.com/@WildCharger) || [LinkedIn](https://www.linkedin.com/in/ethan-guan-ba453a2a0/) ||\]\-\-\-
 
 EVERSPACE™ Builder (shorthand ESBuilder) is an online platform that allows users to create, manage, & share customized loadouts for the game EVERSPACE™, a deep space combat simulation with roguelike & story-based elements released in 2017 by ROCKFISH Games GmbH. This application serves as a tool for players to assemble their own ship, enhancement, & equipment configurations, using a GUI that reflects the menus in the game itself as closely as possible. This makes it possible for players to do things such as record in-game loadouts they have created in the past, plan for loadouts they may seek to build in the future, or create loadouts to help other players, among other possibilities.
 
@@ -52,6 +53,3 @@ As with many applications, ESBuilder was built on a foundation of many other pac
 Credit belongs to ROCKFISH Games for creating EVERSPACE™. I've been playing their games ever since the original Galaxy on Fire on iOS - and it was Galaxy on Fire 2 that led me to being a big part of one of the greatest internet communities I could have ever asked to join. 
 
 Almost all of the website's image assets are sourced from EVERSPACE™ itself, and its UX was the basis for the design of the loadout builder.
-
-ESBuilder was created over the course of many sleepless nights by me, WildCharger.  
-\-\-\-\[|| [Twitter/X](https://x.com/wildchargergame) || [YouTube](https://www.youtube.com/@WildCharger) || [LinkedIn](https://www.linkedin.com/in/ethan-guan-ba453a2a0/) ||\]\-\-\-
