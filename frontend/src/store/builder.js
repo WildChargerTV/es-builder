@@ -327,6 +327,7 @@ export default function builderReducer(state=initialState, action) {
             // Clone the current state and set the index to the appropriate value.
             const clone = structuredClone(state.enhancements);
             clone[index] = enhanceId;
+            if(enhanceId === null) clone['selected'] = null;
 
             // Return the new state.
             return { ...state, enhancements: clone };
