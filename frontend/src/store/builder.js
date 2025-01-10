@@ -5,6 +5,7 @@
 import { shipData } from "../data";
 
 //* --------------------[Thunk Action Identifiers]-------------------- *//
+const SET_FLAG = 'builder/setFlag';
 const SET_TAB = 'builder/setTab';
 const SET_NAME = 'builder/setName';
 const SET_SHIP = 'builder/setShip';
@@ -19,6 +20,7 @@ const BULK_SET_STATE = 'builder/bulkSetState';
 const RESET_STATE = 'builder/resetState';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
+const setFlag = (flag, bool) => ({ type: SET_FLAG, payload: { flag, bool } });
 const setTab = (tabId) => ({ type: SET_TAB, payload: tabId });
 const setName = (name) => ({ type: SET_NAME, payload: name });
 const setShip = (shipId, pSlots, sSlots, dSlots, cSlots) => ({ type: SET_SHIP, payload: { shipId, pSlots, sSlots, dSlots, cSlots } });
@@ -33,6 +35,25 @@ const bulkSetState = (data) => ({ type: BULK_SET_STATE, payload: data });
 const resetState = (mode) => ({ type: RESET_STATE, payload: mode });
 
 //* --------------------[Thunk Middlewares]-------------------- *//
+
+/**
+ * Thunk middleware to change a flag inside the Loadout Builder. The second value MUST be a boolean
+ * in order for this middleware to complete.
+ * ! allow AW & Splitter to be equipped together. First check for splitter, then for AW
+ * 
+ * Accepted flag values: `ancientWeaponEquipped`, `splitterEquipped`
+ * @param {string} flag 
+ * @param {boolean} bool 
+ * @returns {(dispatch) => void} 
+ */
+export const changeFlag = (flag, bool) => (dispatch) => {
+    const VALID_FLAGS = ['ancientWeaponEquipped', 'splitterEquipped'];
+    if(VALID_FLAGS.includes(flag) && typeof bool === 'boolean')
+        dispatch(setFlag(flag, bool));
+    else
+        throw new Error(`One or more values passed to changeFlag are missing or invalid: ${flag}, ${bool}`);
+}
+
 /**
  * Thunk middleware to change the currently selected Loadout Builder tab ID. Value must be between
  * 0 and 2, inclusive.
@@ -241,6 +262,10 @@ export const clearState = (mode) => (dispatch) => { dispatch(resetState(mode)); 
 /** The initial state for `builder`. */
 const initialState = { 
     mode: null,
+    flags: {
+        'ancientWeaponEquipped': false,
+        'splitterEquipped': false
+    },
     tabId: 0,
     name: 'LOADOUT NAME HERE',
     shipId: null,
@@ -263,6 +288,12 @@ const initialState = {
  */
 export default function builderReducer(state=initialState, action) {
     switch(action.type) {
+        case SET_FLAG: {
+            const { flag, bool } = action.payload;
+            const clone = structuredClone(state);
+            clone.flags[flag] = bool;
+            return clone;
+        }
         case SET_TAB:
             return { ...state, tabId: action.payload };
         case SET_NAME:
