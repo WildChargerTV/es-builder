@@ -49,7 +49,7 @@ export default function ChangeQuantityModal({ data }) {
         const maxQuantity = (type === 'Secondary')
         ? secondaryWeaponData[equipId].stack_size
         : consumableData[equipId].stack_size;
-        setDisabled((formQuantity < 0) || (formQuantity > maxQuantity));
+        setDisabled((formQuantity < 1) || (formQuantity > maxQuantity));
     }, [formQuantity, equipId, type]);
 
     /** Return the modal content. */
