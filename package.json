@@ -8,7 +8,9 @@
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend",
-    "build": "npm run --prefix backend build"
+    "build": "npm run --prefix backend build",
+    "devstart:backend": "cd backend/ && npm start",
+    "devstart:frontend": "cd frontend/ && npm run dev"
   },
   "keywords": [],
   "author": "",
