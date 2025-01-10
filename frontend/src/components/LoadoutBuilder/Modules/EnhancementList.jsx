@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import enhancementData from '../../../data/enhcancements';
-import { changeEnhancement, changePrimary, changeSecondary } from '../../../store/builder';
+import { changeEnhancement, changeFlag } from '../../../store/builder';
 
 /** List of all valid Enhancement Categories. */
 const CATEGORIES = [
@@ -79,17 +79,14 @@ function EnhancementCell({ data }) {
         dispatch(changeEnhancement('selected', data.id));
 
         // Iterate through the enhancements state. If a null index is found, equip the enhancement
-        // to it. If the Ancient Weapon was equipped, modify the Primary & Secondary Weapons states
-        // accordingly.
-        // TODO Ancient Weapon testing needed
+        // to it. Account for the addition of Ancient Weapon & Splitter.
+        // ? Ancient Weapon & Splitter CAN be equipped at the same time. Check for Splitter first,
+        // ? then Ancient Weapon, as the latter still makes the former functionally null.
         for(const key in enhancements) {
             if(enhancements[key] === null && key !== 'selected') {
                 dispatch(changeEnhancement(key, data.id));
-                if(data.id === 2) {
-                    dispatch(changePrimary('reset', null, null));
-                    dispatch(changeSecondary('reset', null, null));
-                    dispatch(changePrimary(0, 0, null));
-                }
+                data.id === 2 && dispatch(changeFlag("ancientWeaponEquipped", true));
+                data.id === 24 && dispatch(changeFlag("splitterEquipped", true));
                 return;
             }
         }   
