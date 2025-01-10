@@ -7,12 +7,16 @@ import { csrfFetch } from './csrf';
 //* --------------------[Thunk Action Identifiers]-------------------- *//
 const GET_LOADOUT_MULTI = 'loadout/readMultipleLoadouts';
 const SET_CURRENT_ID = 'loadout/updateActiveLoadoutId';
+const SET_PRIMARY_CACHE = 'loadout/updatePrimaryDataCache';
+const SET_SECONDARY_CACHE = 'loadout/updateSecondaryDataCache';
 const DEL_LOADOUT = 'loadout/deleteLoadoutById';
 const RESET_SLICE = 'loadout/resetStateSlice';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
 const readMultipleLoadouts = (loadouts) => ({ type: GET_LOADOUT_MULTI, payload: loadouts });
 const updateActiveLoadoutId = (loadoutId) => ({ type: SET_CURRENT_ID, payload: loadoutId });
+const updatePrimaryDataCache = (data) => ({ type: SET_PRIMARY_CACHE, payload: data });
+const updateSecondaryDataCache = (data) => ({ type: SET_SECONDARY_CACHE, payload: data });
 const deleteLoadoutById = (loadoutId) => ({ type: DEL_LOADOUT, payload: loadoutId });
 const resetStateSlice = (sliceName) => ({ type: RESET_SLICE, payload: sliceName });
 
@@ -62,6 +66,13 @@ export const updateActiveId = (id) => (dispatch) => {
     dispatch(updateActiveLoadoutId(id));
 };
 
+export const updatePrimaryDataBuffer = (data) => (dispatch) => {
+    dispatch(updatePrimaryDataCache(data));
+}
+export const updateSecondaryDataBuffer = (data) => (dispatch) => {
+    dispatch(updateSecondaryDataCache(data));
+}
+
 export const deleteLoadout = (id) => async (dispatch) => {
     const res = await csrfFetch(`/api/loadouts/${id}`, { method: 'DELETE' });
     if(res.ok) dispatch(deleteLoadoutById(id));
@@ -76,6 +87,8 @@ export const resetSlice = (sliceName) => (dispatch) => {
 /** The initial state for `loadout`. */
 const initialState = {
     activeLoadoutId: null,
+    primaryWeaponCache: null,
+    secondaryWeaponCache: null,
     recentLoadouts: []
 };
 
@@ -86,6 +99,10 @@ export default function loadoutReducer(state=initialState, action) {
             return { ...state, recentLoadouts: action.payload };
         case SET_CURRENT_ID:
             return { ...state, activeLoadoutId: action.payload };
+        case SET_PRIMARY_CACHE:
+            return { ...state, primaryWeaponCache: action.payload };
+        case SET_SECONDARY_CACHE:
+            return { ...state, secondaryWeaponCache: action.payload };
         case DEL_LOADOUT: {
             const clone = structuredClone(state);
             const id = action.payload;
