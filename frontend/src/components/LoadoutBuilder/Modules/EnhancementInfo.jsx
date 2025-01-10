@@ -8,7 +8,7 @@ import useFitText from 'use-fit-text';
 // Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import { enhancementData, shipData } from '../../../data';
-import { changeEnhancement, changePrimary, changeSecondary } from '../../../store/builder';
+import { changeEnhancement, changeFlag } from '../../../store/builder';
 
 /**
  * Renders the group of currently equipped enhancements, as well as information about the currently
@@ -37,6 +37,7 @@ function CurrentEnhancementGroup() {
     // React Hooks
     const dispatch = useDispatch();
     const { shipId, enhancements } = useSelector((state) => state.builder);
+
     /** Dynamically update the group's data array based on the current enhancements state. */
     const groupData = useMemo(() => {
         // Declare the array.
@@ -103,8 +104,7 @@ function CurrentEnhancementGroup() {
  * identical to the Enhancement Cells found in `EnhancementList.jsx`, its functionality is
  * different, and therefore does not violate DRY.
  * 
- * If the **Ancient Weapon** is selected, the weapon is removed from the equipment list, and the
- * ship's prior Primary & Secondary Weapon slots are restored in an empty state.
+ * Removing the **Ancient Weapon** or **Splitter** enhancements will set their appropriate flags.
  * @component `CurrentEnhancementCell`
  * @requires {@linkcode enhancementData}, {@linkcode shipData}, {@linkcode BucketImage}
  * @param {{ id: number }}
@@ -113,8 +113,7 @@ function CurrentEnhancementGroup() {
 function CurrentEnhancementCell({ index, id }) {
     // React Hooks
     const dispatch = useDispatch();
-    const { mode, shipId } = useSelector((state) => state.builder);
-    console.log(index);
+    const { mode } = useSelector((state) => state.builder);
 
     /** Get the enhancement data, if it exists. */
     const enhancement = id !== null && enhancementData[id];
@@ -130,16 +129,9 @@ function CurrentEnhancementCell({ index, id }) {
         // Remove the enhancement in this cell.
         dispatch(changeEnhancement(index, null));
 
-        // If the removed enhancement was the Ancient Weapon, restore the Primary & Secondary 
-        // Weapon slots.
-        // TODO Ancient Weapon testing needed
-        if(id === 2) {
-            const currShip = shipData[shipId];
-            for(let i = 0; i < currShip.primary_weapons; i++)
-                dispatch(changePrimary(i, null, null));
-            for(let i = 0; i < currShip.secondary_weapons; i++)
-                dispatch(changeSecondary(i, null, null));
-        }
+        // Account for the remvoal of Ancient Weapon or Splitter.
+        id === 2 && dispatch(changeFlag('ancientWeaponEquipped', false));
+        id === 24 && dispatch(changeFlag('splitterEquipped', false));
     }
 
     /** Return the enhancement cell. */
