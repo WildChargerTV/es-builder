@@ -166,11 +166,15 @@ function CurrentEnhancementInfo() {
             enhancements in the &quot;Selected&quot; group above will remove it from your loadout.
             <br /><br />
             <span className='red'>WARNING:</span> The
-            <span className='yellow'> Ancient Weapon</span> enhancement overwrites your existing
-            Primary & Secondary Weapons when equipped. Should you choose to remove it later, any
-            Primary & Secondary Weapons you may have installed prior will NOT be restored.
-            {/* TODO add code for the Splitter enhancement */}
-
+            <span className='yellow'> Ancient Weapon</span> enhancement replaces your existing
+            Primary & Secondary Weapons when equipped. Similarly, the 
+            <span className='yellow'> Splitter</span> enhancement will remove all but the first
+            Secondary Weapons slot when equipped.
+            <br /><br />
+            The Loadout Builder will cache this data the moment you equip either enhancement, so
+            you can unequip it later and retain your prior configuration. However, this data is
+            not persistent; submitting your loadout, or your changes to it, will cause the cached
+            data to be <span className='red'>wiped</span>. Be careful!
         </p>
     </div>);
 
