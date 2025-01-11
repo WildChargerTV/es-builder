@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 // Local Module Imports
 import LoginModal from './LoginModal';
 import OpenModal from '../Modal/OpenModal';
+import useWindowSize from '../../hooks/windowSize';
 import { logout } from '../../store/session';
 
 /**
@@ -25,8 +26,9 @@ export default function ProfileButton({ sessionUser }) {
     // React Hooks
     const dispatch = useDispatch();
     const location = useLocation();
-    const btnWidthRef = useRef();
-    const menuWidthRef = useRef();
+    const btnRef = useRef();
+    const menuRef = useRef();
+    const windowSize = useWindowSize();
     // Local State Values
     const [showDropdown, setShowDropdown] = useState(false);
     const [dropdownLeft, setDropdownLeft] = useState(0);
@@ -46,12 +48,13 @@ export default function ProfileButton({ sessionUser }) {
 
     /** Set the absolute position of the dropdown menu based on the width of the profile button. */
     useEffect(() => {
-        if(btnWidthRef.current && menuWidthRef.current)
+        if(btnRef.current && menuRef.current) {
             setDropdownLeft(
-                btnWidthRef.current.getBoundingClientRect().width -
-                menuWidthRef.current.getBoundingClientRect().width
+                btnRef.current.getBoundingClientRect().width -
+                menuRef.current.getBoundingClientRect().width
             );
-    }, [sessionUser]);
+        }
+    }, [sessionUser, windowSize, showDropdown]);
 
     /** Close the dropdown menu whenever the user navigates to a new page. */
     useEffect(() => setShowDropdown(false), [location]);
@@ -63,24 +66,27 @@ export default function ProfileButton({ sessionUser }) {
      *   button reveals a dropdown menu allowing access to their personal profile page and a
      *   logout button.
      */
-    return sessionUser
-    ? (<div id='site-nav-profile-btn' ref={btnWidthRef}>
-        <button onClick={toggleDropdown}>
-            {`${sessionUser.username}`} 
-            <span>{showDropdown ? <FaAngleUp /> : <FaAngleDown />}</span>
-        </button>
-        <div id='site-nav-rel-container'>
-            {showDropdown && <div id='site-nav-profile-dropdown' ref={menuWidthRef} style={{'left': dropdownLeft}}>
-                {/* TODO <NavLink to='/profile'>Profile</NavLink><br /> */}
-                <NavLink id='site-nav-btn-logout' onClick={userLogout}>Logout</NavLink>
+    return (<div id='site-nav-profile-btn' ref={btnRef}>
+        {sessionUser
+        ? (<>
+            {/* User Dropdown Button */}
+            <button onClick={toggleDropdown}>
+                {sessionUser.username}
+                <span>{showDropdown ? <FaAngleUp />:<FaAngleDown />}</span>
+            </button>
+            {showDropdown && <div id='site-nav-rel-container'>
+                <div id='site-nav-profile-dropdown' ref={menuRef} style={{ left: dropdownLeft }}>
+                    <NavLink to='/profile'>Profile</NavLink><br />
+                    <NavLink id='site-nav-btn-logout' to='/' onClick={userLogout}>Logout</NavLink>
+                </div>
             </div>}
-        </div>
-    </div>)
-    : (<div id='site-nav-profile-btn'>
-        <OpenModal 
-            element='button'
-            elementText='Login'
-            modalComponent={<LoginModal />}
-        />
+        </>)
+        : (<>
+            {/* Login Button */}
+            <OpenModal
+                elementText='Login'
+                modalComponent={<LoginModal />}
+            />
+        </>)}
     </div>);
 }
