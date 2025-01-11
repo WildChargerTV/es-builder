@@ -51,8 +51,6 @@ export default function LandingPage() {
                 with any problems you may encounter. All other testers can report issues using the GitHub link at the<br />
                 right side of the page footer. Enjoy!
             </p>
-            {/* Link to Background Image Source */}
-            <h5><Link to='https://wall.alphacoders.com/big.php?i=912237'>Background Image Source</Link></h5>
         </div>
     </main>);
 }

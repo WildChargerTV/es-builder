@@ -14,6 +14,13 @@
     font-size: x-large;
 }
 
+#site-footer-tech svg {
+    display: inline-block;
+    position: relative;
+        bottom: 3px;
+    vertical-align: bottom;
+}
+
 /* Site Footer - Social Media Icons */
 #site-footer-socials { 
     font-size: 32pt; 

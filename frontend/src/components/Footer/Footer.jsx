@@ -30,10 +30,10 @@ export default function Footer({ isLoaded }) {
         {/* Credits: Site Technology */}
         <div id='site-footer-tech'>
             <p>
-                The loadout builder has been built to be compatible with the widescreen<br />
-                (16:9) aspect ratio, tested at the minimum resolution of HD 720p up to<br />
-                a resolution of 2K 1440p. Screen resolutions above or below this are not<br />
-                guaranteed to display properly.
+                The loadout builder, and the website by extension, has been built to be<br /> 
+                compatible with the widescreen (16:9) aspect ratio, tested at the minimum<br /> 
+                resolution of HD 720p, up to the maximum resolution of 2K 1440p. Any<br /> 
+                screen resolutions above or below this are not guaranteed to display properly.
             </p>
             <p><span className='site-footer__text-icon'><DiReact /><DiJavascript1 /> </span> Powered by ReactJS</p>
             <p><span className='site-footer__text-icon'><DiPostgresql /> </span> Database built on PostgreSQL</p>
