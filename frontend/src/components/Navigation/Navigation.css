@@ -25,8 +25,10 @@
     height: 75px;
 }
 #site-nav-logo a { 
+    -webkit-text-stroke: 1.25px black;
     color: white;
     font-size: 36pt;
+    font-weight: 700;
     letter-spacing: 3px;
     text-decoration: none; 
     text-shadow: 2px black;
