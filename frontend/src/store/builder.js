@@ -355,7 +355,8 @@ export default function builderReducer(state=initialState, action) {
                 primaryWeapons: clone, 
                 focusedEquipment: {
                     category: 'Primary',
-                    id: weaponId
+                    id: weaponId,
+                    index: index
                 }
             };
         }
@@ -380,7 +381,8 @@ export default function builderReducer(state=initialState, action) {
                 secondaryWeapons: clone, 
                 focusedEquipment: {
                     category: 'Secondary',
-                    id: weaponId
+                    id: weaponId,
+                    index: index
                 }
             };
         }
@@ -405,7 +407,8 @@ export default function builderReducer(state=initialState, action) {
                 devices: clone, 
                 focusedEquipment: {
                     category: 'Devices',
-                    id: action.payload.deviceId
+                    id: deviceId,
+                    index: index
                 }
             };
         }
@@ -430,7 +433,8 @@ export default function builderReducer(state=initialState, action) {
                 consumables: clone, 
                 focusedEquipment: {
                     category: 'Consumables',
-                    id: action.payload.consumableId 
+                    id: consumableId,
+                    index: index
                 }
             };
         }
