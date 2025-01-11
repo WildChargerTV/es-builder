@@ -94,7 +94,6 @@ const devWarn = (fileName, msg, err) => {
  *  devErr('utils/chalk.js', 'This is a development error.', new Error('This is an error.'));
  */
 const devErr = (fileName, msg, err) => {
-    console.log(typeof err)
     // Require that all three arguments be provided, and that the error is of the correct type.
     if(!fileName || !msg || !err) 
         throw new ReferenceError('devErr: One or more required arguments are missing or null');
