@@ -16,8 +16,6 @@ const handleValidationErrors = (req, _res, next) => {
     // Extract the errors from the request body.
     const errs = validationResult(req);
 
-    console.log(errs, errs.isEmpty())
-
     // If no errors are found, advance to the next middleware.
     if(errs.isEmpty()) return next();
 
@@ -56,8 +54,6 @@ const validateLogin = [
  *  - Email: Exists, Is Email
  *  - Username: Exists, Minimum Length `4`, Is Not Email
  *  - Password: Exists, Minimum Length `6`
- *  - First Name: Exists
- *  - Last Name: Exists
 **/
 const validateSignup = [
     check('email')
@@ -75,12 +71,6 @@ const validateSignup = [
         .exists({ values: 'falsy' })
         .isLength({ min: 6 })
         .withMessage('Password must be 6 characters or more.'),
-    check('firstName')
-        .exists({ values: 'falsy' })
-        .withMessage('Please provide a first name.'),
-    check('lastName')
-        .exists({ values: 'falsy' })
-        .withMessage('Please provide a last name.'),
     handleValidationErrors
 ];
 
