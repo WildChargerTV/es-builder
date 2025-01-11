@@ -44,12 +44,12 @@
 /* Ships Tab: Selected Ship Information */
 #builder-ship-info {
     border: 2px solid rgba(148, 180, 195, 0.7);
-    font-size: clamp(18pt, 1.65vw, 32pt);
     overflow-y: scroll;
     padding: 10px;
 }
 
 #ship-info-name {
+    font-size: 1.75vw;
     letter-spacing: 0.75px;
     line-height: 2;
     margin: 0;
@@ -59,6 +59,7 @@
 
 #ship-info-class {
     color: #94b4c3;
+    font-size: 1.25vw;
     margin: 0;
     text-align: center;
 }
@@ -66,6 +67,7 @@
 #ship-info-desc {
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
+    font-size: 1vw;
     letter-spacing: 0.35px;
     margin: 10px auto;
     padding: 8px 10px;
@@ -76,15 +78,17 @@
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
     display: grid;
+        row-gap: 5px;
+    font-size: 1vw;
     letter-spacing: 0.65px;
     margin: 10px auto;
     padding: 8px 10px;
-    row-gap: 5px;
     width: 90%;
 }
 .ship-info-single-stat {
     display: inline-flex;
         justify-content: space-between;
+    white-space: nowrap;
 }
 .ship-info-single-stat p {
     margin: 0;

@@ -3,7 +3,6 @@
 // Node Module Imports
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import useFitText from 'use-fit-text';
 // Local Module Imports
 import shipData from '../../../data/ships';
 
@@ -16,7 +15,6 @@ import shipData from '../../../data/ships';
  */
 export default function ShipInfo() {
     // React Hooks
-    const { ref, fontSize } = useFitText();
     const { shipId } = useSelector((state) => state.builder);
     const [currShip, setCurrShip] = useState(null);
 
@@ -33,8 +31,8 @@ export default function ShipInfo() {
      * ? may look rather confusing.
      */
     if(!currShip) return (<div id='builder-ship-info'>
-        <h2 id='ship-info-name' style={{ fontSize }}>Select Your Ship</h2>
-        <p id='ship-info-desc' style={{ fontSize: `calc(${fontSize} * 0.55)` }}>
+        <h2 id='ship-info-name'>Select Your Ship</h2>
+        <p id='ship-info-desc'>
             You will not be able to change ships once your loadout has been submitted.<br />
             <span className='red'>WARNING:</span> Changing your ship at any point during loadout
             creation will reset all of your currently selected equipment!
@@ -56,15 +54,15 @@ export default function ShipInfo() {
     </div>);
 
     /** Return the ship information. */
-    return (<div id='builder-ship-info' ref={ref}>
+    return (<div id='builder-ship-info'>
         {/* Ship Name, Class, & Description */}
-        <h2 id='ship-info-name' style={{ fontSize }}>{currShip.name}</h2>
-        <h3 id='ship-info-class' style={{ fontSize: `calc(${fontSize} * 0.75)` }}>{currShip.class}</h3>
-        <p id='ship-info-desc' style={{ fontSize: `calc(${fontSize} * 0.55)` }}>{currShip.description}</p>
+        <h2 id='ship-info-name'>{currShip.name}</h2>
+        <h3 id='ship-info-class'>{currShip.class}</h3>
+        <p id='ship-info-desc'>{currShip.description}</p>
         {/* Ship Stats */}
         {currShip?.stats && (<div id='ship-info-stats'>
             {Object.entries(currShip.stats).map(([statName, statVal]) => (
-                <div key={statName.toLowerCase().split(' ').join('-')} className='ship-info-single-stat' style={{ fontSize: `calc(${fontSize} * 0.5)` }}>
+                <div key={statName.toLowerCase().split(' ').join('-')} className='ship-info-single-stat'>
                     <p>{statName}</p>
                     <p>{statVal}</p>
                 </div>
