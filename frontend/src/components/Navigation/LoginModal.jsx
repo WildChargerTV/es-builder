@@ -35,7 +35,7 @@ export default function LoginModal() {
 
         // Attempt to log in. If errors exist, they will be caught before the Modal is closed.
         return dispatch(sessionActions.login({ credential, password }))
-            .then(closeModal())
+            .then(async (res) => res.ok && closeModal())
             .catch(async (res) => {
                 const data = await res.json();
                 if(data?.errors) setErrors(data.errors);
