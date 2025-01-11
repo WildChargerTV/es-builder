@@ -43,7 +43,7 @@ module.exports = {
     async down (queryInterface, Sequelize) {
         options.tableName = 'Loadouts';
         return queryInterface.bulkDelete(options, {
-            userId: { [Sequelize.Op.in]: [1] }
+            userId: { [Sequelize.Op.in]: [1, 4] }
         }, {});
     }
 };
