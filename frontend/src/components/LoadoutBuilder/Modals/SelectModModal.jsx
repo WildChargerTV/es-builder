@@ -38,13 +38,13 @@ export default function SelectModModal({ currEquip }) {
         const modal = document.getElementById('site-modal-content');
         modal.className = 'item-select-menu';
         if(title === 'Primary')
-            setTitle('Weapon Mod');
+            setTitle('Weapon Modification');
         else if(title === 'Devices')
-            setTitle('Device Mod');
+            setTitle('Device Modification');
     }, [title, currEquip]);
 
     return (<>
-        <h2 className='modal-title'>Add {title}</h2>
+        <h2 className='modal-title'>Select {title}</h2>
         <div className='modal-equip-list'>
             {presetData.map((mod) => <SingleMod key={`${title.split(' ').join('-')}-${mod.id}`} data={{eIndex, eType, eData, mIndex, mData: mod}} />)}
         </div>
