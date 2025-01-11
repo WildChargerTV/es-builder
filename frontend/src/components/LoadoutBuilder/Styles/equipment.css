@@ -1,19 +1,23 @@
-/* Loadout Builder: Equipment Selector */
+/** frontend/src/components/LoadoutBuilder/Styles/equipment.css */
+/** Loadout Builder: Equipment Tab */
+
+/* Equipment Tab: Equipment List Globals */
 #builder-equipment-list {
     border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
     column-gap: 25px;
     display: flex;
         justify-content: space-around;
-    overflow: scroll;
-    padding: 10px 25px;
-    width: 69%;
+    overflow-y: scroll;
+    padding: 10px 25px 0 25px;
+    width: 100%;
 }
 
+/* Equipment Tab: Equipment List Columns */
 .builder-equipment-list-col { 
-    height: 100%; 
+    height: max-content; 
     width: 21%;
 }
-
 .builder-equip-col-title {
     color: #acdbf9;
     font-size: clamp(12pt, 1.25vw, 24pt);
@@ -28,36 +32,42 @@
     row-gap: 10px;
 }
 
-.builder-equip-row {
+/* Equipment Tab: Equipment List Cells */
+.builder-equip-cell {
     aspect-ratio: 20 / 12;
     border: 1px solid rgba(148, 180, 195, 0.5);
     cursor: pointer;
     display: flex;
         align-items: center;
         flex-direction: column;
-        justify-content: flex-end;
+    font-size: 1vw;
     list-style-type: none;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
     z-index: 2;
 }
+
+/* Equipment List Cells: Equipment Icon */
 .builder-equip-icon img {
     aspect-ratio: 13 / 9;
     margin: 0 auto 0 auto;
+    pointer-events: none;
     position: absolute;
         top: 5%;
         left: 18%;
     width: 65%;
     z-index: 3;
 }
+
+/* Equipment List Cells: Equipment Name */
 .builder-equip-name { 
-    height: 25%;
+    pointer-events: none;
     position: absolute;
         bottom: 0;
     width: 90%; 
     z-index: 4;
 }
-.builder-equip-name h2 {
+.builder-equip-name h3 {
     color: #acdbf9;
     font-weight: 600;
     height: 100%;
@@ -66,9 +76,12 @@
     white-space: nowrap;
     width: 100%;
 }
+
+/* Equipment List Cells: Equipment Controls (Add, Modify, Delete) */
 .builder-equip-controls {
     display: flex;
-    flex-direction: row-reverse;
+        column-gap: 1%;
+        flex-direction: row-reverse;
     position: absolute;
         right: 2px;
         top: 2px;
@@ -76,27 +89,10 @@
 }
 .builder-equip-controls button {
     aspect-ratio: 1 / 1;
-    height: clamp(16px, 2.7vh, 40px);
     padding: 0;
 }
-.builder-equip-controls button img {
-    aspect-ratio: 1 / 1;
-    height: 100%;
-    padding: 0;
-}
-.builder-equip-quantity {
-    font-weight: 600;
-    position: absolute;
-        left: 4px;
-        top: -1px;
-    z-index: 5;
-}
-.builder-equip-quantity button {
-    font-weight: 600;
-    font-size: clamp(8pt, 1vw, 20pt);
-    padding: 0;
-}
-.builder-equip-quantity button:disabled { opacity: 1; }
+
+/* Equipment List Cells: Equipment Mods (Primary, Devices) */
 .builder-equip-mod-squares {
     display: flex;
         flex-direction: column;
@@ -116,50 +112,70 @@
 .builder-mod-square.active { background-color: rgba(148, 180, 195, 1); }
 .builder-mod-square.inactive { background-color: rgba(148, 180, 195, 0.6); }
 
-/* Loadout Builder: Equipment Info */
+/* Equipment List Cells: Equipment Quantity (Secondary, Consumables) */
+.builder-equip-quantity {
+    font-weight: 600;
+    position: absolute;
+        left: 4px;
+        top: -1px;
+    z-index: 5;
+}
+.builder-equip-quantity button {
+    font-weight: 600;
+    font-size: clamp(8pt, 1vw, 20pt);
+    padding: 0;
+}
+.builder-equip-quantity button:disabled { opacity: 1; }
+
+/* Equipment Tab: Equipment Info */
 #builder-equipment-info {
     border: 2px solid rgba(148, 180, 195, 0.7);
-    max-width: calc(30% - 20px);
-    min-width: calc(30% - 20px);
+    box-sizing: border-box;
     overflow-y: scroll;
     padding: 10px;
+    width: 100%;
 }
 #builder-equipment-info h2 { 
+    font-size: 1.5vw;
     letter-spacing: 0.75px;
-    line-height: 2;
-    margin: 0; 
+    line-height: 1;
+    margin: 2.5% 0; 
     text-align: center;
-    white-space: nowrap;
+    text-wrap: balance;
 }
-@media screen and (min-width: 1280px) { #builder-equipment-info h2 { font-size: 14pt; } }
-@media screen and (min-width: 1920px) { #builder-equipment-info h2 { font-size: 22pt; } }
 #builder-equipment-info h3 { 
     color: #acdbf9;
+    font-size: 1.1vw;
     letter-spacing: 0.5px;
-    margin: 0; 
+    margin: 0 0 2.5px 0; 
     text-align: center;
     white-space: nowrap;
 }
-@media screen and (min-width: 1280px) { #builder-equipment-info h3 { font-size: 10pt; } }
-@media screen and (min-width: 1920px) { #builder-equipment-info h3 { font-size: 16pt; } }
-#builder-equipment-info h4 { margin: 0; }
 #builder-equipment-info button {
+    font-size: 1vw;
     width: 100%;
 }
 #equip-info-desc {
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
-    font-size: large;
+    font-size: 1vw;
     letter-spacing: 0.35px;
-    margin: 10px auto;
+    margin: 15px auto 10px auto;
     padding: 8px 10px;
     width: 90%;
+}
+#equip-info-desc svg {
+    display: inline-block;
+    position: relative;
+    vertical-align: bottom;
 }
 #equip-info-mods {
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
     display: grid;
-        grid-template-columns: 20% 80%;
+        column-gap: 5%;
+        grid-template-columns: 20% 75%;
+        font-size: 1vw;
     letter-spacing: 0.65px;
     line-height: 1;
     margin: 10px auto;
@@ -189,6 +205,7 @@
         justify-content: space-between;
 }
 .equip-info-single-stat p {
+    font-size: 1.05vw;
     margin: 0;
     text-transform: uppercase;
 }

@@ -13,7 +13,9 @@ const SET_SHIP_PRESET = 'builder/setPreset'
 const SET_ENHANCE = 'builder/setEnhancement';
 const SET_FOCUS_EQUIP = 'builder/setFocusedEquipment';
 const SET_PRIMARY_WEAPON = 'builder/setPrimaryWeapon';
+const SET_PRIMARY_WEAPONS_OVERRIDE = 'builder/overridePrimaryWeapons';
 const SET_SECONDARY_WEAPON = 'builder/setSecondaryWeapon';
+const SET_SECONDARY_WEAPONS_OVERRIDE = 'builder/overrideSecondaryWeapons';
 const SET_DEVICE = 'builder/setDevice';
 const SET_CONSUMABLE = 'builder/setConsumable';
 const BULK_SET_STATE = 'builder/bulkSetState';
@@ -28,7 +30,9 @@ const setPreset = (presetId) => ({ type: SET_SHIP_PRESET, payload: presetId });
 const setEnhancement = (index, enhanceId) => ({ type: SET_ENHANCE, payload: { index, enhanceId } });
 const setFocusedEquipment = (category, id, index) => ({ type: SET_FOCUS_EQUIP, payload: { category, id, index } });
 const setPrimaryWeapon = (index, weaponId, mods) => ({ type: SET_PRIMARY_WEAPON, payload: { index, weaponId, mods } });
+const overridePrimaryWeapons = (slice) => ({ type: SET_PRIMARY_WEAPONS_OVERRIDE, payload: slice });
 const setSecondaryWeapon = (index, weaponId, quantity) => ({ type: SET_SECONDARY_WEAPON, payload: { index, weaponId, quantity } });
+const overrideSecondaryWeapons = (slice) => ({ type: SET_SECONDARY_WEAPONS_OVERRIDE, payload: slice });
 const setDevice = (index, deviceId, mods) => ({ type: SET_DEVICE, payload: { index, deviceId, mods } });
 const setConsumable = (index, consumableId, quantity) => ({ type: SET_CONSUMABLE, payload: { index, consumableId, quantity } });
 const bulkSetState = (data) => ({ type: BULK_SET_STATE, payload: data });
@@ -183,6 +187,7 @@ export const changePrimary = (index, weaponId, mods) => (dispatch) => {
     else 
         throw new RangeError('One or both values passed into changePrimary are invalid');
 };
+export const overridePrimary = (slice) => (dispatch) => dispatch(overridePrimaryWeapons(slice));
 
 /**
  * Thunk middleware to change one of the currently selected **Secondary Weapons** and its quantity,
@@ -200,6 +205,7 @@ export const changeSecondary = (index, weaponId, quantity) => (dispatch) => {
     else 
         throw new RangeError(`One or more values passed into changeSecondary are invalid: ${index}, ${weaponId}, ${quantity}`);
 };
+export const overrideSecondary = (slice) => (dispatch) => dispatch(overrideSecondaryWeapons(slice));
 
 /**
  * Thunk middleware to change one of the currently selected **Devices** and its modifications, or
@@ -360,6 +366,8 @@ export default function builderReducer(state=initialState, action) {
                 }
             };
         }
+        case SET_PRIMARY_WEAPONS_OVERRIDE: 
+            return { ...state, primaryWeapons: action.payload };
         case SET_SECONDARY_WEAPON: {
             // Deconstruct the payload.
             const { index, weaponId, quantity } = action.payload;
@@ -373,7 +381,7 @@ export default function builderReducer(state=initialState, action) {
 
             // Clone the current state and set the index to the appropriate values.
             const clone = structuredClone(state.secondaryWeapons);
-            clone[index] = weaponId ? `${weaponId}x${quantity}` : null;
+            clone[index] = weaponId >= 0 ? `${weaponId}x${quantity}` : null;
 
             // Return the new state, alongside an updated equipment focus.
             return { 
@@ -386,6 +394,8 @@ export default function builderReducer(state=initialState, action) {
                 }
             };
         }
+        case SET_SECONDARY_WEAPONS_OVERRIDE:
+            return { ...state, secondaryWeapons: action.payload };
         case SET_DEVICE: {
             // Deconstruct the payload.
             const { index, deviceId, mods } = action.payload;
@@ -425,7 +435,7 @@ export default function builderReducer(state=initialState, action) {
 
             // Clone the current state and set the index to the appropriate value.
             const clone = structuredClone(state.consumables);
-            clone[index] = consumableId ? `${consumableId}x${quantity}` : null;
+            clone[index] = consumableId >= 0 ? `${consumableId}x${quantity}` : null;
 
             // Return the new state, alongside an updated equipment focus.
             return { 
