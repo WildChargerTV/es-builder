@@ -1,0 +1,25 @@
+
+#site-recent-loadouts-container {
+    background-image: url('https://uiuiui.in/uploads/posts/wally/1058173.webp');
+    background-position: center;
+    background-size: cover;
+    padding: 35px 0;
+}
+#site-recent-loadouts {
+    background-size: cover;
+    box-sizing: border-box;
+    height: max-content;
+    margin: 0 auto;
+    max-width: 1304px;
+    width: calc(75% + 30px);
+}
+#site-recent-loadouts h1 { 
+    backdrop-filter: brightness(20%);
+    border: 3px solid #acdbf9;
+    border-radius: 5px;
+    font-size: clamp(18pt, 2.5vw, 36pt);
+    margin: 0 0 30px 0; 
+    padding: 0 15px;
+    white-space: nowrap;
+    width: fit-content;
+}

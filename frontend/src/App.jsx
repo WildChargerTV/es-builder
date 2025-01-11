@@ -8,7 +8,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 // Local Module Imports
 import Navigation from './components/Navigation/Navigation';
 import LandingPage from './components/Landing/Landing';
-import RecentLoadouts from './components/Loadouts/Recents';
+import RecentLoadouts from './components/Loadouts/RecentLoadouts';
 import LoadoutBuilderMain from './components/LoadoutBuilder/LoadoutBuilder';
 import UserProfile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
