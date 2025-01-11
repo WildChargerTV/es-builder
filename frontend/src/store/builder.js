@@ -439,11 +439,7 @@ export default function builderReducer(state=initialState, action) {
             };
         }
         case BULK_SET_STATE: {
-            const clone = action.payload;
-            clone.mode = state.mode;
-            clone.tabId = state.tabId;
-            clone.shipPreset = null;
-            clone.focusedEquipment = state.focusedEquipment;
+            const clone = { ...structuredClone(state), ...action.payload };
             return clone;
         }
         case RESET_STATE: {
