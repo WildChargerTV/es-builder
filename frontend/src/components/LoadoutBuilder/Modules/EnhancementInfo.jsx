@@ -4,7 +4,6 @@
 // Node Module Imports
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useFitText from 'use-fit-text';
 // Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import { enhancementData, shipData } from '../../../data';
@@ -149,17 +148,16 @@ function CurrentEnhancementCell({ index, id }) {
  */
 function CurrentEnhancementInfo() {
     // React Hooks
-    const { ref, fontSize } = useFitText();
     const currEnhancement = useSelector((state) => state.builder.enhancements.selected);
 
     /** Get the enhancement data, if it exists. */
     const currData = currEnhancement !== null && enhancementData[currEnhancement];
 
     if(currEnhancement === null) return (<div id='builder-enhancement-info'>
-        <h2 id='enhancement-info-name' style={{ fontSize: `calc(${fontSize} * 0.9)` }}>
+        <h2 id='enhancement-info-name'>
             Select Enhancements
         </h2>
-        <p id='enhancement-info-desc'  style={{ fontSize: `calc(${fontSize} * 0.55)` }}>
+        <p id='enhancement-info-desc'>
             Select any one of the available enhancements to add it to your loadout. You may add
             up to three unique enhancements. If an enhancement is greyed out & cannot be clicked,
             that means it is not compatible with your current ship. Clicking on any one of the 
@@ -179,22 +177,22 @@ function CurrentEnhancementInfo() {
     </div>);
 
     /** Return the enhancement's information. */
-    return currEnhancement !== null && (<div id='builder-enhancement-info' ref={ref}>
+    return currEnhancement !== null && (<div id='builder-enhancement-info'>
         {/* Enhancement Name */}
-        <h2 id='enhancement-info-name' style={{ fontSize }}>{currData.name}</h2>
+        <h2 id='enhancement-info-name'>{currData.name}</h2>
 
         {/* Enhancement Positive & Negative Effects */}
         <div id='enhancement-info-effect-pos'>
             <BucketImage dir='/enhancements/enhancement-pos-effect.png' />
-            <p style={{ fontSize: `calc(${fontSize} * 0.67)` }}>{currData.effect_pos}</p>
+            <p>{currData.effect_pos}</p>
         </div>
         {currData.effect_neg && <div id='enhancement-info-effect-neg'>
             <BucketImage dir='/enhancements/enhancement-neg-effect.png' />
-            <p style={{ fontSize: `calc(${fontSize} * 0.67)` }}>{currData.effect_neg}</p>
+            <p>{currData.effect_neg}</p>
         </div>}
 
         {/* Enhancement Class Restriction(s) */}
-        {currData.allowed_ships && <div id='enhancement-info-allowed-ships' style={{ fontSize: `calc(${fontSize} * 0.6)` }}>
+        {currData.allowed_ships && <div id='enhancement-info-allowed-ships'>
             <p>Class Restriction</p>
             <p className='enhancement-ship-name' >
                 {currData.allowed_ships.map((id) => <>{shipData[id].name.split('Colonial ')[1]}<br /></> )}

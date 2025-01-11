@@ -75,13 +75,15 @@
     width: 100%;
 }
 #enhancement-info-name {
+    font-size: 1.75vw;
     margin: 0;
     text-align: center;
-    white-space: nowrap;
+    text-wrap: balance;
 }
 #enhancement-info-desc {
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
+    font-size: 1vw;
     letter-spacing: 0.35px;
     margin: 10px auto;
     padding: 8px 10px;
@@ -93,6 +95,7 @@
     display: grid;
         column-gap: 15px;
         grid-template-columns: 32px calc(100% - 47px);
+    font-size: 1.2vw;
     letter-spacing: 0.35px;
     margin: 10px auto;
     padding-right: 10px;
@@ -111,6 +114,7 @@
     display: grid;
         column-gap: 15px;
         grid-template-columns: 32px calc(100% - 47px);
+    font-size: 1vw;
     margin: 10px auto;
     padding: 8px 10px;
     width: 90%;
