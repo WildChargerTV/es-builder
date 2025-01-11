@@ -28,7 +28,6 @@ const removeUser = () => ({ type: REMOVE_USER });
  * Thunk middleware to restore the current session user.
  * @requires {@linkcode csrfFetch}
  * @returns {(dispatch: any) => Promise<Response>}
- * @example TODO
  */
 export const restoreUser = () => async (dispatch) => {
     // Send a `GET` request to `/api/session`. Decode the response into a JSON object.
@@ -45,7 +44,6 @@ export const restoreUser = () => async (dispatch) => {
  * @requires {@linkcode csrfFetch}
  * @param {JSON} user
  * @returns {(dispatch: any) => Promise<Response>}
- * @example TODO
  */
 export const login = (user) => async (dispatch) => {
     // Retrieve the submitted login form data.
@@ -68,7 +66,6 @@ export const login = (user) => async (dispatch) => {
  * Thunk middleware to log out a user.
  * @requires {@linkcode csrfFetch}
  * @returns {(dispatch: any) => Promise<Response>}
- * @example TODO
  */
 export const logout = () => async (dispatch) => {
     // Send a `DELETE` request to `/api/session`.
@@ -82,13 +79,12 @@ export const logout = () => async (dispatch) => {
 /**
  * Thunk middleware to sign up a new user.
  * @requires {@linkcode csrfFetch}
- * @param {JSON} user
+ * @param {{ username: string, email: email, password: string }} user
  * @returns {(dispatch: any) => Promise<Response>}
- * @example TODO
  */
 export const signup = (user) => async (dispatch) => {
     // Retrieve the submitted signup form data.
-    const { username, firstName, lastName, email, password } = user;
+    const { username, email, password } = user;
 
     // Send a `POST` request to `/api/users` with the retrieved data. Decode the response into a
     // JSON object.

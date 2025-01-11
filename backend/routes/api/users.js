@@ -27,15 +27,13 @@ const users = require('express').Router();
 **/
 users.post('/', validateSignup, async (req, res) => {
     // Take the data from the request body, hash the password, and make a new user.
-    const { email, password, username, firstName, lastName } = req.body;
+    const { email, password, username } = req.body;
     const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword, firstName, lastName });
+    const user = await User.create({ email, username, hashedPassword });
 
     // Extract the new user's id, email, and username.
     const safeUser = {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
         email: user.email,
         username: user.username
     };
