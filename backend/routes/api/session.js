@@ -32,8 +32,8 @@ session.get('/', (req, res) => {
     if(!req.user) return res.json({ user: null });
 
     // Extract the necessary data from req.user and return it as an object.
-    const { id, firstName, lastName, email, username } = req.user;
-    return res.json({ user: { id, firstName, lastName, email, username } });
+    const { id, email, username } = req.user;
+    return res.json({ user: { id, email, username } });
 });
 
 /** POST /api/session
@@ -52,7 +52,9 @@ session.post('/', validateLogin, async (req, res, next) => {
     });
 
     // Verify that the password is valid.
-    const verifiedPassword = bcrypt.compareSync(password, foundUser.hashedPassword.toString());
+    const verifiedPassword = foundUser?.hashedPassword
+    ? bcrypt.compareSync(password, foundUser.hashedPassword.toString())
+    : false;
 
     // If either no user was found or the password was invalid, return an error.
     if(!foundUser || !verifiedPassword) {
