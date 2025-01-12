@@ -107,7 +107,7 @@ export default function loadoutReducer(state=initialState, action) {
             const clone = structuredClone(state);
             const id = action.payload;
             clone.activeLoadoutId = null;
-            clone.recentLoadouts = clone.recentLoadouts.list.filter((loadout) => loadout.id !== id);
+            clone.recentLoadouts.list = clone.recentLoadouts.list.filter((loadout) => loadout.id !== id);
             return clone;
         }
         case RESET_SLICE: {
