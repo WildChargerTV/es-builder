@@ -1,13 +1,16 @@
+// * frontend/src/components/Loadouts/LoadoutList.jsx
 
-
+// Node Module Imports
 import { useEffect, useState } from 'react';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+// Local Module Imports
 import ConfirmLoadoutDeleteModal from './Modals/DeleteLoadoutModal';
+import SingleLoadoutEquipList from './Modules/SingleLoadoutEquipList';
 import BucketImage from '../Bucket/BucketImage';
 import OpenModal from '../Modal/OpenModal';
-import { shipData } from '../../data';
+import { enhancementData, shipData } from '../../data';
 import { updateActiveId } from '../../store/loadout';
 import './LoadoutList.css';
 
@@ -20,7 +23,7 @@ export default function LoadoutList({ idName, listArr }) {
 }
 
 function SingleLoadout({ data }) {
-    const { id, name, shipId, User } = data;
+    const { id, name, shipId, enhancements, User } = data;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user);
@@ -54,11 +57,12 @@ function SingleLoadout({ data }) {
                 <BucketImage dir={`/ships/ship${shipId}-icon.png`} />
                 {currShip.name}
             </div>
+            <div className='single-loadout-info__enhancements'>
+                {Object.values(enhancements).map((id) => <BucketImage key={id} dir={enhancementData[id].icon} />)}
+            </div>
             
         </div>
-        <div className='single-loadout-grid'>
-            
-        </div>
+        <SingleLoadoutEquipList loadout={data} />
         <div className='single-loadout-owner'>
             <Link to={`/users/${User.id}`}>{User.username}</Link>
             <p>Created {createdAt.toLocaleDateString('en-US')}</p>
