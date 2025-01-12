@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 // Local Module Imports
 import LoginModal from './LoginModal';
 import OpenModal from '../Modal/OpenModal';
-import useWindowSize from '../../hooks/windowSize';
+import useWindowSize from '../../hooks/useWindowSize';
 import { logout } from '../../store/session';
 
 /**
