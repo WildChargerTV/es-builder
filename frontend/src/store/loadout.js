@@ -62,7 +62,7 @@ export const updateLoadout = (id, loadout) => async () => {
         console.log('success');
 };
 
-export const updateActiveId = (id) => (dispatch) => {
+export const setActiveLoadoutId = (id) => (dispatch) => {
     dispatch(updateActiveLoadoutId(id));
 };
 
