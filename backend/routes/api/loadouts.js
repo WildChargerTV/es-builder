@@ -1,13 +1,18 @@
 // * backend/routes/api/loadouts.js
 
+// Local Module Imports
 const { Loadout, User } = require('../../db/models');
 const { requireSessionAuth } = require('../../utils/auth');
 const { devLog, devErr } = require('../../utils/devLogger');
+// Chalk Color Aliases
 const { green } = require('chalk');
 
 const loadouts = require('express').Router();
 const PATH = 'routes/api/loadouts.js';
 
+/**
+ * GET /api/loadouts
+ */
 loadouts.get('/', async (_req, res) => {
     const limit = 10;
     const query = {
@@ -19,7 +24,8 @@ loadouts.get('/', async (_req, res) => {
             { model: User }
         ],
         limit,
-    }
+        order: [['createdAt', 'DESC']]
+    };
 
     const list = await Loadout.findAll(query)
     .then(async (result) => {
@@ -33,7 +39,6 @@ loadouts.get('/', async (_req, res) => {
                 if(typeof json[key] === 'string' && !['name'].includes(key))
                     json[key] = JSON.parse(json[key]);
             
-            json['enhancements'].selected = null;
             arr.push(json);
         }
 
@@ -46,6 +51,9 @@ loadouts.get('/', async (_req, res) => {
     });
 });
 
+/**
+ * GET /api/loadouts/:loadoutId
+ */
 loadouts.get('/:loadoutId', async (req, res, next) => {
     const { loadoutId } = req.params;
 
