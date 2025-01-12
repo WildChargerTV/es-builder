@@ -56,7 +56,7 @@ button:hover:disabled {
 }
 button img, button p { pointer-events: none; }
 
-div:disabled { 
+div:disabled, div.disabled { 
     opacity: 0.5;
     pointer-events: none;
 }
