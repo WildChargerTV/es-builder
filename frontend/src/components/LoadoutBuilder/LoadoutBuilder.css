@@ -24,7 +24,7 @@
     backdrop-filter: brightness(20%);
     border: 3px solid #acdbf9;
         border-radius: 5px;
-    font-size: clamp(14pt, 1.85vw, 28pt);
+    font-size: 1.95vw;
     margin: auto;
     padding: 0 10px;
     white-space: nowrap;

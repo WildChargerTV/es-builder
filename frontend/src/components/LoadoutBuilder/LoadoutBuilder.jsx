@@ -3,7 +3,7 @@
 // Node Module Imports
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 // Local Module Imports
 import BuilderTabs from './BuilderTabs';
 import ShipsTab from './ShipsTab';
@@ -59,8 +59,10 @@ const VALID_BUILDER_MODES = ['create', 'view', 'edit'];
 export default function LoadoutBuilderMain({ mode }) {
     // React Hooks
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const params = useParams();
-    const { tabId, User } = useSelector((state) => state.builder);    
+    const { tabId, User } = useSelector((state) => state.builder); 
+    const sessionUser = useSelector((state) => state.session.user);   
     // Local State Values
     const [isLoaded, setIsLoaded] = useState(false);
     const [pageTitle, setPageTitle] = useState('');
@@ -84,6 +86,10 @@ export default function LoadoutBuilderMain({ mode }) {
         // ? Because the other two modes require pseudo-asynchronous dispatch calls, it's easier to 
         // ? return early here if in create mode.
         if(mode === 'create') {
+            if(!sessionUser) {
+                alert(`Must be logged in to create a Loadout. If you are logged in and see this message, please submit a bug report via GitHub.`);
+                return navigate('/');
+            }
             setPageTitle('Create Loadout');
             setIsLoaded(true); 
             return; 
@@ -96,13 +102,17 @@ export default function LoadoutBuilderMain({ mode }) {
         // page to render.
         dispatch(getLoadout(params.loadoutId))
         .then((loadoutData) => {
+            if(mode === 'edit' && (!sessionUser || loadoutData.userId !== sessionUser.id)) {
+                alert(`Unauthorized to edit this Loadout. Please log in as the Loadout's owner, or submit a bug report via GitHub.`);
+                return navigate('/');
+            }
             delete loadoutData.userId;
             delete loadoutData.createdAt;
             delete loadoutData.updatedAt;
             dispatch(builderActions.bulkUpdateState(loadoutData));
             setIsLoaded(true);
         });
-    }, [dispatch, mode, params.loadoutId]);
+    }, [dispatch, navigate, mode, params.loadoutId, sessionUser]);
 
     /** Return the Loadout Builder. */
     return isLoaded && (<main id='site-loadout-builder'>
