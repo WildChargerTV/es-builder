@@ -69,6 +69,8 @@ function EquipListRow({ type, loadoutData }) {
     }, [dispatch, type, loadoutData, loadedIds]);
 
     return (<li>
-        {iconArr && iconArr.map((dir) => dir && <BucketImage key={key()} dir={dir} />)}
+        {iconArr && iconArr.map((dir) => dir && 
+            <BucketImage key={`${type.toLowerCase()}-${key(true)}`} dir={dir} />
+        )}
     </li>);
 }
