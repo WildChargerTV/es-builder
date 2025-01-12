@@ -1,11 +1,13 @@
 // * frontend/src/components/Landing/Landing.jsx
 
 // Node Module Imports
-import { PiMouseLeftClickFill } from "react-icons/pi";
+import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 // Local Module Imports
 import './Landing.css';
+import OpenModal from '../Modal/OpenModal';
+import SignUpModal from './SignUpModal';
 
 /**
  * Component to display a site landing page to all logged-out users. Logged-in users are redirected
@@ -37,7 +39,10 @@ export default function LandingPage() {
                 Our online layout builder&apos;s got you covered. Sign up and create one today!
             </p>
             {/* Sign Up Button */}
-            <button>Sign Up<span className='site-text-icon'><PiMouseLeftClickFill /></span></button>
+            <OpenModal
+                elementText={<>Sign Up <span className='site-text-icon'><PiMouseLeftClickFill /></span></>}
+                modalComponent={<SignUpModal />}
+            />
             {/* Message for Testers */}
             <h2>Important Information for All Testers:</h2>
             <p>
