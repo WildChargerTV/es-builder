@@ -14,6 +14,7 @@ import builderReducer from './builder';
 import customEquippableReducer from './customEquippable';
 import loadoutReducer from './loadout';
 import sessionReducer from './session';
+import userReducer from './user';
 
 /** 
  * The primary Redux reducer (and by extension, thunk) controller. This connects all thunk actions
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     builder: builderReducer,
     customEquippable: customEquippableReducer,
     loadout: loadoutReducer,
-    session: sessionReducer
+    session: sessionReducer,
+    user: userReducer
 });
 
 /** 
