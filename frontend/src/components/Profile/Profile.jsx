@@ -2,25 +2,29 @@
 
 // Node Module Imports
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 // Local Module Imports
 import './Profile.css';
 
 /**
- * Component to display a user's profile. If this page is accessed by a logged-out user, redirect
- * to the landing page.
- * @component UserProfile
+ * Component to display a user's profile.
+ * 
+ * This component is currently empty and just redirects to `/users/:userId/loadouts` for logged-in
+ * users, and the homepage for logged-out users. A more comprehensive profile system will be 
+ * implemented at a later time.
+ * @component `UserProfile`
  * @returns {ReactElement}
  */
 export default function UserProfile() {
     // React Hooks
+    const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user);
 
-    /** If there is no session user, redirect to the landing page. */
-    if(!sessionUser) return <Navigate to='/' />
+    /** Determine where to redirect the user. */
+    const redirectTarget = sessionUser
+    ? `/users/${sessionUser.id}/loadouts`
+    : '/';
 
-    /** Return the profile page content. */
-    return (<main id='site-profile'>
-        <h1>User Profile for {sessionUser.username}</h1>
-    </main>);
+    /** Return the redirection element. */
+    return <Navigate to={redirectTarget} />
 }
