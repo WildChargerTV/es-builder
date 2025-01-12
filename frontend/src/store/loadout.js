@@ -13,7 +13,7 @@ const DEL_LOADOUT = 'loadout/deleteLoadoutById';
 const RESET_SLICE = 'loadout/resetStateSlice';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
-const readMultipleLoadouts = (loadouts) => ({ type: GET_LOADOUT_MULTI, payload: loadouts });
+const readMultipleLoadouts = (mode, loadouts) => ({ type: GET_LOADOUT_MULTI, payload: { mode, loadouts } });
 const updateActiveLoadoutId = (loadoutId) => ({ type: SET_CURRENT_ID, payload: loadoutId });
 const updatePrimaryDataCache = (data) => ({ type: SET_PRIMARY_CACHE, payload: data });
 const updateSecondaryDataCache = (data) => ({ type: SET_SECONDARY_CACHE, payload: data });
@@ -46,10 +46,20 @@ export const getRecentLoadouts = () => async (dispatch) => {
     const res = await csrfFetch('/api/loadouts');
     if(res.ok) {
         const loadouts = await res.json();
-        dispatch(readMultipleLoadouts(loadouts));
+        dispatch(readMultipleLoadouts('recents', loadouts));
     }
     return res;
 };
+
+export const getUserLoadouts = (userId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/users/${userId}/loadouts`);
+
+    if(res.ok) {
+        const loadouts = await res.json();
+        dispatch(readMultipleLoadouts('user', loadouts));
+    }
+    return res;
+}
 
 export const updateLoadout = (id, loadout) => async () => {
     console.log('hi');
@@ -89,14 +99,18 @@ const initialState = {
     activeLoadoutId: null,
     primaryWeaponCache: null,
     secondaryWeaponCache: null,
-    recentLoadouts: []
+    recentLoadouts: {},
+    userLoadouts: {}
 };
 
 //* --------------------[Redux Reducer]-------------------- *//
 export default function loadoutReducer(state=initialState, action) {
     switch(action.type) {
         case GET_LOADOUT_MULTI:
-            return { ...state, recentLoadouts: action.payload };
+            if(action.payload.mode === 'recents')
+                return { ...state, recentLoadouts: action.payload.loadouts };
+            else if(action.payload.mode === 'user')
+                return { ...state, userLoadouts: action.payload.loadouts}
         case SET_CURRENT_ID:
             return { ...state, activeLoadoutId: action.payload };
         case SET_PRIMARY_CACHE:
