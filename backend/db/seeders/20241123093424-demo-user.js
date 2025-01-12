@@ -20,24 +20,24 @@ module.exports = {
     async up (_queryInterface, _Sequelize) {
         await User.bulkCreate([
             {
-                email: 'demo@aa.io',
-                username: 'Demo-lition',
-                hashedPassword: bcrypt.hashSync('password')
+                email: 'hive@aa.io',
+                username: 'HIVEUnit',
+                hashedPassword: bcrypt.hashSync('172a]vlo0k')
             },
             {
                 email: 'user1@aa.io',
-                username: 'FakeUser1',
-                hashedPassword: bcrypt.hashSync('password2')
+                username: 'AdamRoslin',
+                hashedPassword: bcrypt.hashSync('X5;d$U]oCT')
             },
             {
                 email: 'user2@aa.io',
-                username: 'FakeUser2',
-                hashedPassword: bcrypt.hashSync('password3')
+                username: 'Maurice',
+                hashedPassword: bcrypt.hashSync('I|5F6!T7Ad')
             },
             {
-                email: 'wctv@aa.io',
-                username: 'WildChargerDemo',
-                hashedPassword: bcrypt.hashSync('quagsire')
+                email: 'info@wildcharger.xyz',
+                username: 'WildCharger',
+                hashedPassword: bcrypt.hashSync('L|N*C_p?8g')
             }
         ], { validate: true });
     },
@@ -46,7 +46,7 @@ module.exports = {
     async down (queryInterface, Sequelize) {
         options.tableName = 'Users';
         return queryInterface.bulkDelete(options, {
-            username: { [Sequelize.Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2', 'WildChargerDemo'] }
+            username: { [Sequelize.Op.in]: ['HIVEUnit', 'AdamRoslin', 'Maurice', 'WildCharger'] }
         }, {});
     }
 };
