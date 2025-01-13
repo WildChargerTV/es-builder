@@ -11,6 +11,7 @@ import LandingPage from './components/Landing/Landing';
 import RecentLoadouts from './components/Loadouts/RecentLoadouts';
 import LoadoutBuilderMain from './components/LoadoutBuilder/LoadoutBuilder';
 import UserProfile from './components/Profile/Profile';
+import UserLoadouts from './components/Loadouts/UserLoadouts';
 import Footer from './components/Footer/Footer';
 import * as sessionActions from './store/session';
 
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             {
                 path: '/profile',
                 element: <UserProfile />
+            },
+            {
+                path: '/users/:userId/loadouts',
+                element: <UserLoadouts />
             }
         ]
     }

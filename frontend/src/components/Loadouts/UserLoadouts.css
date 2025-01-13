@@ -1,0 +1,30 @@
+/* * frontend/src/components/Loadouts/UserLoadouts.css */
+
+#site-user-loadouts-container {
+    min-height: 100vh;
+    padding: 35px 0;
+}
+#site-user-loadouts {
+    background-size: cover;
+    box-sizing: border-box;
+    height: max-content;
+    margin: 0 auto;
+    width: 80%;
+}
+#site-user-loadouts h1 { 
+    backdrop-filter: brightness(20%);
+    border: 3px solid #acdbf9;
+        border-radius: 5px;
+    font-size: 1.95vw;
+    margin: 0 0 1vw 0; 
+    padding: 0 15px;
+    white-space: nowrap;
+    width: fit-content;
+}
+#site-user-loadouts h3 {
+    border: 2px solid #acdbf9;
+    color: #abcdf9;
+    font-size: 1.5vw;
+    padding: 10px 0;
+    text-align: center;
+}
