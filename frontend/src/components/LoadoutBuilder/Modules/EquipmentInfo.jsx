@@ -80,10 +80,8 @@ export default function EquipmentInfo() {
         );
 
         // If the equipment is a Secondary Weapon or Consumable, it can be returned here.
-        if(['Secondary', 'Consumables'].includes(category)) {
-
+        if(['Secondary', 'Consumables'].includes(category))
             return clone;
-        }
 
         // * For the remaining two categories, enhancement flags & mod data must be added.
         // Add an indicator for whether or not the equipment is enhanced.
@@ -92,12 +90,12 @@ export default function EquipmentInfo() {
         // Add an indicator for whether or not the equipment is allowed for enhancement.
         // All Primary Weapons are enhanceable except the Ancient Weapon.
         // Only the Gatling Turret, Laser Turret, and Missile Turret are enhanceable.
-        clone.enhanceable = category === 'Primary' || 
+        clone.enhanceable = (category === 'Primary' && id !== 0) || 
             (category === 'Devices' && [39, 40, 47].includes(id));
         
         // Insert the mod data from the appropriate Redux state, converted into an array.
         const reduxData = category === 'Primary' ? builder.primaryWeapons[index] : builder.devices[index];
-        clone.mods = Object.entries(reduxData.mods);
+        clone.mods = reduxData.mods ? Object.entries(reduxData.mods) : null;
         
         // Return the data.
         return clone;
