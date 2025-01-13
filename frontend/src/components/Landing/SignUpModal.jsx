@@ -10,7 +10,7 @@ import * as sessionActions from '../../store/session';
 
 /**
  * Modal component to display a user signup form. Closes itself once the signup succeeds.
- * @component LoginModal
+ * @component SignUpModal
  * @require {@linkcode useModal}
  * @require {@linkcode sessionActions}
  * @returns {ReactElement}

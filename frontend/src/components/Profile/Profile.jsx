@@ -2,7 +2,7 @@
 
 // Node Module Imports
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 // Local Module Imports
 import './Profile.css';
 
@@ -17,7 +17,6 @@ import './Profile.css';
  */
 export default function UserProfile() {
     // React Hooks
-    const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user);
 
     /** Determine where to redirect the user. */

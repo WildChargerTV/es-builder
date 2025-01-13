@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 // Local Module Imports
 import PresetLoadoutModal from './Modals/PresetLoadoutModal';
 import OpenModal from '../Modal/OpenModal';
-import { shipData } from '../../data';
 import * as builder from '../../store/builder';
 import { createLoadout, updateLoadout } from '../../store/loadout';
 

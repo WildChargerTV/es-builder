@@ -1,6 +1,8 @@
 // * frontend/src/components/LoadoutBuilder/Modals/MessageModal.jsx
 
+// Node Module Imports
 import { PiMouseLeftClickFill } from 'react-icons/pi';
+// Local Module Imports
 import { useModal } from '../../../context/Modal';
 
 function MessageModal({ title, message, confirmTxt, onConfirm, denyTxt, onDeny }) {
