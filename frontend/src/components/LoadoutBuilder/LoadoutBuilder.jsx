@@ -121,7 +121,7 @@ export default function LoadoutBuilderMain({ mode }) {
             <h1 id='builder-page-title'>{pageTitle}</h1>
             <LoadoutName contentEditable={mode !== 'view'} />
             {User?.username && <h3 id='builder-owner-name'>
-                <Link to={`/users/${User.id}`}>{User.username}</Link>
+                <Link to={`/users/${User.id}/loadouts`}>{User.username}</Link>
             </h3>}
         </div>
         
