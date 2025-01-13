@@ -99,8 +99,8 @@ const initialState = {
     activeLoadoutId: null,
     primaryWeaponCache: null,
     secondaryWeaponCache: null,
-    recentLoadouts: {},
-    userLoadouts: {}
+    recentLoadouts: null,
+    userLoadouts: null
 };
 
 //* --------------------[Redux Reducer]-------------------- *//
@@ -110,7 +110,9 @@ export default function loadoutReducer(state=initialState, action) {
             if(action.payload.mode === 'recents')
                 return { ...state, recentLoadouts: action.payload.loadouts };
             else if(action.payload.mode === 'user')
-                return { ...state, userLoadouts: action.payload.loadouts}
+                return { ...state, userLoadouts: action.payload.loadouts };
+            else
+                return state;
         case SET_CURRENT_ID:
             return { ...state, activeLoadoutId: action.payload };
         case SET_PRIMARY_CACHE:

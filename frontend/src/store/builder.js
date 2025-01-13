@@ -381,7 +381,7 @@ export default function builderReducer(state=initialState, action) {
 
             // Clone the current state and set the index to the appropriate values.
             const clone = structuredClone(state.secondaryWeapons);
-            clone[index] = weaponId >= 0 ? `${weaponId}x${quantity}` : null;
+            clone[index] = weaponId !== null ? `${weaponId}x${quantity}` : null;
 
             // Return the new state, alongside an updated equipment focus.
             return { 
@@ -435,7 +435,7 @@ export default function builderReducer(state=initialState, action) {
 
             // Clone the current state and set the index to the appropriate value.
             const clone = structuredClone(state.consumables);
-            clone[index] = consumableId >= 0 ? `${consumableId}x${quantity}` : null;
+            clone[index] = consumableId !== null ? `${consumableId}x${quantity}` : null;
 
             // Return the new state, alongside an updated equipment focus.
             return { 
