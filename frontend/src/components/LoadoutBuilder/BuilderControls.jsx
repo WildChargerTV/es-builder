@@ -59,7 +59,7 @@ function SubmitLoadoutButton() {
      * 2. The loadout's name must be between 4 and 30 characters, inclusive, and must not be the
      *    same as the predefined name.
      * 3. A ship has been selected.
-     * 4. A preset loadout was selected, or the user chose to start from scratch.
+     * 4. A preset loadout was selected, or the user chose to start from scratch (create mode).
      * 5. The loadout has at least one Primary or Secondary Weapon. This check is bypassed if the
      *    `ancientWeaponEquipped` flag is true.
      */
@@ -67,15 +67,18 @@ function SubmitLoadoutButton() {
         const sessionUserExists = sessionUser !== null;
         const isValidName = name.length >= 4 && name.length <= 30 && name !== 'LOADOUT NAME HERE';
         const shipChosen = shipId >= 0;
-        const presetChosen = shipPreset === false || ['a', 'b', 'c'].includes(shipPreset);
+        const presetChosen = mode !== 'create' || 
+            (shipPreset === false || ['a', 'b', 'c'].includes(shipPreset));
         const hasOnePrimary = primaryWeapons && (flags.ancientWeaponEquipped ||
             Object.values(primaryWeapons).filter((primary) => primary.id !== null).length > 0);
         const hasOneSecondary = secondaryWeapons &&
             Object.values(secondaryWeapons).filter((secondary) => secondary !== null).length > 0;
-
+        
+        console.warn(sessionUserExists, isValidName, shipChosen, presetChosen,
+            hasOnePrimary, hasOneSecondary)
         setDisabled(!(sessionUserExists && isValidName && shipChosen && presetChosen &&
             hasOnePrimary && hasOneSecondary));
-    }, [sessionUser, flags, name, shipId, shipPreset, primaryWeapons, secondaryWeapons]);
+    }, [sessionUser, mode, flags, name, shipId, shipPreset, primaryWeapons, secondaryWeapons]);
 
     
     /** When the Submit button is clicked, send the data to the backend. */
