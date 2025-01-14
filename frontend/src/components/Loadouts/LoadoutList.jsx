@@ -94,8 +94,10 @@ function SingleLoadout({ loadoutData }) {
                 {currShip.name}
             </div>
             <div className='single-loadout-info__enhancements'>
-                {Object.values(enhancements).map((id) => 
-                    <BucketImage key={id || crypto.randomUUID()} dir={id ? enhancementData[id].icon : '/empty'} />
+                {Object.values(enhancements).map((id) => <BucketImage 
+                        key={id || crypto.randomUUID()} 
+                        dir={(id !== null && id >= 0) ? enhancementData[id].icon : '/empty'} 
+                    />
                 )}
             </div>
             
