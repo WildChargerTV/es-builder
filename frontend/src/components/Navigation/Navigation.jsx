@@ -23,11 +23,13 @@ export default function Navigation({ isLoaded }) {
     return isLoaded && (<header id='site-nav'>
         {/* Site Logo */}
         <div id='site-nav-logo'>
-            <NavLink to='/'><img 
-                src='https://upload.wikimedia.org/wikipedia/fr/2/2b/Everspace_Logo.png' 
-                alt='ES1 logo' 
-            /></NavLink>
-            <NavLink to='/'>Builder</NavLink>
+            <NavLink to='/'>
+                <img 
+                    src='https://upload.wikimedia.org/wikipedia/fr/2/2b/Everspace_Logo.png' 
+                    alt='ES1 logo' 
+                /> Builder <span style={{ fontSize: '20pt' }}>Beta</span>
+            </NavLink>
+            
         </div>
 
         {/* Nav Links & Profile Button */}
