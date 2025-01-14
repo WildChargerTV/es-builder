@@ -77,12 +77,18 @@ export default function EnhanceModal() {
             a new Custom Equippable that will be applicable to loadouts you create in the future.
         </p>
         <p className='modal-paragraph'>
-            <span className='red'>This feature is in its Alpha stages.</span> The loadout builder
-            cannot currently properly discern what kind of Primary Weapons & Devices are eligible
-            to be enhanced, nor does it know which stats are eligible for enhancement. Stats that
-            would be represented as percentages in-game are displayed as decimals here. Fixes for
-            these issues are coming sometime in the future; for now, let me know of discrepancies
-            by submitting a GitHub issue. Thank you!
+            <span className='red'>This feature is in Beta, and is largely unregulated.</span> The 
+            loadout builder does not yet have any way of knowing which equipment stats are allowed
+            to be changed during enhancement, nor does it know whether or not the stats you submit
+            are technically &quot;legal&quot; or &quot;legitimate&quot;. So yes, it will not stop
+            you from claiming your Plasma Thrower has no Energy Consumption, however a fix for this
+            is planned.
+            <br />
+            Additionally, just like the rest of the Loadout Builder, all stats are represented only
+            by numbers, regardless of whether they may be a percentage, and these numbers are not
+            currently influenced by any other factors. This is also planned to be implemented at a
+            later time; however, the change in numbers you submit here will show up as intended.
+            Please feel free to let me know of any other discrepancies via GitHub. Thank you!
         </p>
 
         {/* Modal Form (Equipment Stats) */}
