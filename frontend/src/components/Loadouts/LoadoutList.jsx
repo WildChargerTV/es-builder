@@ -106,7 +106,7 @@ function SingleLoadout({ loadoutData }) {
 
         {/* Loadout Owner Info: Link to User Page, Create/Change Dates, Edit/Delete Buttons */}
         <div className='single-loadout-owner'>
-            <Link to={`/users/${User.id}`}>{User.username}</Link>
+            <Link to={`/users/${User.id}/loadouts`}>{User.username}</Link>
             <p>Created {createdAt.toLocaleDateString('en-US')}</p>
             {(createdAt.valueOf() !== updatedAt.valueOf()) && <p>Modified {updatedAt.toLocaleDateString('en-US')}</p>}
             {showCtrls && <div className='single-loadout-owner__ctrls'>
