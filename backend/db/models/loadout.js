@@ -30,6 +30,14 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.INTEGER
         },
+        flags: {
+            allowNull: false,
+            type: DataTypes.STRING
+        },
+        /**
+         * Name - String Field, Not Nullable
+         * Length Restriction: Minimum 4, Maximum 30
+         */
         name: {
             allowNull: false,
             type: DataTypes.STRING,

@@ -1,6 +1,6 @@
 'use strict';
 // * backend/db/migrations/20241208054657-create-loadout.js
-// * Sequelize: Loadouts Migration File
+// * Sequelize: Loadouts Migration File 1
 // ? As a reminder, this is a representation of the data actually inserted into the table.
 
 /** In production, ensure Sequelize refers to the schema in the .env file. */
