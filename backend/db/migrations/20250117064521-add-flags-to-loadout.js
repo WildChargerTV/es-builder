@@ -4,6 +4,14 @@
 // ? As a reminder, this is a representation of the data actually inserted into the table.
 // ! FINALIZED - DO NOT MODIFY
 
+const loadoutTableName = process.env.NODE_ENV === 'production'
+? { schema: process.env.SCHEMA, tableName: 'Loadouts' }
+: 'Loadouts';
+
+const customEquippableTableName = process.env.NODE_ENV === 'production'
+? { schema: process.env.SCHEMA, tableName: 'CustomEquippables' }
+: 'CustomEquippables';
+
 /** 
  * Export the migration.
  * @type {import('sequelize-cli').Migration} 
@@ -18,13 +26,13 @@ module.exports = {
      * Data Type is now String Field (Limit 1024 Characters)
      */
     async up (queryInterface, Sequelize) {
-        await queryInterface.addColumn('Loadouts', 'flags', {
+        await queryInterface.addColumn(loadoutTableName, 'flags', {
             allowNull: false,
             defaultValue: "{\"ancientWeaponEquipped\":null,\"splitterEquipped\":null}",
             type: Sequelize.STRING(1024)
         });
 
-        await queryInterface.changeColumn('CustomEquippables', 'stats', Sequelize.STRING(1024));
+        await queryInterface.changeColumn(customEquippableTableName, 'stats', Sequelize.STRING(1024));
     },
 
     /** 
