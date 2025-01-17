@@ -9,15 +9,17 @@ const { restoreUser } = require('../../utils/auth.js');
  * 1. `GET /api/csrf/restore`: Update CSRF Token
  *  
  * Parent to the following branches:
- * 1. `/api/session`
- * 2. `/api/users`
+ * 1. `/api/custom-equippables`
+ * 2. `/api/loadouts`
+ * 3. `/api/session`
+ * 4. `/api/users`
  */
 const api = require('express').Router();
 
 /** 
  * GET /api/csrf/restore
- * ? Route is exclusive to development.
  * Updates the CSRF token to re-authenticate the current session.
+ * ? Route is exclusive to development.
  */
 if(require('../../config').environment !== 'production') api.get('/csrf/restore', (req, res) => {
     const csrfToken = req.csrfToken();

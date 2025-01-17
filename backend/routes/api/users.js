@@ -9,51 +9,63 @@ const { setTokenCookie } = require('../../utils/auth');
 const { devLog, devWarn, devErr } = require('../../utils/devLogger');
 const { validateSignup } = require('../../utils/validation');
 // Chalk Color Aliases
-const { green } = require('chalk');
-
-// Define the file path (for dev logger).
+const { green, red } = require('chalk');
+// Dev Logger File Path
 const PATH = 'routes/api/users.js';
 
 /** 
  * Controller for all `/api/users` Express routes.
  * 
  * Includes the following routes:
- * 1. `POST /api/users`: User Signup
+ * 1. `GET /api/users/:userId`: Get User Details By ID
+ * 2. `GET /api/users/:userId/loadouts`: Get User Loadouts
+ * 3. `POST /api/users`: User Signup Route (Create New User)
+ * @file `/backend/routes/api/users.js`
  */
 const users = require('express').Router();
 
 /**
  * GET /api/users/:userId
+ * Retrieves a specific User's ID & Username. If no User is found, a 404 is returned, but no error
+ * is thrown, as this is expected to be handled on the frontend.
  */
 users.get('/:userId', async (req, res, next) => {
+    // Destructured Parameters
     const { userId } = req.params;
 
-    let user;
-    try {
-        user = await User.findByPk(userId)
-        .then((result) => result.toJSON());
+    /** Return the User specified by the `userId`. Handle any errors. */
+    return await User.findByPk(userId)
+    .then((user) => {
+        // If the User does not exist, return a 404, but do not throw an error.
+        if(!user) {
+            devWarn(PATH, `User ${userId} ` + red('not found') + 
+                '. If the User exists, this is a bug!');
+            return res.status(404).json(null);
+        }
+
+        // Convert the User to a JSON object.
+        user = user.toJSON();
+
+        // Return the final User object.
         devLog(PATH, `User ${userId} found ` + green('successfully'));
-    } catch(err) {
-        devErr(PATH, err.message, err);
-        return next(err);
-    }
-    
-    return res.json(user);
-})
+        return res.json(user);
+    }).catch((err) => next(err));
+});
 
 /**
  * GET /api/users/:userId/loadouts
+ * Retrieves a User's Loadouts. If any exist, also safely returns the User's ID & Username. Does
+ * not reveal any personally identifying information.
  */
 users.get('/:userId/loadouts', async (req, res) => {
+    // Destructured Parameters
     const { userId } = req.params;
 
+    /** Create a variable to hold returned User data from the query. */
     let user;
 
+    /** Construct the query. Include Loadout User data. */
     const query = {
-        attributes: [
-            'id', 'name', 'shipId', 'enhancements', 'primaryWeapons', 'secondaryWeapons', 'devices', 
-            'consumables', 'createdAt', 'updatedAt'
-        ],
         include: [{ model: User }],
         order: [['createdAt', 'DESC']],
         where: {
@@ -61,53 +73,54 @@ users.get('/:userId/loadouts', async (req, res) => {
         }
     };
 
-    const list = await Loadout.findAll(query)
-    .then(async (result) => {
-        const arr = [];
+    /** Return the list of Loadouts as specified by the query. Handle any errors. */
+    return await Loadout.findAll(query)
+    .then(async (list) => {
+        // Map through the returned list, preparing the data to be returned.
+        list = list.map((loadout) => {
+            // Convert the Loadout to a JSON object.
+            loadout = loadout.toJSON();
 
-        for await (const loadout of result) {
-            const json = loadout.toJSON();
-            if(json.id === null) continue;
-
-            for(let key in json)
-                if(typeof json[key] === 'string' && !['name'].includes(key))
-                    json[key] = JSON.parse(json[key]);
+            // Parse the string values in the Loadout, except for its name & description.
+            for(let key in loadout)
+                if((typeof loadout[key]) === 'string' && !['name', 'description'].includes(key))
+                    loadout[key] = JSON.parse(loadout[key]);
             
-            if(!user)
-                user = loadout.User;
+            // Return the parsed Loadout.
+            return loadout;
+        });
 
-            delete loadout.User;
-            arr.push(json);
-        }
-
-        arr.length > 0
-        ? devLog(PATH, `Retrieved ${arr.length} loadouts belonging to user ID ${userId}` + green(' successfully'))
-        : devWarn(PATH, `Retrieval was successful; however, user ID ${userId} has no loadouts.`)
-        return arr;
-    });
-
-    return res.json({ list, user });
+        // Return the parsed Loadout list.
+        devLog(PATH, `Retrieved ${list.length} loadouts ` + green('successfully'));
+        return res.json({ list, limit });
+    }).catch((err) => next(err));
 });
 
 /** 
  * POST /api/users
- * The user signup route.
-**/
+ * The User Signup route. Validates input data, then returns the created User.
+ */
 users.post('/', validateSignup, async (req, res) => {
-    // Take the data from the request body, hash the password, and make a new user.
+    // Destructured Parameters
     const { email, password, username } = req.body;
+
+    /** Hash the provided password. */
     const hashedPassword = bcrypt.hashSync(password);
+
+    /** Create the User. */
     const user = await User.create({ email, username, hashedPassword });
 
-    // Extract the new user's id, email, and username.
+    /** Extract the new User's ID, Email, & Username. */
     const safeUser = {
         id: user.id,
         email: user.email,
         username: user.username
     };
 
-    // Update the token cookie and return the extracted user data.
+    /** Apply the `safeUser` data to the JWT token cookie. */
     await setTokenCookie(res, safeUser);
+
+    /** Return the `safeUser` data. */
     devLog(PATH, 'User signup ' + green('SUCCESS'));
     return res.json({ user: safeUser });
 });

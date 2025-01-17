@@ -1,5 +1,4 @@
 // * backend/routes/api/session.js
-// Controller for all `/api/session` Express routes.
 
 // Node Module Imports
 const bcrypt = require('bcryptjs');
@@ -7,43 +6,48 @@ const { Op } = require('sequelize');
 // Local Module Imports
 const { User } = require('../../db/models');
 const { setTokenCookie } = require('../../utils/auth');
-const { devLog, devWarn } = require('../../utils/devLogger');
+const { devLog, devWarn, devErr } = require('../../utils/devLogger');
 const { validateLogin } = require('../../utils/validation');
 // Chalk Color Aliases
 const { green, red } = require('chalk');
-
-// Define the file path (for dev logger).
+// Dev Logger File Path
 const PATH = 'routes/api/session.js';
 
-/** ### `/api/session` Route Controller
- *  @file `/backend/routes/api/session.js`
- *  @description Includes the following routes:
- *  1. `GET /api/session` - Fetch Current User
- *  2. `POST /api/session` - User Login
- *  3. `DELETE /api/session` - User Logout
-**/
+/** 
+ * Controller for all `/api/session` Express routes.
+ * 
+ * Includes the following routes:
+ * 1. `GET /api/session`: Get Current User Details
+ * 2. `POST /api/session`: User Login Route
+ * 3. `DELETE /api/session`: User Logout Route
+ * @file `/backend/routes/api/session.js`
+ */
 const session = require('express').Router();
 
-/** GET /api/session
- *  Fetch the current session user. 
-**/
+/** 
+ * GET /api/session
+ * Retrieves the current Session User's data. Unlike `GET /api/users/:userId`, also returns the 
+ * User's Email.
+ */
 session.get('/', (req, res) => {
-    // If there is no session user, return null.
-    if(!req.user) return res.json({ user: null });
+    /** If there is no Session User, return null. */
+    if(!req.user) 
+        return res.json({ user: null });
 
-    // Extract the necessary data from req.user and return it as an object.
+    /** Extract and return the necessary data from `req.user`. */
     const { id, email, username } = req.user;
     return res.json({ user: { id, email, username } });
 });
 
-/** POST /api/session
- *  The user login route.
-**/
+/** 
+ * POST /api/session
+ * The User Login route. Validates input data, then returns the specified User.
+ */
 session.post('/', validateLogin, async (req, res, next) => {
-    // Grab the username/email & password from the request body.
+    // Destructured Parameters
     const { credential, password } = req.body;
 
-    // Try to find a user based on either the provided username or email.
+    /** Try to find a User based on either the provided Username or Email. Ignore scope. */
     const foundUser = await User.unscoped().findOne({
         where: {[Op.or]: {
             username: credential,
@@ -51,12 +55,11 @@ session.post('/', validateLogin, async (req, res, next) => {
         }}
     });
 
-    // Verify that the password is valid.
+    /** Verify that the Password is valid. */
     const verifiedPassword = foundUser?.hashedPassword
-    ? bcrypt.compareSync(password, foundUser.hashedPassword.toString())
-    : false;
+    && bcrypt.compareSync(password, foundUser.hashedPassword.toString());
 
-    // If either no user was found or the password was invalid, return an error.
+    /** If no User was found or the Password was invalid, throw an error. */
     if(!foundUser || !verifiedPassword) {
         devWarn(PATH, 'User login ' + red('FAIL'));
         const err = new Error('Login failed');
@@ -66,23 +69,35 @@ session.post('/', validateLogin, async (req, res, next) => {
         return next(err);
     }
 
-    // Create a new session cookie with the valid user data.
-    const { id, firstName, lastName, email, username } = foundUser;
+    /** Apply the User's ID, Email, and Username to the JWT token cookie. */
+    const { id, email, username } = foundUser;
     await setTokenCookie(res, { id, email, username });
 
-    // Return the user in JSON.
+    /** Return the User's ID, Email, and Username. */
     devLog(PATH, 'User login ' + green('SUCCESS'));
-    return res.json({ user: { id, firstName, lastName, email, username } });
+    return res.json({ user: { id, email, username } });
 });
 
-/** DELETE /api/session
- *  The user logout route.
-**/
-session.delete('/', (_req, res) => {
+/** 
+ * DELETE /api/session
+ * The User Logout route. If no User exists, a faux error (not sent to the default error handler)
+ * is returned with status code 400. Returns a success message otherwise.
+ */
+session.delete('/', (req, res, next) => {
+    /** If this route was called without a User, throw an error. */
+    if(!req.user) {
+        devErr(PATH, 'Attempted to log out a nonexistent user!', 
+            new Error('Attempted to log out a null user'));
+        return res.status(400).json({ message: 'failure' });
+    }
+        
+    /** Clear the JWT token cookie. */
     res.clearCookie('token');
+
+    /** Return a success message. */
     devLog(PATH, 'User logout ' + green('SUCCESS'));
     return res.json({ message: 'success' });
 })
 
-// Export the branch.
+/** Export the branch. */
 module.exports = session;
