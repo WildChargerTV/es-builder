@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
              * One-to-Many: One Loadout have have many Custom Equippables
              * ! This is deprecated and awaiting removal via migration.
              */
-            Loaadout.hasMany(models.CustomEquippable, {
+            Loadout.hasMany(models.CustomEquippable, {
                 foreignKey: 'equippableId',
                 constraints: false
             });
