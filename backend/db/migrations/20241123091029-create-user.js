@@ -2,6 +2,7 @@
 // * backend/db/migrations/20241123091029-create-user.js
 // * Sequelize: Users Migration File
 // ? As a reminder, this is a representation of the data actually inserted into the table.
+// ! FINALIZED - DO NOT MODIFY
 
 /** In production, ensure Sequelize refers to the schema in the .env file. */
 let options = {};

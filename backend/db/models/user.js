@@ -16,12 +16,14 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
+            /** One-to-Many: One User can have many Loadouts */
             User.hasMany(models.Loadout, {
                 foreignKey: 'userId',
                 sourceKey: 'id',
                 onDelete: 'CASCADE',
                 hooks: true
             });
+            /** One-to-Many: One User can have many Custom Equippables */
             User.hasMany(models.CustomEquippable, {
                 foreignKey: 'userId',
                 sourceKey: 'id',

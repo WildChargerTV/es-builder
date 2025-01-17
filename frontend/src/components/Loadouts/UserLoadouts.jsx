@@ -49,7 +49,7 @@ export default function UserLoadouts() {
             <h1>{activeUser.username}&apos;s Loadouts</h1>
             {userLoadouts.list.length === 0
             ? <h3>
-                No Loadouts fFund. 
+                No Loadouts Found. 
                 {sessionUser && <Link to='/loadouts/new'> Click Here To Create One!</Link>}
             </h3>
             : <LoadoutList idName='user-loadouts-list' listArr={userLoadouts.list} />}

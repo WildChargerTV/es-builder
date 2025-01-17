@@ -16,16 +16,24 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
+            /** Many-to-One: Many Custom Equippables can belong to one User */
             CustomEquippable.belongsTo(models.User, {
                 foreignKey: 'userId'
             });
         }
     }
+
+    // Initialize the model with the below fields & options.
     CustomEquippable.init({
+        /** User ID - Integer Field, Not Nullable */
         userId: {
             allowNull: false,
             type: DataTypes.INTEGER
         },
+        /**
+         * Equippable Type - String Field, Not Nullable
+         * Value Restriction: Value must be 'Primary' or 'Devices'
+         */
         equippableType: {
             allowNull: false,
             type: DataTypes.STRING,
@@ -36,17 +44,23 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
+        /** Equippable ID - Integer Field, Not Nullable */
         equippableId: {
             allowNull: false,
             type: DataTypes.INTEGER
         },
+        /** Stats - String Field, Not Nullable */
         stats: {
             allowNull: false,
             type: DataTypes.STRING
         },
     }, {
+        /** Sequelize - Required Sequelize Connection */
         sequelize,
+        /** Model Name - Name of the model. Must be the same as the class name. */
         modelName: 'CustomEquippable',
     });
+
+    // Return the initialized Custom Equippable model.
     return CustomEquippable;
 };
