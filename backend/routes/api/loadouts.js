@@ -161,7 +161,7 @@ loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     // Destructured Parameters
     const { loadoutId } = req.params;
     const { flags, name, shipId, enhancements, primaryWeapons, secondaryWeapons, devices, 
-            consumables, overrideKey } = req.body;
+            consumables } = req.body;
     const { id } = req.user;
     
     /** 
@@ -172,7 +172,7 @@ loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     return await Loadout.findByPk(loadoutId)
     .then(async (loadout) => {
         // Requests from unauthorized Users should be intercepted and thrown as an error.
-        if(id !== loadout.userId && (!overrideKey || overrideKey !== adminKey)) {
+        if(id !== loadout.userId) {
             const err = new Error('Not authorized to edit this Loadout.');
             err.title = 'Unauthorized User';
             err.errors = { message: 'Current User is not authorized to edit this Loadout.' };
