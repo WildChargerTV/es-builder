@@ -79,7 +79,7 @@
 
 .single-loadout-list {
     height: 100%;
-    overflow: scroll;
+    overflow: hidden;
     pointer-events: none;
 }
 .single-loadout-list ul {
