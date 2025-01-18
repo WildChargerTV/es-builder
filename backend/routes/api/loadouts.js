@@ -1,7 +1,6 @@
 // * backend/routes/api/loadouts.js
 
 // Local Module Imports
-const { adminKey } = require('../../config');
 const { Loadout, User } = require('../../db/models');
 const { requireSessionAuth } = require('../../utils/auth');
 const { devLog, devWarn } = require('../../utils/devLogger');
@@ -155,7 +154,8 @@ loadouts.post('/', requireSessionAuth, async (req, res, next) => {
 
 /**
  * PUT /api/loadouts/:loadoutId
- * Edits the data of an existing Loadout. Returns a success message if no errors occur.
+ * Edits the data of an existing Loadout. Verifies that the user sending the request is the owner
+ * of the Loadout. Returns a success message if no errors occur.
  */
 loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     // Destructured Parameters
@@ -203,12 +203,11 @@ loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
 
 /**
  * DELETE /api/loadouts/:loadoutId
- * Deletes an existing Loadout. Returns a success message if no errors occur. This route's
- * authorization can be bypassed with a valid admin key in the request body.
+ * Deletes an existing Loadout. Verifies that the user sending the request is the owner of the
+ * Loadout. Returns a success message if no errors occur.
  */
 loadouts.delete('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     // Destructured Parameters
-    const { overrideKey } = req.body;
     const { loadoutId } = req.params;
     const { id } = !overrideKey && req.user;
 
@@ -216,7 +215,7 @@ loadouts.delete('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     return await Loadout.findByPk(loadoutId)
     .then(async (loadout) => {
         // Requests from unauthorized Users should be intercepted and thrown as an error.
-        if(id !== loadout.userId && (!overrideKey || overrideKey !== adminKey)) {
+        if(id !== loadout.userId) {
             const err = new Error('Not authorized to delete this Loadout.');
             err.title = 'Unauthorized User';
             err.errors = { message: 'Current User is not authorized to delete this Loadout.' };

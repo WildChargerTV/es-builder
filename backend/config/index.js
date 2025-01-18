@@ -21,7 +21,5 @@ module.exports = {
         accessKeyId: process.env.AWS_USER_KEY,
         bucket: process.env.AWS_BUCKET,
         secretAccessKey: process.env.AWS_USER_SECRET
-    },
-    /** Reads the admin override key to allow for executive moderation of offensive content. */
-    adminKey: process.env.ADMIN_OVERRIDE_SECRET || false
+    }
 };
