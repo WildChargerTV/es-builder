@@ -21,9 +21,9 @@ module.exports = {
                 name: "PREPPED FOR ANYTHING",
                 shipId: 0,
                 enhancements: "{\"0\":19,\"1\":20,\"2\":22}",
-                primaryWeapons: "{\"0\":{\"id\":11,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"1\":{\"id\":6,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"2\":{\"id\":null,\"mods\":null}}",
+                primaryWeapons: "{\"0\":{\"id\":11,\"mods\":{\"0\":null,\"1\":null,\"2\":null}},\"1\":{\"id\":6,\"mods\":{\"0\":null,\"1\":null,\"2\":null}},\"2\":{\"id\":null,\"mods\":null}}",
                 secondaryWeapons: "{\"0\":\"0x1\",\"1\":\"1x7\",\"2\":\"7x6\"}",
-                devices: "{\"0\":{\"id\":59,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"1\":{\"id\":14,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"2\":{\"id\":26,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"3\":{\"id\":45,\"mods\":{\"0\":null,\"1\":null,\"2\":null,\"3\":null}},\"4\":{\"id\":null,\"mods\":null}}",
+                devices: "{\"0\":{\"id\":59,\"mods\":{\"0\":null,\"1\":null,\"2\":null}},\"1\":{\"id\":14,\"mods\":{\"0\":null,\"1\":null,\"2\":null}},\"2\":{\"id\":26,\"mods\":{\"0\":null,\"1\":null,\"2\":null}},\"3\":{\"id\":45,\"mods\":{\"0\":null,\"1\":null,\"2\":null}},\"4\":{\"id\":null,\"mods\":null}}",
                 consumables: "{\"0\":\"16x2\",\"1\":\"11x4\",\"2\":\"13x1\",\"3\":\"14x1\",\"4\":null}"
             },
             {
