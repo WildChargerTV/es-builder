@@ -98,31 +98,42 @@ users.get('/:userId/loadouts', async (req, res, next) => {
 
 /** 
  * POST /api/users
- * The User Signup route. Validates input data, then returns the created User.
+ * The User Signup route. Validates input data, then returns the created User. Signups are blocked
+ * if a User is already logged in.
  */
-users.post('/', validateSignup, async (req, res) => {
+users.post('/', validateSignup, async (req, res, next) => {
     // Destructured Parameters
     const { email, password, username } = req.body;
+
+    /** Block signups if a user is currently logged in. */
+    if(req.user !== null) {
+        const err = new Error('Cannot sign up a user while logged in.');
+        err.title = 'User Error';
+        err.errors = { message: 'Unable to sign up: You are currently logged in. This is a bug!' };
+        err.status = 403;
+        next(err);
+    }
 
     /** Hash the provided password. */
     const hashedPassword = bcrypt.hashSync(password);
 
-    /** Create the User. */
-    const user = await User.create({ email, username, hashedPassword });
+    /** Create & return the new User. Handle any errors. */
+    return await User.create({ email, username, hashedPassword })
+    .then(async (user) => {
+        // Extract all of the User's non-personally-identifying information into an object.
+        const safeUser = {
+            id: user.id,
+            email: user.email,
+            username: user.username
+        };
 
-    /** Extract the new User's ID, Email, & Username. */
-    const safeUser = {
-        id: user.id,
-        email: user.email,
-        username: user.username
-    };
+        // Apply the `safeUser` data to the JWT token cookie.
+        await setTokenCookie(res, safeUser);
 
-    /** Apply the `safeUser` data to the JWT token cookie. */
-    await setTokenCookie(res, safeUser);
-
-    /** Return the `safeUser` data. */
-    devLog(PATH, 'User signup ' + green('SUCCESS'));
-    return res.json({ user: safeUser });
+        // Return the `safeUser` data.
+        devLog(PATH, 'User signup ' + green('SUCCESS') + ` at ID ${user.id}`);
+        return res.json({ user: safeUser });
+    }).catch((err) => next(err));
 });
 
 /** Export the branch. */
