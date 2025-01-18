@@ -92,7 +92,7 @@ users.get('/:userId/loadouts', async (req, res, next) => {
 
         // Return the parsed Loadout list.
         devLog(PATH, `Retrieved ${list.length} loadouts ` + green('successfully'));
-        return res.json({ list, limit });
+        return res.json({ list, user });
     }).catch((err) => next(err));
 });
 
