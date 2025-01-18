@@ -209,7 +209,7 @@ loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
 loadouts.delete('/:loadoutId', requireSessionAuth, async (req, res, next) => {
     // Destructured Parameters
     const { loadoutId } = req.params;
-    const { id } = !overrideKey && req.user;
+    const { id } = req.user;
 
     /** Find & destroy the specified Loadout. Handle any errors. */
     return await Loadout.findByPk(loadoutId)
