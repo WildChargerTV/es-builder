@@ -25,7 +25,7 @@ const PATH = 'routes/api/session.js';
 const session = require('express').Router();
 
 /** 
- * GET /api/session
+ * * GET /api/session
  * Retrieves the current Session User's data. Unlike `GET /api/users/:userId`, also returns the 
  * User's Email.
  */
@@ -40,8 +40,9 @@ session.get('/', (req, res) => {
 });
 
 /** 
- * POST /api/session
- * The User Login route. Validates input data, then returns the specified User.
+ * * POST /api/session
+ * The User Login route. Validates input data, then returns the specified User, in the same way as
+ * `GET /api/session`.
  */
 session.post('/', validateLogin, async (req, res, next) => {
     // Destructured Parameters
@@ -79,7 +80,7 @@ session.post('/', validateLogin, async (req, res, next) => {
 });
 
 /** 
- * DELETE /api/session
+ * * DELETE /api/session
  * The User Logout route. If no User exists, a faux error (not sent to the default error handler)
  * is returned with status code 400. Returns a success message otherwise.
  */
@@ -96,7 +97,7 @@ session.delete('/', (req, res, next) => {
 
     /** Return a success message. */
     devLog(PATH, 'User logout ' + green('SUCCESS'));
-    return res.json({ message: 'success' });
+    return res.json({ message: 'Successfully logged out' });
 })
 
 /** Export the branch. */

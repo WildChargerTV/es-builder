@@ -14,11 +14,11 @@ require('express-async-errors');
 const { environment } = require('./config');
 const routes = require('./routes');
 const { devWarn, devErr } = require('./utils/devLogger');
-
-// Determine if the current environment is development or production.
-const isProd = environment === 'production';
-// Define the file path (for dev logger).
+// Dev Logger File Path
 const PATH = 'app.js';
+
+/** Determine if the current environtment is development or production. */
+const isProd = environment === 'production';
 
 /**
  * The core Express app. It alone holds the entire database on its shoulders.
@@ -49,21 +49,22 @@ app.use(csurf({
     }
 }));
 
-// Connect the router controller.
+/** Connect the router controller. */
 app.use(routes);
 
-/** Error Handler
- *  If any backend route passes an error into `next()`, this will be invoked immediately, bypassing
- *  any other routes. 
+/** 
+ * * Error Handler
+ * If any backend route passes an error into `next()`, this will be invoked immediately, bypassing
+ * any other routes. 
  * 
- *  The expectation is that the passed-in error object has enough details of its own to be properly
- *  organized by the Error Formatter. However, if non-unique errors of a shared nature need to have
- *  a more unified information set, it should be set up here.
+ * The expectation is that the passed-in error object has enough details of its own to be properly
+ * organized by the Error Formatter. However, if non-unique errors of a shared nature need to have
+ * a more unified information set, it should be set up here.
  * 
- ** See `utils/validation.js` for the `express-validator` error handler.
-**/
+ * ? See `utils/validation.js` for the `express-validator` error handler.
+ */
 app.use((err, _req, _res, next) => {
-    // All `ValidationError`s are from Sequelize, and should be intercepted here.
+    /** All `ValidationError`s are from Sequelize, and should be intercepted here. */
     if(err instanceof ValidationError) {
         const errors = {};
         for(let error of err.errors)
@@ -72,7 +73,7 @@ app.use((err, _req, _res, next) => {
         err.errors = errors;
     }
 
-    // If the error lacks required data, fill it in here.
+    /** If the error lacks required data, fill it in here. */
     if(!err.title) {
         err.title = 'Server Error';
         devWarn(PATH, 'An error was passed in without a title!');
@@ -90,17 +91,18 @@ app.use((err, _req, _res, next) => {
         devWarn(PATH, 'An error was passed in without a status code!')
     }
 
-    // Pass the error through to the Error Formatter.
+    /** Pass the error through to the Error Formatter. */
     next(err);
 });
 
-/** Error Formatter
- *  Once all necessary error data has been set, this will format the data into something palatable
- *  and sufficiently readable for the server response.
+/** 
+ * * Error Formatter
+ * Once all necessary error data has been set, this will format the data into something palatable
+ * and sufficiently readable for the server response.
  * 
- *  In production, the error stack trace will not be visible.
+ * In production, the error stack trace will not be visible.
  * 
- ** This should be the last middleware in the app. Do not place ANYTHING after this.
+ * ? This should be the last middleware in the app. Do not place ANYTHING after this.
 **/
 app.use((err, _req, res, _next) => {
     if(isProd) console.error(err);
@@ -109,5 +111,5 @@ app.use((err, _req, res, _next) => {
     res.status(err.status).json({ title, message, errors, stack: isProd ? null : stack });
 });
 
-// Export the app.
+/** Export the app. */
 module.exports = app;

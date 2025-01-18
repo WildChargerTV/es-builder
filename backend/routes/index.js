@@ -5,7 +5,7 @@ const AWS = require('aws-sdk');
 // Local Module Imports
 const { accessKeyId, bucket, secretAccessKey } = require('../config').awsConfig;
 
-// Determine if the current environment is development or production.
+/** Determine if the current environtment is development or production. */
 const isProd = require('../config').environment === 'production';
 
 /** 
@@ -30,6 +30,7 @@ const router = require('express').Router();
 router.use('/api', require('./api'));
 
 /**
+ * * GET /img-assets/*
  * For all backend routes beginning with `/img-assets`, serve assets from the AWS bucket.
  * ! AWS-SDK v2 is due for deprecation on September 8, 2025. Consider migrating to v3.
  */
@@ -50,8 +51,9 @@ router.get('/img-assets/*', async (req, res, next) => {
 });
 
 /**
+ * * GET /favicon.ico
  * This catches the browser request to get a favicon when directly accessing a backend route. The
- * request is intercepted and, instead of proceeding as a 404 error, returns a 204 No Content.
+ * request is intercepted and, instead of proceeding as a 404 error, returns a `204 No Content`.
  * ? Should not be considered an actual route.
  */
 router.get('/favicon.ico', (_req, res) => res.status(204).send());

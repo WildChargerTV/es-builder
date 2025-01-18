@@ -23,7 +23,7 @@ const PATH = 'routes/api/loadouts.js';
 const loadouts = require('express').Router();
 
 /**
- * GET /api/loadouts
+ * * GET /api/loadouts
  * Retrieves the ten most recently created Loadouts & their owners. No error is thrown if the list
  * is empty, as this is expected to be handled on the frontend.
  */
@@ -64,7 +64,7 @@ loadouts.get('/', async (_req, res, next) => {
 });
 
 /**
- * GET /api/loadouts/:loadoutId
+ * * GET /api/loadouts/:loadoutId
  * Retrieves a specific Loadout's data, as well as the data of its owner. If no Loadout is found,
  * a 404 is returned, but no error is thrown, as this is expected to be handled on the frontend.
  */
@@ -116,7 +116,7 @@ loadouts.get('/:loadoutId', async (req, res, next) => {
 });
 
 /** 
- * POST /api/loadouts
+ * * POST /api/loadouts
  * Creates a new Loadout & returns its data.
  */
 loadouts.post('/', requireSessionAuth, async (req, res, next) => {
@@ -153,7 +153,7 @@ loadouts.post('/', requireSessionAuth, async (req, res, next) => {
 });
 
 /**
- * PUT /api/loadouts/:loadoutId
+ * * PUT /api/loadouts/:loadoutId
  * Edits the data of an existing Loadout. Verifies that the user sending the request is the owner
  * of the Loadout. Returns a success message if no errors occur.
  */
@@ -202,7 +202,7 @@ loadouts.put('/:loadoutId', requireSessionAuth, async (req, res, next) => {
 });
 
 /**
- * DELETE /api/loadouts/:loadoutId
+ * * DELETE /api/loadouts/:loadoutId
  * Deletes an existing Loadout. Verifies that the user sending the request is the owner of the
  * Loadout. Returns a success message if no errors occur.
  */

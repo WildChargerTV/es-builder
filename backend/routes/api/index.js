@@ -17,7 +17,7 @@ const { restoreUser } = require('../../utils/auth.js');
 const api = require('express').Router();
 
 /** 
- * GET /api/csrf/restore
+ * * GET /api/csrf/restore
  * Updates the CSRF token to re-authenticate the current session.
  * ? Route is exclusive to development.
  */
@@ -27,7 +27,7 @@ if(require('../../config').environment !== 'production') api.get('/csrf/restore'
     res.status(200).json({ 'XSRF-TOKEN': csrfToken });
 });
 
-/** Ensure that the user is restored for all remaining API routes. */
+/** Ensure that the user is restored for all remaining API routes. (This populates `req.user`.) */
 api.use(restoreUser);
 
 /** Attach the `/custom-equippables`, `/loadouts`, `/session`, and `/users` route branches. */

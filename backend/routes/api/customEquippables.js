@@ -19,7 +19,7 @@ const PATH = 'routes/api/customEquippables.js';
 const customEquippables = require('express').Router();
 
 /**
- * GET /api/custom-equippables/:customEquippableId
+ * * GET /api/custom-equippables/:customEquippableId
  * Retrieves a specific Custom Equippable's data. If no Custom Equippable is found, a 404 is 
  * returned, but no error is thrown, as this is expected to be handled on the frontend.
  */
@@ -50,7 +50,7 @@ customEquippables.get('/:customEquippableId', async (req, res, next) => {
 });
 
 /**
- * POST /api/custom-equippables
+ * * POST /api/custom-equippables
  * Creates a new Custom Equippable & returns its data.
  */
 customEquippables.post('/', requireSessionAuth, async (req, res, next) => {

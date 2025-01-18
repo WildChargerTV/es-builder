@@ -6,7 +6,7 @@ const { Op } = require('sequelize');
 // Local Module Imports
 const { Loadout, User } = require('../../db/models');
 const { setTokenCookie } = require('../../utils/auth');
-const { devLog, devWarn, devErr } = require('../../utils/devLogger');
+const { devLog, devWarn } = require('../../utils/devLogger');
 const { validateSignup } = require('../../utils/validation');
 // Chalk Color Aliases
 const { green, red } = require('chalk');
@@ -25,7 +25,7 @@ const PATH = 'routes/api/users.js';
 const users = require('express').Router();
 
 /**
- * GET /api/users/:userId
+ * * GET /api/users/:userId
  * Retrieves a specific User's ID & Username. If no User is found, a 404 is returned, but no error
  * is thrown, as this is expected to be handled on the frontend.
  */
@@ -53,7 +53,7 @@ users.get('/:userId', async (req, res, next) => {
 });
 
 /**
- * GET /api/users/:userId/loadouts
+ * * GET /api/users/:userId/loadouts
  * Retrieves a User's Loadouts. If any exist, also safely returns the User's ID & Username. Does
  * not reveal any personally identifying information.
  */
@@ -102,7 +102,7 @@ users.get('/:userId/loadouts', async (req, res, next) => {
 });
 
 /** 
- * POST /api/users
+ * * POST /api/users
  * The User Signup route. Validates input data, then returns the created User. Signups are blocked
  * if a User is already logged in.
  */
