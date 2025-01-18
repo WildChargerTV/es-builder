@@ -57,7 +57,7 @@ users.get('/:userId', async (req, res, next) => {
  * Retrieves a User's Loadouts. If any exist, also safely returns the User's ID & Username. Does
  * not reveal any personally identifying information.
  */
-users.get('/:userId/loadouts', async (req, res) => {
+users.get('/:userId/loadouts', async (req, res, next) => {
     // Destructured Parameters
     const { userId } = req.params;
 
