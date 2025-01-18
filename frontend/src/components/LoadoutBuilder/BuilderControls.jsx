@@ -74,8 +74,6 @@ function SubmitLoadoutButton() {
         const hasOneSecondary = secondaryWeapons &&
             Object.values(secondaryWeapons).filter((secondary) => secondary !== null).length > 0;
         
-        console.warn(sessionUserExists, isValidName, shipChosen, presetChosen,
-            hasOnePrimary, hasOneSecondary)
         setDisabled(!(sessionUserExists && isValidName && shipChosen && presetChosen &&
             hasOnePrimary && hasOneSecondary));
     }, [sessionUser, mode, flags, name, shipId, shipPreset, primaryWeapons, secondaryWeapons]);
