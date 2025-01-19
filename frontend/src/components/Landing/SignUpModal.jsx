@@ -1,12 +1,18 @@
 // * frontend/src/components/Landing/SignUpModal.jsx
 
 // Node Module Imports
+import { Filter } from 'bad-words';
 import { useEffect, useState } from 'react';
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch } from 'react-redux';
 // Local Module Imports
 import { useModal } from '../../context/Modal';
+import { allowedProfanity } from '../../data';
 import * as sessionActions from '../../store/session';
+
+/** Declare the profanity filter, and remove some common swears. */
+const filter = new Filter();
+filter.removeWords(...allowedProfanity);
 
 /**
  * Modal component to display a user signup form. Closes itself once the signup succeeds.
@@ -32,6 +38,14 @@ export default function SignUpModal() {
         event.preventDefault();
         // Clear the Errors object.
         setErrors({});
+
+        // If the username contains profanity, reject the signup.
+        if(filter.clean(username) !== username)
+            return setErrors({ 
+                message: `Detected profanity in username. ESBuilder uses the assistance of a third-
+                party module to detect profanity - if you believe your name has been wrongly caught
+                by the filter, please report this as a bug!`
+            });
 
         // Attempt to log in. If errors exist, they will be caught before the Modal is closed.
         return dispatch(sessionActions.signup({ username, email, password }))
@@ -64,7 +78,13 @@ export default function SignUpModal() {
             Accounts on ESBuilder are entirely on the honor system. None of this information is
             tracked or shared beyond anything explicitly to do with the site. Please do not use
             real names, emails, or passwords, as no guarantee can be made to their permanent
-            security. Thank you.
+            security.
+            <br />
+            Usernames are scanned for profanity. ESBuilder reserves the right to delete accounts
+            with profane usernames without notice; however, you are encouraged to report usernames
+            that make it past the filter. Additionally, you are welcome to request that a word be
+            added as an exception to the filter at any time. (Testers: the ability to change your
+            username is slated to be added soon!)
         </p>
 
         {/* Signup Form */}

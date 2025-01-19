@@ -2,6 +2,7 @@
 // TODO docs
 
 // Node Module Imports
+import { Filter } from 'bad-words';
 import { useEffect, useState } from 'react';
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,8 +10,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 // Local Module Imports
 import PresetLoadoutModal from './Modals/PresetLoadoutModal';
 import OpenModal from '../Modal/OpenModal';
+import { allowedProfanity } from '../../data';
 import * as builder from '../../store/builder';
 import { createLoadout, updateLoadout } from '../../store/loadout';
+
+/** Declare the profanity filter, and remove some common swears. */
+const filter = new Filter();
+filter.removeWords(...allowedProfanity);
 
 /**
  * Renders a set of control buttons at the bottom of the Layout Builder. Access to use these
@@ -52,12 +58,14 @@ function SubmitLoadoutButton() {
     const { sessionUser } = useSelector((state) => state.session);
     // Local State Values
     const [disabled, setDisabled] = useState(true);
+
+    
     
     /** 
      * In order for the button to be enabled: 
      * 1. There must be an active session user.
-     * 2. The loadout's name must be between 4 and 30 characters, inclusive, and must not be the
-     *    same as the predefined name.
+     * 2. The loadout's name must be between 4 and 30 characters, inclusive, must not be the same
+     *    as the predefined name, and must not contain profanity.
      * 3. A ship has been selected.
      * 4. A preset loadout was selected, or the user chose to start from scratch (create mode).
      * 5. The loadout has at least one Primary or Secondary Weapon. This check is bypassed if the
@@ -65,7 +73,11 @@ function SubmitLoadoutButton() {
      */
     useEffect(() => {
         const sessionUserExists = sessionUser !== null;
-        const isValidName = name.length >= 4 && name.length <= 30 && name !== 'LOADOUT NAME HERE';
+        const isValidName = (
+            name.length >= 4 && name.length <= 30 && 
+            name !== 'LOADOUT NAME HERE' &&
+            filter.clean(name) === name
+        );
         const shipChosen = shipId >= 0;
         const presetChosen = mode !== 'create' || 
             (shipPreset === false || ['a', 'b', 'c'].includes(shipPreset));
