@@ -40,8 +40,8 @@ export default function UserLoadouts() {
 
     /** Allow the page to render if the active user & loadout list have loaded to the Redux state. */
     useEffect(() => {
-        setIsLoaded(activeUser?.id && userLoadouts?.list);
-    }, [activeUser, userLoadouts]);
+        setIsLoaded(activeUser?.id == params.userId && userLoadouts?.list);
+    }, [activeUser, params, userLoadouts]);
 
     /** Return the User Loadouts page. */
     return isLoaded && (<main id='site-user-loadouts-container'>
