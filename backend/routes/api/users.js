@@ -86,10 +86,9 @@ users.get('/:userId/loadouts', async (req, res, next) => {
                 if((typeof loadout[key]) === 'string' && !['name', 'description'].includes(key))
                     loadout[key] = JSON.parse(loadout[key]);
 
+            // If not already, populate the `user` variable declared earlier.
             if(!user)
                 user = loadout.User;
-
-            delete loadout.User;
             
             // Return the parsed Loadout.
             return loadout;
