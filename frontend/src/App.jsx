@@ -52,37 +52,43 @@ function Layout() {
 /**
  * The route tree utilized by the `RouterProvider` to establish the locations of routes inside the
  * React app.
- * @type {Router}
  */
 const router = createBrowserRouter([
     {
         element: <Layout />,
         children: [
+            /** Root - Landing Page */
             {
                 path: '/',
                 element: <LandingPage />
             },
+            /** Loadouts - Recent Loadouts List */
             {
                 path: '/loadouts',
                 element: <RecentLoadouts />
             },
+            /** Loadouts - Create New Loadout */
             {
                 path: '/loadouts/new',
                 element: <LoadoutBuilderMain mode='create' />
 
             },
+            /** Loadouts - View Existing Loadout */
             {
                 path: '/loadouts/:loadoutId',
                 element: <LoadoutBuilderMain mode='view' />
             },
+            /** Loadouts - Edit Existing Loadout */
             {
                 path: '/loadouts/:loadoutId/edit',
                 element: <LoadoutBuilderMain mode='edit' />
             },
+            /** Users - User Profile (Current User & Otherwise) */
             {
                 path: '/profile',
                 element: <UserProfile />
             },
+            /** Users - User Loadouts List */
             {
                 path: '/users/:userId/loadouts',
                 element: <UserLoadouts />
@@ -94,6 +100,7 @@ const router = createBrowserRouter([
 /**
  * The React App component. Effectively an abstraction layer that sits hierarchically between the
  * Redux Store Provider and the `Layout` component.
+ * @exports
  * @component App
  * @requires {@linkcode router}
  * @returns {ReactElement.RouterProvider}
