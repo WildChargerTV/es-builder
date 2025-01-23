@@ -13,6 +13,7 @@ import LoadoutBuilderMain from './components/LoadoutBuilder/LoadoutBuilder';
 import UserProfile from './components/Profile/Profile';
 import UserLoadouts from './components/Loadouts/UserLoadouts';
 import Footer from './components/Footer/Footer';
+import useWindowSize from './hooks/useWindowSize';
 import * as sessionActions from './store/session';
 
 /**
@@ -32,6 +33,7 @@ import * as sessionActions from './store/session';
 function Layout() {
     // React Hooks
     const dispatch = useDispatch();
+    const [screenX] = useWindowSize();
     // Local State Values
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -40,7 +42,15 @@ function Layout() {
         dispatch(sessionActions.restoreUser())
             .then(() => { setIsLoaded(true) });
     }, [dispatch]);
-    
+
+    /** Determine whether or not the current window's width is below 720p. */
+    useEffect(() => {
+        if(isLoaded && screenX < 1280)
+            console.warn('⚠️ App Warning: Screen width is below minimum compatible standard.');
+        else if(isLoaded && screenX > 2560)
+            console.warn('⚠️ App Warning: SCreen width is above maximum compatible standard.');
+    }, [screenX, isLoaded]);
+
     /** Return the page content. */
     return (<>
         <Navigation isLoaded={isLoaded} />
