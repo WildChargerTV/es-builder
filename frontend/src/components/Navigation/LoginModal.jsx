@@ -31,7 +31,7 @@ export default function LoginModal() {
      * Manual flag to allow demo logins on the site. 
      * ! This is only intended for use where needed, and should not be enabled by default.
      */
-    const showDemoLogin = true;
+    const showDemoLogin = false;
 
     /** Perform a demo login, but only after showing a warning. */
     const demoLogin = (event) => {
