@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 // Local Module Imports
 import LoadoutList from './LoadoutList';
 import { getUserLoadouts } from '../../store/loadout';
-import { getUser } from '../../store/user';
+import { updateActiveUser } from '../../store/user';
 import './UserLoadouts.css';
 
 /**
@@ -35,7 +35,7 @@ export default function UserLoadouts() {
     /** Get user loadouts from the backend, and set the active user in the Redux state. */
     useEffect(() => { 
         dispatch(getUserLoadouts(params.userId)); 
-        dispatch(getUser(params.userId));
+        dispatch(updateActiveUser(params.userId));
     }, [dispatch, params]);
 
     /** Allow the page to render if the active user & loadout list have loaded to the Redux state. */
