@@ -15,6 +15,7 @@ import './index.css';
  
 /**
  * Determines if the current environment is development or production.
+ * ? Typically, .env values aren't accessible at runtime. This value is the one and only exception.
  * @type {boolean}
  */
 export const isProd = process.env.NODE_ENV === 'production';
@@ -22,7 +23,6 @@ export const isProd = process.env.NODE_ENV === 'production';
 /** 
  * The Redux store, as assembled & configured by {@linkcode configureStore}. Managed by the
  * Provider element supplied by `react-redux`.
- * @type {Store}
  * @requires {@linkcode configureStore}
  */
 const store = configureStore();
@@ -41,8 +41,8 @@ if(!isProd) {
 
 /** 
  * Render the React app. 
- * ? Note: `React.StrictMode` will render components twice in development, but not in production,
- * ? in order to detect any problems with your code and warn you about them.
+ * ? `React.StrictMode` will render components twice in development, but not in production, in
+ * ? order to detect any problems with your code and warn you about them.
  */
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

@@ -1,5 +1,6 @@
 // * frontend/src/store/aws.js
-// TODO documentation
+// ! This method of retrieving AWS assets is due for deprecation in favor of AWS SDK v3
+// ! functionality. Documentation may be limited or out of date.
 
 // Local Module Imports
 import { csrfFetch } from './csrf';
@@ -13,6 +14,11 @@ const addEntry = (dir) => ({ type: ADD_ENTRY, payload: dir });
 const setUrl = (dir, url) => ({ type: SET_URL, payload: { dir, url }});
 
 //* --------------------[Thunk Middlewares]-------------------- *//
+/**
+ * Thunk action to retrieve a presigned URL referencing an asset in the AWS bucket.
+ * @param {string} dir 
+ * @returns {(dispatch: function) => void}
+ */
 export const retrieveAsset = (dir) => async (dispatch) => {
     dispatch(addEntry(dir));
 
@@ -25,9 +31,17 @@ export const retrieveAsset = (dir) => async (dispatch) => {
 }
 
 //* --------------------[Initial State]-------------------- *//
+/** The initial state for `aws`. */
 const initialState = { bucket: 'aa-capstone-esbuilder-s3' };
 
 //* --------------------[Redux Reducer]-------------------- *//
+/**
+ * The thunk reducer for the `aws` state, which manages and stores the data of assets retrieved
+ * from the AWS bucket.
+ * @param {initialState} [state=initialState]
+ * @param {object} action
+ * @returns {object}
+ */
 export default function awsReducer(state=initialState, action) {
     switch(action.type) {
         case ADD_ENTRY: {
