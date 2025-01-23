@@ -1,6 +1,7 @@
 // * frontend/src/components/LoadoutBuilder/Modules/EquipmentInfo.jsx
 
 // Node Module Imports
+import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 // Local Module Imports
 import EnhanceModal from '../Modals/EnhanceModal';
@@ -33,9 +34,9 @@ export default function EquipmentInfo() {
                 <RemoveEquipIcon height='1.3vw' /> - Removes a piece of existing 
                 equipment from the loadout.
                 <br /><br />
-                <span className='yellow'>Note for Testers:</span> The ability to add equipment slots
-                due to upgrades via G&B Tuning Stations is not currently supported, but is slated
-                for addition at a later time, alongide indicators for all other run-length Tuning
+                <span className='yellow'>Note for Testers:</span> The ability to add equipment
+                slots via G&B Tuning Stations is not currently supported, but is slated for
+                addition at a later time, alongide indicators for all other run-length Tuning
                 Station upgrades. 
                 <br /><br />
                 Primary Weapons & eligible Devices can be enhanced using the &quot;Click to 
@@ -94,7 +95,9 @@ export default function EquipmentInfo() {
             (category === 'Devices' && [39, 40, 47].includes(id));
         
         // Insert the mod data from the appropriate Redux state, converted into an array.
-        const reduxData = category === 'Primary' ? builder.primaryWeapons[index] : builder.devices[index];
+        const reduxData = category === 'Primary' 
+        ? builder.primaryWeapons[index] 
+        : builder.devices[index];
         clone.mods = reduxData.mods ? Object.entries(reduxData.mods) : null;
         
         // Return the data.
@@ -107,7 +110,8 @@ export default function EquipmentInfo() {
         <h2>
             {focusData.enhanced && '★ '}
             {focusData.name}
-            {focusData?.mods && focusData.mods[0][1] && ` (${focusData.mods.map((mod) => mod[1] && '+').join('')})`}
+            {focusData?.mods && focusData.mods[0][1] && 
+            ` (${focusData.mods.map((mod) => mod[1] && '+').join('')})`}
         </h2>
 
         {/* Equipment Type */}
@@ -115,7 +119,9 @@ export default function EquipmentInfo() {
 
         {/* Equipment Enhancement Button (Where Applicable) */}
         {focusData?.enhanceable && !focusData.enhanced && builder.mode !== 'view' && <OpenModal 
-            elementText='Click to Enhance'
+            elementText={<>
+                Enhance <span className='site-text-icon'><PiMouseLeftClickFill /></span>
+            </>}
             modalComponent={<EnhanceModal />}
         />}
 
@@ -129,16 +135,20 @@ export default function EquipmentInfo() {
         {focusData?.mods && focusData.mods[0][1] && <div id='equip-info-mods'>
             <label>Mods</label>
             <ul>
-                {focusData.mods.map(([key, id]) => id && <li key={`mod-${key}`} title={modsArr[id].description}>{modsArr[id].name}</li>)}
+                {focusData.mods.map(([key, id]) => id && 
+                    <li key={`mod-${key}`} title={modsArr[id].description}>{modsArr[id].name}</li>
+                )}
             </ul>
         </div>}
 
         {/* Equipment Stats (Where Applicable) */}
         {focusData?.stats && (<div id='equip-info-stats'>
-            {focusData.stats.map(([name, stat]) => (<div key={name.split(' ').join('-')} className='equip-info-single-stat'>
-                <p>{name}</p>
-                <p>{stat}</p>
-            </div>))}
+            {focusData.stats.map(([name, stat]) => 
+                (<div key={name.split(' ').join('-')} className='equip-info-single-stat'>
+                    <p>{name}</p>
+                    <p>{stat}</p>
+                </div>)
+            )}
         </div>)}
     </div>);
 }

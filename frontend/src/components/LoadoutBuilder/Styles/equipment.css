@@ -22,7 +22,7 @@
     color: #acdbf9;
     font-size: clamp(12pt, 1.25vw, 24pt);
     font-weight: 600;
-    margin-top: 0;
+    margin-top: 10px;
     text-align: center;
 }
 .builder-equip-col-slots {
@@ -152,8 +152,19 @@
     white-space: nowrap;
 }
 #builder-equipment-info button {
-    font-size: 1vw;
-    width: 100%;
+    background-color: rgba(148, 180, 195, 0.3);
+    border: 2px solid rgba(148, 180, 195, 0.7);
+        border-radius: 5px;
+    box-sizing: border-box;
+    display: block;
+    font-size: 1.1vw;
+    letter-spacing: 0.85px;
+    margin: 10px auto;
+    width: 90%;
+}
+#builder-equipment-info button span svg {
+    margin-bottom: 0.25vw;
+    vertical-align: middle;
 }
 #equip-info-desc {
     border: 2px solid rgba(148, 180, 195, 0.7);
