@@ -19,7 +19,7 @@ import './UserLoadouts.css';
  * loaded. Page seeking will be implemented at a later time. See {@linkcode LoadoutList} for more
  * information on the functionality of the loadout list.
  * @component `UserLoadouts`
- * @requires {@linkcode LoadoutList} {@linkcode getUserLoadouts} {@linkcode getUser} 
+ * @requires {@linkcode LoadoutList} {@linkcode getUserLoadouts} {@linkcode updateActiveUser} 
  * @returns {ReactElement}
  */
 export default function UserLoadouts() {

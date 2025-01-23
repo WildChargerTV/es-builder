@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import * as dataFiles from '../../../data';
-import { getCustomEquippable } from '../../../store/customEquippable';
+import { readCustomEquippable } from '../../../store/customEquippable';
 
 /**
  * Renders a list of equipment, without names, for a single loadout inside the `LoadoutList`
@@ -48,7 +48,7 @@ export default function SingleLoadoutEquipList({ loadoutData }) {
  *      type: 'Primary' | 'Secondary' | 'Devices' | 'Consumables',
  *      loadoutData: object
  * }} 
- * @requires {@linkcode dataFiles} {@linkcode getCustomEquippable} {@linkcode BucketImage}
+ * @requires {@linkcode dataFiles} {@linkcode readCustomEquippable} {@linkcode BucketImage}
  * @returns {ReactElement}
  */
 function EquipListRow({ type, loadoutData }) {
@@ -95,7 +95,7 @@ function EquipListRow({ type, loadoutData }) {
                 // `equippableId`.
                 else {
                     const customId = Number(id.split('c')[1]);
-                    !loadedIds[customId] && dispatch(getCustomEquippable(customId));
+                    !loadedIds[customId] && dispatch(readCustomEquippable(customId));
                     loadedIds[customId] && res.push(equipmentData[loadedIds[customId].id].icon);
                 }
             }

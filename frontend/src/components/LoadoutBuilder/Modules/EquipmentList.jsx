@@ -13,8 +13,9 @@ import OpenModal from '../../Modal/OpenModal';
 import * as SVG from '../../../assets/svg';
 import * as dataFile from '../../../data';
 import * as builderActions from '../../../store/builder';
+import { readCustomEquippable } from '../../../store/customEquippable';
 import * as loadoutActions from '../../../store/loadout';
-import { getCustomEquippable } from '../../../store/customEquippable';
+
 
 /**
  * Renders the Equipment Interface, styled almost exactly as it is in-game. This component consists 
@@ -218,7 +219,7 @@ function EquipmentColumn({ name, slots, reduxData }) {
  * 1. An icon that represents what the equipment looks like.
  * 2. 
  * @component `SingleEquipment`
- * @requires {@linkcode dataFile} {@linkcode builderActions} {@linkcode getCustomEquippable} 
+ * @requires {@linkcode dataFile} {@linkcode builderActions} {@linkcode readCustomEquippable} 
  * @requires {@linkcode BucketImage} {@linkcode OpenModal} {@linkcode SelectEquipModal} {@linkcode SelectModModal} {@linkcode ChangeQuantityModal}
  * @param {{ slotData: {
  *      type: 'Primary' | 'Secondary' | 'Devices' | 'Consumables',
@@ -266,7 +267,7 @@ function SingleEquipment({ slotData }) {
         // Get the custom equippable's `equippableId` from the database, and get that ID's
         // respective data. Then, add an `enhanced` flag key and override the stats before sending
         // it to the local state.
-        dispatch(getCustomEquippable(customId))
+        dispatch(readCustomEquippable(customId))
             .then((customEquippable) => {
                 const clone = structuredClone(equipmentData[customEquippable.equippableId]);
                 clone.enhanced = true;
