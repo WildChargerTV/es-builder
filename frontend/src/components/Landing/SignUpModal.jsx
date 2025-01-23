@@ -75,16 +75,18 @@ export default function SignUpModal() {
         <h2 className='modal-title' style={{ marginBottom: 0 }}>Sign Up</h2>
 
         <p className='modal-paragraph'>
-            Accounts on ESBuilder are entirely on the honor system. None of this information is
-            tracked or shared beyond anything explicitly to do with the site. Please do not use
-            real names, emails, or passwords, as no guarantee can be made to their permanent
-            security.
-            <br />
-            Usernames are scanned for profanity. ESBuilder reserves the right to delete accounts
-            with profane usernames without notice; however, you are encouraged to report usernames
-            that make it past the filter. Additionally, you are welcome to request that a word be
-            added as an exception to the filter at any time. (Testers: the ability to change your
-            username is slated to be added soon!)
+            At present, <span className='yellow'>accounts on ESBuilder are entirely on the honor
+            system</span>. No information is verified, tracked, or shared; however, no guarantee
+            can be made as to its permanent security. <span className='red'>Please do not use your
+            real names, emails, or passwords</span> at this time. Email verification will likely
+            be implemented before ESBuilder leaves Beta; however, existing accounts will continue
+            to work indefinitely.
+            <br /><br />
+            <span className='yellow'>Usernames are scanned for profanity</span> with
+            assistance from a third-party module. <span className='red'> ESBuilder reserves the 
+            right to delete accounts with profane usernames without notice.</span> If you believe 
+            a username has been unfairly caught by the filter, or that a word should be added as an 
+            exception, please submit an issue on GitHub.
         </p>
 
         {/* Signup Form */}
