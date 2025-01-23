@@ -30,26 +30,46 @@ export default function Footer({ isLoaded }) {
         {/* Credits: Site Technology */}
         <div id='site-footer-tech'>
             <p>
-                The loadout builder, and the website by extension, has been built to be<br /> 
-                compatible with the widescreen (16:9) aspect ratio, tested at the minimum<br /> 
-                resolution of HD 720p, up to the maximum resolution of 2K 1440p. Any<br /> 
-                screen resolutions above or below this are not guaranteed to display properly.
+                The loadout builder, and the website by extension, has been built to be compatible 
+                with the widescreen (16:9) aspect ratio, tested at the minimum resolution of HD 
+                720p, up to the maximum resolution of 2K 1440p. Any screen resolutions above or 
+                below this are not guaranteed to display properly.
             </p>
-            <p><span className='site-footer__text-icon'><DiReact /><DiJavascript1 /> </span> Powered by ReactJS</p>
-            <p><span className='site-footer__text-icon'><DiPostgresql /> </span> Database built on PostgreSQL</p>
-            <p><span className='site-footer__text-icon'><FaAws /> </span> Asset Delivery served via Amazon Web Services</p>
-            <p><span className='site-footer__text-icon'><DiFirefox /> </span> Tested on Mozilla Firefox</p>
+            <p>
+                <span className='site-footer__text-icon'><DiReact /><DiJavascript1 /></span>
+                Powered by ReactJS
+            </p>
+            <p>
+                <span className='site-footer__text-icon'><DiPostgresql /></span>
+                Database built on PostgreSQL
+            </p>
+            <p>
+                <span className='site-footer__text-icon'><FaAws /></span>
+                Asset Delivery served via Amazon Web Services
+            </p>
+            <p>
+                <span className='site-footer__text-icon'><DiFirefox /></span> 
+                Tested on Mozilla Firefox
+            </p>
         </div>
 
         {/* Credits: Me. */}
         <div id='site-footer-wctv'>
             <p>ESBuilder created by WildCharger</p>
-            <p id='site-footer-socials'>
-                <Link to='https://github.com/WildChargerTV/aa-capstone-es-builder'><AiFillGithub /> </Link>
-                <Link to='https://www.linkedin.com/in/ethan-guan-ba453a2a0/'><AiFillLinkedin /> </Link>
-                <Link to='https://x.com/wildchargergame'><AiOutlineX /> </Link>
-                <Link to='https://www.youtube.com/@WildCharger'><AiFillYoutube /> </Link>
-            </p>
+            <div id='site-footer-socials'>
+                <Link to='https://github.com/WildChargerTV/aa-capstone-es-builder'>
+                    <AiFillGithub />
+                </Link>
+                <Link to='https://www.linkedin.com/in/ethan-guan-ba453a2a0/'>
+                    <AiFillLinkedin />
+                </Link>
+                <Link to='https://x.com/wildchargergame'>
+                    <AiOutlineX />
+                </Link>
+                <Link to='https://www.youtube.com/@WildCharger'>
+                    <AiFillYoutube />
+                </Link>
+            </div>
         </div>
     </footer>);
 }

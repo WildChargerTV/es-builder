@@ -3,26 +3,40 @@
 /* Site Footer - Global Definitions */
 #site-footer {
     color: lightgray;
-    display: flex;
+    display: grid;
+        column-gap: 2vw;
+        grid-template-columns: 30% auto 20%;
     font-weight: 700;
     justify-content: space-between;
-    padding: 0 5%;
+    padding: 0 3.5%;
     text-align: center;
 }
 
+#site-footer p {
+    font-size: 1.15vw;
+}
+
+/* Site Footer - Tech Information */
+#site-footer-tech p {
+    display: flex;
+        justify-content: center;
+}
+
 .site-footer__text-icon {
-    font-size: x-large;
+    display: inline-flex;
+        align-items: center;
+    font-size: 1.5vw;
+    margin-right: 0.5vw;
 }
 
-#site-footer-tech svg {
-    display: inline-block;
-    position: relative;
-        bottom: 3px;
-    vertical-align: bottom;
+/* Site Footer - WildCharger Information */
+#site-footer-wctv * {
+    margin-bottom: 0;
 }
-
-/* Site Footer - Social Media Icons */
-#site-footer-socials { 
-    font-size: 32pt; 
-    margin-top: 0;
+#site-footer-socials {
+    display: inline-flex;
+        column-gap: 5px;
+}
+#site-footer-socials * { 
+    font-size: 3vw; 
 }
