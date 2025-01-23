@@ -3,7 +3,7 @@
 // Node Module Imports
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 // Local Module Imports
 import './Landing.css';
 import OpenModal from '../Modal/OpenModal';
@@ -33,10 +33,11 @@ export default function LandingPage() {
             <h1>Shoot. Loot. Share.</h1>
             {/* Site Information */}
             <p>
-                ESBuilder is a new way to store, share, &amp; immortalize your most memorable EVERSPACE™<br />
-                moments. Got an enhanced Scatter Gun 2880 with awesome stats? Want to help a new pilot<br />
-                survive Cluster 34 with ease? Or would you like to better visualize your own perfect build?<br />
-                Our online layout builder&apos;s got you covered. Sign up and create one today!
+                ESBuilder is a new way to store, share, &amp; immortalize your most memorable 
+                EVERSPACE™ moments. Got an enhanced Scatter Gun 2880 with awesome stats? Want to 
+                help a new pilot survive Cluster 34 with ease? Or would you like to better 
+                visualize your own perfect build? Our online loadout builder&apos;s got you 
+                covered. Sign up and create one today!
             </p>
             {/* Sign Up Button */}
             <OpenModal
@@ -46,15 +47,16 @@ export default function LandingPage() {
             {/* Message for Testers */}
             <h2>Important Information for All Testers:</h2>
             <p>
-                Thank you for giving ESBuilder a try! This web application has been built to be my capstone (final)<br />
-                project for App Academy. Accounts work on the honor system; <span>please do not use your real names,<br />
-                emails, or passwords,</span> and assume that any information you provide may be deleted at any time.<br />
-                This site has no trackers, I promise.
-            </p>
-            <p>
-                If you&apos;ve arrived here from the invite I sent to the ROCKFISH Games Discord, feel free to DM me<br /> 
-                with any problems you may encounter. All other testers can report issues using the GitHub link at the<br />
-                right side of the page footer. Enjoy!
+                Thank you for giving ESBuilder a try! This web application is currently 
+                in <span className='yellow'>early beta</span>. This means that the core mechanics are
+                in place, but are rather unpolished (for example, ship & equipment stats are
+                currently static values). Your patience is appreciated as development continues!
+                <br /><br />
+                If you&apos;ve arrived here from the invite sent to the ROCKFISH Games Discord, 
+                feel free to send a ping with any problems you may encounter that do not appear on
+                the <Link to='https://github.com/WildChargerTV/es-builder/issues/1'>known issues 
+                list</Link>. All other testers can report issues using the GitHub link at the right 
+                side of the page footer. Thank you!
             </p>
         </div>
     </main>);
