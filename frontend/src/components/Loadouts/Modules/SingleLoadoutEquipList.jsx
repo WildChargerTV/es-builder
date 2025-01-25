@@ -95,8 +95,12 @@ function EquipListRow({ type, loadoutData }) {
                 // `equippableId`.
                 else {
                     const customId = Number(id.split('c')[1]);
-                    !loadedIds[customId] && dispatch(readCustomEquippable(customId));
-                    loadedIds[customId] && res.push(equipmentData[loadedIds[customId].id].icon);
+                    if(!loadedIds[customId])
+                        dispatch(readCustomEquippable(customId));
+                    else {
+                        const iconName = equipmentData[loadedIds[customId].id].icon;
+                        res.push(iconName.split('.')[0] + '-enhanced.png');
+                    }
                 }
             }
         } else if(['Secondary', 'Consumables'].includes(type)) {
@@ -111,7 +115,6 @@ function EquipListRow({ type, loadoutData }) {
             // array to the return value.
             res = res.concat(loadoutData
                 ? Object.entries(loadoutData).map((equipment) => {
-                    console.log(equipment, equipment[1]);
                     const id = equipment[1] !== null && equipment[1].split('x')[0];
                     return id ? equipmentData[id].icon : null;
                 })
