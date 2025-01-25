@@ -238,6 +238,7 @@ function SingleEquipment({ slotData }) {
     // Local State Values
     const [data, setData] = useState(null);
     const [moddable, setModdable] = useState(false);
+    const [titleColor, setTitleColor] = useState('#94b4c3');
 
     /** 
      * Dynamically update the cell's contents as the equipment is changed or modified. 
@@ -256,20 +257,24 @@ function SingleEquipment({ slotData }) {
         const equipmentData = type === 'Primary' ? dataFile.primaryWeaponData : dataFile.deviceData;
 
         // If the ID is NOT a Custom Equippable, get the ID's respective data and return.
-        if(typeof id === 'number' || id === null)
+        if(typeof id === 'number' || id === null) {
+            setTitleColor('#94b4c3');
             return setData(equipmentData[id]);
+        }
 
         // Get the custom equippable's ID.
         const customId = Number(id.split('c')[1]);
 
         // Get the custom equippable's `equippableId` from the database, and get that ID's
-        // respective data. Then, add an `enhanced` flag key and override the stats before sending
-        // it to the local state.
+        // respective data. Then, add an `enhanced` flag key, modify the icon file name, & override 
+        // the stats before sending it to the local state.
         dispatch(readCustomEquippable(customId))
             .then((customEquippable) => {
                 const clone = structuredClone(equipmentData[customEquippable.equippableId]);
                 clone.enhanced = true;
+                clone.icon = clone.icon.split('.')[0] + '-enhanced.png';
                 clone.stats = customEquippable.stats;
+                setTitleColor('#f9e2ad');
                 return setData(clone);
             });
     }, [dispatch, type, id]);
@@ -321,7 +326,7 @@ function SingleEquipment({ slotData }) {
 
         {/* Equipment Name */}
         <div className='builder-equip-name' ref={ref} style={{ fontSize }}>
-            <h3>
+            <h3 style={{ color: titleColor }}>
                 {['Primary', 'Devices'].includes(type) && typeof id === 'string' && '★ '}
                 {data?.name}
             </h3>
