@@ -20,10 +20,12 @@ export default function Footer({ isLoaded }) {
         {/* Credits: Rockfish Games */}
         <div id='site-footer-rockfish'>
             <p>EVERSPACE™ is brought to you by</p>
-            <Link to='https://classic.everspace-game.com/'><img
-                src='https://classic.everspace-game.com/wp-content/uploads/2015/07/Rockfish_logo_RGB_weiss_1_300dpi.png'
-                alt='rockfish logo'
-            /></Link>
+            <Link to='https://classic.everspace-game.com/'>
+                <img
+                    src='https://indiearenabooth.de/assets/media/rockfish-logo-rgb-weiss-1-300dpi.png'
+                    alt='rockfish logo'
+                />
+            </Link>
             <p>© 2017-2025 ROCKFISH Games GmbH. All rights reserved.</p> 
         </div>
 
