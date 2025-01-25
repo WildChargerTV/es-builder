@@ -191,7 +191,11 @@
     line-height: 1;
     margin: 10px auto;
     padding: 12px 10px;
+    text-transform: uppercase;
     width: 90%;
+}
+#equip-info-mods p {
+    margin: 0;
 }
 #equip-info-mods ul { 
     display: grid;
