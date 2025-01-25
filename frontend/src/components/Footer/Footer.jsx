@@ -59,7 +59,7 @@ export default function Footer({ isLoaded }) {
             </p>
         </div>
 
-        {/* Credits: Me. */}
+        {/* Credits: Me. & Background Images. */}
         <div id='site-footer-wctv'>
             <p>ESBuilder created by WildCharger</p>
             <div id='site-footer-socials'>
@@ -76,6 +76,10 @@ export default function Footer({ isLoaded }) {
                     <AiFillYoutube />
                 </Link>
             </div>
+            <p>
+                Special thanks to <Link to='https://steamcommunity.com/id/ITS_YFP'>ITS_YFP </Link>
+                for the background image used in the Recent Loadouts page.
+            </p>
         </div>
     </footer>);
 }
