@@ -1,8 +1,7 @@
 // * frontend/src/store/builder.js
-// TODO complete documentation
 
 // Local Module Imports
-import { shipData } from "../data";
+import { shipData } from '../data';
 
 //* --------------------[Thunk Action Identifiers]-------------------- *//
 const SET_FLAG = 'builder/setFlag';

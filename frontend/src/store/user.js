@@ -30,7 +30,7 @@ export const updateActiveUser = (userId) => async (dispatch) => {
         dispatch(setActiveUser(user));
         return user;
     });
-}
+};
 
 //* --------------------[Initial State]-------------------- *//
 /** The initial state for `user`. */
