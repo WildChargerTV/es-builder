@@ -5,9 +5,11 @@ import { csrfFetch } from './csrf';
 
 //* --------------------[Thunk Action Identifiers]-------------------- *//
 const SET_ACTIVE_USER = 'user/setActiveUser';
+const RESET_SLICE = 'user/resetStateSlice';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
 const setActiveUser = (user) => ({ type: SET_ACTIVE_USER, payload: user });
+const resetStateSlice = (sliceName) => ({ type: RESET_SLICE, payload: sliceName });
 
 //* --------------------[Thunk Middlewares]-------------------- *//
 /**
@@ -32,6 +34,16 @@ export const updateActiveUser = (userId) => async (dispatch) => {
     });
 };
 
+/**
+ * Thunk middleware to reset one of the slices in the `user` state. Slice name is case-sensitive.
+ * @param {string} sliceName 
+ * @returns {(dispatch: function) => void}
+ */
+export const resetSlice = (sliceName) => (dispatch) => {
+    if(Object.keys(initialState).includes(sliceName))
+        dispatch(resetStateSlice(sliceName));
+};
+
 //* --------------------[Initial State]-------------------- *//
 /** The initial state for `user`. */
 const initialState = {
@@ -46,9 +58,18 @@ const initialState = {
  * @returns {object}
  */
 export default function userReducer(state=initialState, action) {
+    /** Create a clone of the current state. */
+    const clone = structuredClone(state);
+
+    /** Return the state with the given modifications. */
     switch(action.type) {
         case SET_ACTIVE_USER:
             return { ...state, activeUser: action.payload };
+        
+        case RESET_SLICE:
+            clone[action.payload] = initialState[action.payload];
+            return clone;
+            
         default:
             return state;
     }

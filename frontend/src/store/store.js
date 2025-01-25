@@ -56,5 +56,5 @@ else {
  */
 const configureStore = (preloadedState) => createStore(rootReducer, preloadedState, enhancer);
 
-/** Exports the Redux store. */
+/** Export the Redux store. */
 export default configureStore;

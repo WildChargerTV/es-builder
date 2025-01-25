@@ -4,26 +4,18 @@
 import { csrfFetch } from './csrf';
 
 //* --------------------[Thunk Action Identifiers]-------------------- *//
+// ? Action Identifiers utilize ADD/GET/SET/DEL terminology.
 const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+const DEL_USER = 'session/removeUser';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
-/**
- * Thunk action creator to set the current session user in the Redux store.
- * @param {*} user
- * @returns {{ type: SET_USER; payload: any; }}
- */
-const setUser = (user) => ({
-    type: SET_USER,
-    payload: user
-});
-/**
- * Thunk action creator to remove the current session user in the Redux store.
- * @returns {{ type: REMOVE_USER; }}
- */
-const removeUser = () => ({ type: REMOVE_USER });
+// ? Action Creators utilize Add/Get/Set/Remove terminology.
+const setUser = (user) => ({ type: SET_USER, payload: user });
+const removeUser = () => ({ type: DEL_USER });
 
 //* --------------------[Thunk Middlewares]-------------------- *//
+// ? Middlewares utilize Create/Read/Update/Delete terminology.
+
 /**
  * Thunk middleware to restore the current session user.
  * @requires {@linkcode csrfFetch}
@@ -37,7 +29,7 @@ export const restoreUser = () => async (dispatch) => {
     // Dispatch the `setUser` thunk action and return the `csrfFetch` response.
     dispatch(setUser(data.user));
     return res;
-}
+};
 
 /**
  * Thunk middleware to log in a user.
@@ -74,7 +66,7 @@ export const logout = () => async (dispatch) => {
     // Dispatch the `removeUser` thunk action and return the `csrfFetch` response.
     dispatch(removeUser());
     return res;
-}
+};
 
 /**
  * Thunk middleware to sign up a new user.
@@ -97,7 +89,7 @@ export const signup = (user) => async (dispatch) => {
     // Dispatch the `setUser` thunk action and return the `csrfFetch` response.
     dispatch(setUser(data.user));
     return res;
-}
+};
 
 //* --------------------[Initial State]-------------------- *//
 /**
@@ -110,15 +102,15 @@ const initialState = { user: null };
 /**
  * The thunk reducer for the `session` state, which manages the current session user, logins,
  * and logouts.
- * @param {{ user: JSON | null; }} [state=initialState]
- * @param {string} action
- * @returns {{user: JSON | null;}}
+ * @param {initialState} [state=initialState]
+ * @param {object} action
+ * @returns {object}
  */
 export default function sessionReducer(state=initialState, action) {
     switch(action.type) {
         case SET_USER:
             return { ...state, user: action.payload };
-        case REMOVE_USER:
+        case DEL_USER:
             return { ...state, user: null };
         default:
             return state;
