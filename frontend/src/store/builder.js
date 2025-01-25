@@ -139,7 +139,7 @@ export const changeShipPreset = (presetId) => (dispatch) => {
 
 /**
  * Thunk middleware to change one of the currently selected enhancements, or reset the state slice.
- * @param {number | 'reset'} index
+ * @param {number | 'selected' | 'reset'} index
  * @param {number} enhanceId
  * @returns {(dispatch) => void}
  */
@@ -220,7 +220,7 @@ export const changeDevice = (index, deviceId, mods) => (dispatch) => {
     else if((index >= 0 && index <= 5) && (String(deviceId).startsWith('c') || (deviceId >= 0 && deviceId <= 83) || deviceId === null)) 
         dispatch(setDevice(index, deviceId, mods));
     else 
-        throw new RangeError(`One or both values passed into changeDevice are invalid: ${index}, ${deviceId}, ${mods}`);
+        throw new RangeError(`One or both values passed into changeDevice are invalid: ${index}, ${deviceId}, ${Object.values(mods)}`);
 }; 
 
 /**
@@ -243,13 +243,15 @@ export const changeConsumable = (index, consumableId, quantity) => (dispatch) =>
 /**
  * Thunk middleware to bulk load data into the Loadout Builder. This is the only way to modify
  * multiple slices of this state at once, and is only intended for use in the `LoadoutBuilderMain`
- * component, which only calls this middleware in the `'create'` & `'edit'` modes. **DO NOT CALL
+ * component, which only calls this middleware in the `'edit'` & `'view'` modes. **DO NOT CALL
  * THIS ANYWHERE ELSE.**
+ * 
+ * This component assumes all data has been validated beforehand. If the use of this component
+ * causes an error, please ensure the loadout data is valid.
  * @param {object} data 
  * @returns {(dispatch) => void}
  */
 export const bulkUpdateState = (data) => (dispatch) => {
-    // TODO maybe add checks to ensure state data is all valid
     dispatch(bulkSetState(data));
 }
 
