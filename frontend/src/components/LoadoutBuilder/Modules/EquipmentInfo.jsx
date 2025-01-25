@@ -110,7 +110,7 @@ export default function EquipmentInfo() {
         <h2>
             {focusData.enhanced && '★ '}
             {focusData.name}
-            {focusData?.mods && focusData.mods[0][1] && 
+            {focusData?.mods?.[0][1] && 
             ` (${focusData.mods.map((mod) => mod[1] && '+').join('')})`}
         </h2>
 
@@ -132,8 +132,8 @@ export default function EquipmentInfo() {
         </p>
 
         {/* Equipment Mods (Where Applicable) */}
-        {focusData?.mods && focusData.mods[0][1] && <div id='equip-info-mods'>
-            <label>Mods</label>
+        {focusData?.mods?.[0][1] && <div id='equip-info-mods'>
+            <p>Mods</p>
             <ul>
                 {focusData.mods.map(([key, id]) => id && 
                     <li key={`mod-${key}`} title={modsArr[id].description}>{modsArr[id].name}</li>

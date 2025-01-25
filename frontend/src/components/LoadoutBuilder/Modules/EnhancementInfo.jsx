@@ -163,11 +163,10 @@ function CurrentEnhancementInfo() {
             that means it is not compatible with your current ship. Clicking on any one of the 
             enhancements in the &quot;Selected&quot; group above will remove it from your loadout.
             <br /><br />
-            <span className='red'>WARNING:</span> The
-            <span className='yellow'> Ancient Weapon</span> enhancement replaces your existing
-            Primary & Secondary Weapons when equipped. Similarly, the 
-            <span className='yellow'> Splitter</span> enhancement will remove all but the first
-            Secondary Weapons slot when equipped.
+            <span className='red'>WARNING:</span> The <span className='yellow'> Ancient 
+            Weapon</span> enhancement replaces your existing Primary & Secondary Weapons when 
+            equipped. Similarly, the <span className='yellow'> Splitter</span> enhancement will 
+            remove all but the first Secondary Weapons slot when equipped.
             <br /><br />
             The Loadout Builder will cache this data the moment you equip either enhancement, so
             you can unequip it later and retain your prior configuration. However, this data is

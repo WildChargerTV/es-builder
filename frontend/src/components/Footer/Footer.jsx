@@ -38,20 +38,24 @@ export default function Footer({ isLoaded }) {
                 below this are not guaranteed to display properly.
             </p>
             <p>
-                <span className='site-footer__text-icon'><DiReact /><DiJavascript1 /></span>
-                Powered by ReactJS
+                <span className='site-footer__text-icon'>
+                    <DiReact /><DiJavascript1 />
+                </span> Powered by ReactJS
             </p>
             <p>
-                <span className='site-footer__text-icon'><DiPostgresql /></span>
-                Database built on PostgreSQL
+                <span className='site-footer__text-icon'>
+                    <DiPostgresql />
+                </span> Database built on PostgreSQL
             </p>
             <p>
-                <span className='site-footer__text-icon'><FaAws /></span>
-                Asset Delivery served via Amazon Web Services
+                <span className='site-footer__text-icon'>
+                    <FaAws />
+                </span> Asset Delivery served via Amazon Web Services
             </p>
             <p>
-                <span className='site-footer__text-icon'><DiFirefox /></span> 
-                Tested on Mozilla Firefox
+                <span className='site-footer__text-icon'>
+                    <DiFirefox />
+                </span> Tested on Mozilla Firefox
             </p>
         </div>
 

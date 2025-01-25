@@ -10,7 +10,7 @@ import SelectEquipModal from '../Modals/SelectEquipModal';
 import SelectModModal from '../Modals/SelectModModal';
 import BucketImage from '../../Bucket/BucketImage';
 import OpenModal from '../../Modal/OpenModal';
-import * as SVG from '../../../assets/svg';
+import * as SVGIcon from '../../../assets/svg';
 import * as dataFile from '../../../data';
 import * as builderActions from '../../../store/builder';
 import { readCustomEquippable } from '../../../store/customEquippable';
@@ -96,8 +96,8 @@ export default function EquipmentList() {
         // If Splitter is equipped, only 1 Secondary slot is allowed. Equipping Ancient Weapon
         // overrides Splitter, and all Secondary slots are removed.
         const secondarySlots = ((res=currShip.secondary_weapons) => {
-            splitterEquipped && (res = 1);
-            ancientWeaponEquipped && (res = 0);
+            if(splitterEquipped) res = 1;
+            if(ancientWeaponEquipped) res = 0;
             return res;
         })();
 
@@ -332,14 +332,14 @@ function SingleEquipment({ slotData }) {
         {/* Equipment Controls */}
         {mode !== 'view' && !(type === 'Primary' && id === 0) && <div className='builder-equip-controls'>
             {data
-            ? <button onClick={deleteEquip}><SVG.RemoveEquipIcon height='1.25vw' /></button>
+            ? <button onClick={deleteEquip}><SVGIcon.RemoveEquipIcon height='1.25vw' /></button>
             : <OpenModal
-                elementText={<SVG.AddEquipIcon height='1.25vw' />}
+                elementText={<SVGIcon.AddEquipIcon height='1.25vw' />}
                 modalComponent={<SelectEquipModal currEquip={{index, type}} />}
             />}
             {moddable && mods && Object.values(mods).includes(null) &&
             <OpenModal
-                elementText={<SVG.AddModIcon height='1.25vw' />}
+                elementText={<SVGIcon.AddModIcon height='1.25vw' />}
                 modalComponent={<SelectModModal currEquip={{eIndex: index, eType: type}} />}
             />}
         </div>}

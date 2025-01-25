@@ -111,8 +111,9 @@ function EquipListRow({ type, loadoutData }) {
             // array to the return value.
             res = res.concat(loadoutData
                 ? Object.entries(loadoutData).map((equipment) => {
-                    const id = equipment[1] && equipment[1].split('x')[0];
-                    return id !== null ? equipmentData[id].icon : null;
+                    console.log(equipment, equipment[1]);
+                    const id = equipment[1] !== null && equipment[1].split('x')[0];
+                    return id ? equipmentData[id].icon : null;
                 })
                 : []
             );
@@ -124,7 +125,7 @@ function EquipListRow({ type, loadoutData }) {
 
     /** Return the equipment list. */
     return (<li>
-        {iconArr && iconArr.map((dir) => dir && 
+        {iconArr?.map((dir) => dir && 
             <BucketImage key={`${type.toLowerCase()}-${key(true)}`} dir={dir} />
         )}
     </li>);

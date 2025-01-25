@@ -55,7 +55,7 @@ export default function OpenModal({
         case 'button':
             return <button onClick={onClick} disabled={disabled}>{elementText}</button>;
         case 'checkbox':
-            return (<label onClick={onClick}><input type='checkbox' onChange={onClick} aria-hidden /><h4>{elementText}</h4></label>);
+            return (<label onClick={onClick} aria-hidden><input type='checkbox' onChange={onClick}/><h4>{elementText}</h4></label>);
         default:
             console.error('Please provide a valid element type!');
             return <button onClick={onClick} disabled={disabled}>{elementText}</button>;
