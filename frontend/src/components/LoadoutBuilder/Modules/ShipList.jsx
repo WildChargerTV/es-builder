@@ -1,5 +1,4 @@
-// * frontend/src/components/LoadoutBuilder/Modules/ShipSelectorGrid.jsx
-// TODO documentation
+// * frontend/src/components/LoadoutBuilder/Modules/ShipList.jsx
 
 // Node Module Imports
 import { useEffect } from 'react';
@@ -51,11 +50,13 @@ export default function ShipList() {
             <button key={`ship-${ship.id}`} id={`builder-ship-${ship.id}`} ref={ref} onClick={onClick} disabled={mode !== 'create'}>
                 {/* Ship Name */}
                 <h2 className='builder-ship-name' style={{fontSize}} >{ship.name}</h2>
+
                 {/* Ship Graphic - Contains Top & Front Views */}
                 <div className='builder-ship-graphic'>
                     <BucketImage dir={`/ships/ship${ship.id}-top.png`} />
                     <BucketImage dir={`/ships/ship${ship.id}-front.png`} />
                 </div>
+
                 {/* Ship Class Name */}
                 <h3 className='builder-ship-class' style={{fontSize: `calc(${fontSize} * 0.66)`}} >{ship.class}</h3>
             </button>

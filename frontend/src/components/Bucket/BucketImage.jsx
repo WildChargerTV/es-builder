@@ -1,5 +1,4 @@
 // * frontend/src/components/Bucket/BucketImage.jsx
-// TODO documentation
 
 // Node Module Imports
 import { useEffect, useState } from 'react';

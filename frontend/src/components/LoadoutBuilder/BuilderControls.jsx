@@ -1,5 +1,4 @@
 // * frontend/src/components/LoadoutBuilder/BuilderControls.jsx
-// TODO docs
 
 // Node Module Imports
 import { Filter } from 'bad-words';
@@ -136,14 +135,9 @@ function StartBlankButton() {
     const dispatch = useDispatch();
     const { mode, tabId, shipId, shipPreset } = useSelector((state) => state.builder);
 
-    /** 
-     * When the button is clicked, set `shipPreset` to `false`. As a safeguard, clear any selected 
-     * equipment. 
-     * TODO make it so that the focusEquip is cleared long before this
-     */
+    /** When the button is clicked, set `shipPreset` to `false`. */
     const onClick = () => {
         dispatch(builder.changeShipPreset(false));
-        dispatch(builder.changeFocusEquip('reset'));
     }
 
     /**

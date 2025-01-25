@@ -1,5 +1,4 @@
 // * frontend/src/components/LoadoutBuilder/Modules/EnhancementInfo.jsx
-// TODO docs && clearer naming
 
 // Node Module Imports
 import { useEffect, useMemo } from 'react';

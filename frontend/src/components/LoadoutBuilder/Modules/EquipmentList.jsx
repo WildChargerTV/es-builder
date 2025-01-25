@@ -79,7 +79,6 @@ export default function EquipmentList() {
                 dispatch(loadoutActions.updateSecondaryDataBuffer(null));
             } 
             // Load a clean-slate empty state otherwise. Primarily occurs in Edit mode.
-            // TODO eventually this should accommodate preset loadouts when loading from scratch.
             else if(builder.primaryWeapons[0].id === 0) {
                 let cleanState = {};
                 for(let i = 0; i < currShip.primary_weapons; i++)
@@ -118,7 +117,6 @@ export default function EquipmentList() {
                 dispatch(loadoutActions.updateSecondaryDataBuffer(null));
             }
             // Load a clean-slate empty state otherwise. Primarily occurs in Edit mode.
-            // TODO eventually this should accommodate preset loadouts when loading from scratch.
             else if(Object.entries(builder.secondaryWeapons).length !== currShip.secondary_weapons) {
                 let cleanState = {};
                 for(let i = 0; i < currShip.secondary_weapons; i++)
