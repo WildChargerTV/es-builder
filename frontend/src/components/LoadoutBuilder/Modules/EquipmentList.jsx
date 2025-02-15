@@ -295,8 +295,8 @@ function SingleEquipment({ slotData }) {
     const showInfo = (event) => {
         event.stopPropagation();
         data
-        ? dispatch(builderActions.changeFocusEquip(type, id, index))
-        : dispatch(builderActions.changeFocusEquip('reset'));
+        ? dispatch(builderActions.updateFocusEquip(type, id, index))
+        : dispatch(builderActions.updateFocusEquip('reset'));
     };
 
     /** 
@@ -307,13 +307,13 @@ function SingleEquipment({ slotData }) {
         event.stopPropagation();
         switch(type) {
             case 'Primary': 
-                return dispatch(builderActions.changePrimary(index, null, null));
+                return dispatch(builderActions.updatePrimary(index, null, null));
             case 'Secondary': 
-                return dispatch(builderActions.changeSecondary(index, null, null));
+                return dispatch(builderActions.updateSecondary(index, null, null));
             case 'Devices': 
-                return dispatch(builderActions.changeDevice(index, null, null));
+                return dispatch(builderActions.updateDevice(index, null, null));
             case 'Consumables': 
-                return dispatch(builderActions.changeConsumable(index, null, null));
+                return dispatch(builderActions.updateConsumable(index, null, null));
         }
     };
 

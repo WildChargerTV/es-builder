@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 // Local Module Imports
 import { useModal } from '../../../context/Modal';
 import { secondaryWeaponData, consumableData } from '../../../data';
-import { changeSecondary, changeConsumable } from '../../../store/builder';
+import { updateSecondary, updateConsumable } from '../../../store/builder';
 
 /**
  * Modal to change the quantity of a **Secondary Weapon or Consumable**. Consists of a form with a
@@ -16,7 +16,7 @@ import { changeSecondary, changeConsumable } from '../../../store/builder';
  * @component `ChangeQuantityModal`
  * @requires {@linkcode useModal} 
  * @requires {@linkcode secondaryWeaponData} {@linkcode consumableData}
- * @requires {@linkcode changeSecondary} {@linkcode changeConsumable}
+ * @requires {@linkcode updateSecondary} {@linkcode updateConsumable}
  * @param {{ data: {
  *      type: 'Secondary' | 'Consumables',
  *      id: string,
@@ -38,8 +38,8 @@ export default function ChangeQuantityModal({ data }) {
     const onSubmit = (event) => {
         event.preventDefault();
         (type === 'Secondary')
-        ? dispatch(changeSecondary(index, equipId, formQuantity))
-        : dispatch(changeConsumable(index, equipId, formQuantity));
+        ? dispatch(updateSecondary(index, equipId, formQuantity))
+        : dispatch(updateConsumable(index, equipId, formQuantity));
         closeModal();
     }
 

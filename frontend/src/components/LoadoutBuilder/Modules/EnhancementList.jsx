@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import enhancementData from '../../../data/enhcancements';
-import { changeEnhancement, changeFlag } from '../../../store/builder';
+import { updateEnhancement, updateFlag } from '../../../store/builder';
 
 /** List of all valid Enhancement Categories. */
 const CATEGORIES = [
@@ -76,7 +76,7 @@ function EnhancementCell({ data }) {
     /** When an enhancement is selected, add it to the selected enhancements. */
     const onClick = () => {
         // Set the currently selected enhancement to the current one.
-        dispatch(changeEnhancement('selected', data.id));
+        dispatch(updateEnhancement('selected', data.id));
 
         // Iterate through the enhancements state. If a null index is found, equip the enhancement
         // to it. Account for the addition of Ancient Weapon & Splitter.
@@ -84,9 +84,9 @@ function EnhancementCell({ data }) {
         // ? then Ancient Weapon, as the latter still makes the former functionally null.
         for(const key in enhancements) {
             if(enhancements[key] === null && key !== 'selected') {
-                dispatch(changeEnhancement(key, data.id));
-                data.id === 2 && dispatch(changeFlag("ancientWeaponEquipped", true));
-                data.id === 24 && dispatch(changeFlag("splitterEquipped", true));
+                dispatch(updateEnhancement(key, data.id));
+                data.id === 2 && dispatch(updateFlag("ancientWeaponEquipped", true));
+                data.id === 24 && dispatch(updateFlag("splitterEquipped", true));
                 return;
             }
         }   

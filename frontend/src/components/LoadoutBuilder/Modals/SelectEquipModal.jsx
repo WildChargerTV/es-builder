@@ -1,4 +1,4 @@
-
+// TODO docs
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import useFitText from 'use-fit-text';
 import BucketImage from '../../Bucket/BucketImage';
 import { useModal } from '../../../context/Modal';
 import * as dataFiles from '../../../data';
-import { changeConsumable, changeDevice, changePrimary, changeSecondary } from '../../../store/builder';
+import { updateConsumable, updateDevice, updatePrimary, updateSecondary } from '../../../store/builder';
 
 export default function SelectEquipModal({ currEquip }) {
     const { index, type } = currEquip;
@@ -69,10 +69,10 @@ function SingleEquipment({ index, type, data }) {
         event.stopPropagation();
         closeModal();
         switch(type) {
-            case 'Primary': return dispatch(changePrimary(index, data.id, emptyModsObj));
-            case 'Secondary': return dispatch(changeSecondary(index, data.id, data.stack_size));
-            case 'Devices': return dispatch(changeDevice(index, data.id, emptyModsObj));
-            case 'Consumables': return dispatch(changeConsumable(index, data.id, data.stack_size));
+            case 'Primary': return dispatch(updatePrimary(index, data.id, emptyModsObj));
+            case 'Secondary': return dispatch(updateSecondary(index, data.id, data.stack_size));
+            case 'Devices': return dispatch(updateDevice(index, data.id, emptyModsObj));
+            case 'Consumables': return dispatch(updateConsumable(index, data.id, data.stack_size));
         }
     }
 

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import { enhancementData, shipData } from '../../../data';
-import { changeEnhancement, changeFlag } from '../../../store/builder';
+import { updateEnhancement, updateFlag } from '../../../store/builder';
 
 /**
  * Renders the group of currently equipped enhancements, as well as information about the currently
@@ -72,7 +72,7 @@ function CurrentEnhancementGroup() {
 
             // If the enhancement cannot be equipped on the current ship, remove it from the group.
             if(eData?.allowed_ships && (shipId === null || eData.allowed_ships.indexOf(shipId) === -1))
-                dispatch(changeEnhancement(enhancement.i, null));
+                dispatch(updateEnhancement(enhancement.i, null));
         }
     }, [dispatch, groupData, shipId]);
 
@@ -120,16 +120,16 @@ function CurrentEnhancementCell({ index, id }) {
     const onClick = () => {
         // In View mode, set the selected enhancement to this cell's ID, and return early.
         if(mode === 'view') {
-            dispatch(changeEnhancement('selected', id));
+            dispatch(updateEnhancement('selected', id));
             return;
         }
 
         // Remove the enhancement in this cell.
-        dispatch(changeEnhancement(index, null));
+        dispatch(updateEnhancement(index, null));
 
         // Account for the remvoal of Ancient Weapon or Splitter.
-        id === 2 && dispatch(changeFlag('ancientWeaponEquipped', false));
-        id === 24 && dispatch(changeFlag('splitterEquipped', false));
+        id === 2 && dispatch(updateFlag('ancientWeaponEquipped', false));
+        id === 24 && dispatch(updateFlag('splitterEquipped', false));
     }
 
     /** Return the enhancement cell. */

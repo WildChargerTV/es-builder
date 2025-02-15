@@ -1,4 +1,5 @@
 // * frontend/src/components/LoadoutBuilder/Modals/PresetLoadoutModal.jsx
+// TODO docs
 
 import { useDispatch, useSelector } from 'react-redux';
 import BucketImage from '../../Bucket/BucketImage';
@@ -10,12 +11,12 @@ import {
     secondaryWeaponData, 
     shipData } from '../../../data';
 import { 
-    changeConsumable, 
-    changeDevice, 
-    changeFocusEquip, 
-    changePrimary, 
-    changeSecondary, 
-    changeShipPreset } from '../../../store/builder';
+    updateConsumable, 
+    updateDevice, 
+    updateFocusEquip, 
+    updatePrimary, 
+    updateSecondary, 
+    updateShipPreset } from '../../../store/builder';
 
 export default function PresetLoadoutModal() {
     const dispatch = useDispatch();
@@ -25,42 +26,42 @@ export default function PresetLoadoutModal() {
 
     const onClick = (event) => {
         event.preventDefault();
-        dispatch(changeShipPreset(event.target.id));
+        dispatch(updateShipPreset(event.target.id));
 
         const selectedLoadout = shipData[shipId].presets[event.target.id];
 
         let pIndex = 0;
         for(let id of selectedLoadout.primary) {
-            dispatch(changePrimary(pIndex, id.id, id.mods));
+            dispatch(updatePrimary(pIndex, id.id, id.mods));
             pIndex++;
         }
         let sIndex = 0;
         for(let data of selectedLoadout.secondary) {
             console.log(selectedLoadout.secondary.length);
             if(data === null) 
-                dispatch(changeSecondary(sIndex, null, null));
+                dispatch(updateSecondary(sIndex, null, null));
             else {
                 const [id, quantity] = data.split('x');
-                dispatch(changeSecondary(selectedLoadout.secondary.indexOf(data), id, quantity));
+                dispatch(updateSecondary(selectedLoadout.secondary.indexOf(data), id, quantity));
             }
             sIndex++;
         }
         let dIndex = 0;
         for(let id of selectedLoadout.device) {
-            dispatch(changeDevice(dIndex, id.id, id.mods));
+            dispatch(updateDevice(dIndex, id.id, id.mods));
             dIndex++;
         }
         let cIndex = 0;
         for(let data of selectedLoadout.consumable) {
             if(data === null)
-                dispatch(changeConsumable(cIndex, null, null));
+                dispatch(updateConsumable(cIndex, null, null));
             else {
                 const [id, quantity] = data.split('x');
-                dispatch(changeConsumable(selectedLoadout.consumable.indexOf(data), id, quantity));
+                dispatch(updateConsumable(selectedLoadout.consumable.indexOf(data), id, quantity));
             }
             cIndex++;
         }
-        dispatch(changeFocusEquip('reset'));
+        dispatch(updateFocusEquip('reset'));
         closeModal();
     }
 

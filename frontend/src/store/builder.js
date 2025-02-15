@@ -4,6 +4,7 @@
 import { shipData } from '../data';
 
 //* --------------------[Thunk Action Identifiers]-------------------- *//
+// ? Action Identifiers utilize ADD/GET/SET/DEL terminology.
 const SET_FLAG = 'builder/setFlag';
 const SET_TAB = 'builder/setTab';
 const SET_NAME = 'builder/setName';
@@ -21,6 +22,7 @@ const BULK_SET_STATE = 'builder/bulkSetState';
 const RESET_STATE = 'builder/resetState';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
+// ? Action Creators utilize Add/Get/Set/Remove terminology.
 const setFlag = (flag, bool) => ({ type: SET_FLAG, payload: { flag, bool } });
 const setTab = (tabId) => ({ type: SET_TAB, payload: tabId });
 const setName = (name) => ({ type: SET_NAME, payload: name });
@@ -38,6 +40,7 @@ const bulkSetState = (data) => ({ type: BULK_SET_STATE, payload: data });
 const resetState = (mode) => ({ type: RESET_STATE, payload: mode });
 
 //* --------------------[Thunk Middlewares]-------------------- *//
+// ? Middlewares utilize Create/Read/Update/Delete terminology.
 
 /**
  * Thunk middleware to change a flag inside the Loadout Builder. The second value MUST be a boolean
@@ -49,7 +52,7 @@ const resetState = (mode) => ({ type: RESET_STATE, payload: mode });
  * @param {boolean} bool 
  * @returns {(dispatch) => void} 
  */
-export const changeFlag = (flag, bool) => (dispatch) => {
+export const updateFlag = (flag, bool) => (dispatch) => {
     const VALID_FLAGS = ['ancientWeaponEquipped', 'splitterEquipped'];
     if(VALID_FLAGS.includes(flag) && typeof bool === 'boolean')
         dispatch(setFlag(flag, bool));
@@ -63,7 +66,7 @@ export const changeFlag = (flag, bool) => (dispatch) => {
  * @param {0 | 1 | 2} tabId
  * @returns {(dispatch) => void}
  */
-export const changeTab = (tabId) => (dispatch) => {
+export const updateTab = (tabId) => (dispatch) => {
     if(tabId >= 0 && tabId <= 2) 
         dispatch(setTab(tabId));
     else 
@@ -76,7 +79,7 @@ export const changeTab = (tabId) => (dispatch) => {
  * @param {string} name
  * @returns {(dispatch) => void}
  */
-export const changeName = (name) => (dispatch) => {
+export const updateName = (name) => (dispatch) => {
     if(name.length >= 4 && name.length <= 30)
         dispatch(setName(name));
     else
@@ -94,7 +97,7 @@ export const changeName = (name) => (dispatch) => {
  * @param {0 | 1 | 2 | 3} shipId
  * @returns {(dispatch) => void}
  */
-export const changeShip = (shipId) => (dispatch) => {
+export const updateShip = (shipId) => (dispatch) => {
     if(shipId >= 0 && shipId <= 3) {
         const { primary_weapons, secondary_weapons, devices, consumables } = shipData[shipId];
         const pSlots = ((res={}) => {
@@ -127,7 +130,7 @@ export const changeShip = (shipId) => (dispatch) => {
  * @param {false | 'a' | 'b' | 'c' | 'reset'} presetId
  * @returns {(dispatch) => void}
  */
-export const changeShipPreset = (presetId) => (dispatch) => {
+export const updateShipPreset = (presetId) => (dispatch) => {
     const VALID_PRESETS = ['a', 'b', 'c']
     if(presetId === 'reset') 
         dispatch(setPreset(null));
@@ -143,7 +146,7 @@ export const changeShipPreset = (presetId) => (dispatch) => {
  * @param {number} enhanceId
  * @returns {(dispatch) => void}
  */
-export const changeEnhancement = (index, enhanceId) => (dispatch) => {
+export const updateEnhancement = (index, enhanceId) => (dispatch) => {
     if(index === 'reset') 
         dispatch(setEnhancement('reset', null));
     else if(((index >= 0 && index <= 2) || index === 'selected') && (enhanceId >= 0 && enhanceId <= 26))
@@ -160,7 +163,7 @@ export const changeEnhancement = (index, enhanceId) => (dispatch) => {
  * @param {number} index
  * @returns {(dispatch) => void}
  */
-export const changeFocusEquip = (category, id, index) => (dispatch) => {
+export const updateFocusEquip = (category, id, index) => (dispatch) => {
     const VALID_CATEGORIES = ['Primary', 'Secondary', 'Devices', 'Consumables'];
     if(category === 'reset') 
         dispatch(setFocusedEquipment(null, null, null))
@@ -178,7 +181,7 @@ export const changeFocusEquip = (category, id, index) => (dispatch) => {
  * @param {object} mods
  * @returns {(dispatch) => void}
  */
-export const changePrimary = (index, weaponId, mods) => (dispatch) => {
+export const updatePrimary = (index, weaponId, mods) => (dispatch) => {
     if(index === 'reset') 
         dispatch(setPrimaryWeapon('reset', null, null));
     else if((index >= 0 && index <= 3) && (String(weaponId).startsWith('c') || (weaponId >= 0 && weaponId <= 23) || weaponId === null))
@@ -196,7 +199,7 @@ export const overridePrimary = (slice) => (dispatch) => dispatch(overridePrimary
  * @param {number} quantity
  * @returns {(dispatch) => void}
  */
-export const changeSecondary = (index, weaponId, quantity) => (dispatch) => {
+export const updateSecondary = (index, weaponId, quantity) => (dispatch) => {
     if(index === 'reset')
         dispatch(setSecondaryWeapon('reset', null, null));
     else if((index >= 0 && index <= 4) && ((weaponId >= 0 && weaponId <= 9) || weaponId === null))
@@ -214,7 +217,7 @@ export const overrideSecondary = (slice) => (dispatch) => dispatch(overrideSecon
  * @param {object} mods
  * @returns {(dispatch) => void}
  */
-export const changeDevice = (index, deviceId, mods) => (dispatch) => {
+export const updateDevice = (index, deviceId, mods) => (dispatch) => {
     if(index === 'reset')
         dispatch(setDevice('reset', null, null));
     else if((index >= 0 && index <= 5) && (String(deviceId).startsWith('c') || (deviceId >= 0 && deviceId <= 83) || deviceId === null)) 
@@ -231,7 +234,7 @@ export const changeDevice = (index, deviceId, mods) => (dispatch) => {
  * @param {number} quantity
  * @returns {(dispatch) => void}
  */
-export const changeConsumable = (index, consumableId, quantity) => (dispatch) => {
+export const updateConsumable = (index, consumableId, quantity) => (dispatch) => {
     if(index === 'reset')
         dispatch(setConsumable('reset', null, null));
     else if((index >= 0 && index <= 5) && ((consumableId >= 0 && consumableId <= 32) || consumableId === null))

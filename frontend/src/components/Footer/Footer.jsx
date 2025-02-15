@@ -1,9 +1,9 @@
 // * frontend/src/components/Footer/Footer.jsx
 
 // Node Module Imports
-import { AiFillGithub, AiFillLinkedin, AiFillYoutube, AiOutlineX } from "react-icons/ai";
-import { DiFirefox, DiJavascript1, DiPostgresql, DiReact } from "react-icons/di";
-import { FaAws } from "react-icons/fa";
+import { AiFillGithub, AiFillLinkedin, AiFillYoutube, AiOutlineTwitch, AiOutlineX } from 'react-icons/ai';
+import { DiFirefox, DiJavascript1, DiPostgresql, DiReact } from 'react-icons/di';
+import { FaAws } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 // Local Module Imports
 import './Footer.css';
@@ -74,6 +74,9 @@ export default function Footer({ isLoaded }) {
                 </Link>
                 <Link to='https://www.youtube.com/@WildCharger'>
                     <AiFillYoutube />
+                </Link>
+                <Link to='https://twitch.tv/wildchargertv'>
+                    <AiOutlineTwitch />
                 </Link>
             </div>
             <p>

@@ -159,7 +159,7 @@ function LoadoutName({ contentEditable }) {
 
         // If the current name is different and is within the length limits, dispatch to Redux.
         if(name !== currName && (length > 3 && length < 31))
-            dispatch(builderActions.changeName(currName));
+            dispatch(builderActions.updateName(currName));
     }
 
     /** Implement maximum length restriction & color indication onto the h2 field. */

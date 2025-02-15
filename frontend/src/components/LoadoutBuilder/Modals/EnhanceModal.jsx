@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
 import { primaryWeaponData, deviceData } from '../../../data';
 import { useModal } from '../../../context/Modal';
-import { changeDevice, changePrimary } from '../../../store/builder';
+import { updateDevice, updatePrimary } from '../../../store/builder';
 import { createCustomEquippable } from '../../../store/customEquippable';
 
 /**
@@ -20,7 +20,7 @@ import { createCustomEquippable } from '../../../store/customEquippable';
  * on its functionality. 
  * @component `EnhanceModal`
  * @requires {@linkcode useModal} {@linkcode primaryWeaponData} {@linkcode deviceData}
- * @requires {@linkcode changePrimary} {@linkcode changeDevice} {@linkcode createCustomEquippable}
+ * @requires {@linkcode updatePrimary} {@linkcode updateDevice} {@linkcode createCustomEquippable}
  * @requires {@linkcode SingleStat}
  * @returns {ReactElement}
  */
@@ -56,8 +56,8 @@ export default function EnhanceModal() {
         dispatch(createCustomEquippable(customEquippableData))
         .then((res) => {
             category === 'Primary'
-            ? dispatch(changePrimary(index, `c${res.id}`, primaryWeapons[index].mods))
-            : dispatch(changeDevice(index, `c${res.id}`, devices[index].mods))})
+            ? dispatch(updatePrimary(index, `c${res.id}`, primaryWeapons[index].mods))
+            : dispatch(updateDevice(index, `c${res.id}`, devices[index].mods))})
         .then(closeModal());
     };
 

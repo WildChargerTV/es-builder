@@ -137,7 +137,7 @@ function StartBlankButton() {
 
     /** When the button is clicked, set `shipPreset` to `false`. */
     const onClick = () => {
-        dispatch(builder.changeShipPreset(false));
+        dispatch(builder.updateShipPreset(false));
     }
 
     /**
@@ -204,7 +204,7 @@ function ClearEnhancementsButton() {
     /** When the button is clicked, clear the enhancements state. */
     const onClick = (event) => {
         event.stopPropagation();
-        dispatch(builder.changeEnhancement('reset', null));
+        dispatch(builder.updateEnhancement('reset', null));
     };
 
     /** In order for the button to be enabled, one or more enhancements must be not null. */

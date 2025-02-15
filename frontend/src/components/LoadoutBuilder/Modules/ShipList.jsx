@@ -7,7 +7,7 @@ import useFitText from 'use-fit-text';
 // Local Module Imports
 import BucketImage from '../../Bucket/BucketImage';
 import { shipData } from '../../../data';
-import { changeShip } from '../../../store/builder';
+import { updateShip } from '../../../store/builder';
 
 /**
  * Renders a 2x2 grid of buttons, allowing the user to select one of EVERSPACE's four available
@@ -16,7 +16,7 @@ import { changeShip } from '../../../store/builder';
  * 
  * See {@linkcode shipData} for more information about the ships in EVERSPACE.
  * @component `ShipList`
- * @requires {@linkcode BucketImage}, {@linkcode shipData}, {@linkcode changeShip}
+ * @requires {@linkcode BucketImage}, {@linkcode shipData}, {@linkcode updateShip}
  * @returns {ReactElement}
  */
 export default function ShipList() {
@@ -31,7 +31,7 @@ export default function ShipList() {
      */
     const onClick = (event) => {
         const currId = Number(event.target.id.split('-')[2]);
-        currId !== shipId && dispatch(changeShip(currId));
+        currId !== shipId && dispatch(updateShip(currId));
     }
 
     /** Set the active ship to the one defined in the Redux store. */

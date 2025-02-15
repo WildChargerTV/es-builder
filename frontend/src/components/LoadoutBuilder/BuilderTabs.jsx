@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
-import { changeTab } from '../../store/builder';
+import { updateTab } from '../../store/builder';
 
 /**
  * Renders an EVERSPACE-style tab navigation menu for the Loadout Builder. Changing the tab updates 
@@ -20,7 +20,7 @@ import { changeTab } from '../../store/builder';
  * - `1`: Enhancement Selection
  * - `2`: Equipment Selection & Customization
  * @component `BuilderTabs`
- * @requires {@linkcode changeTab}
+ * @requires {@linkcode updateTab}
  * @param {{ isLoaded: boolean }}
  * @returns {null | ReactElement}
  */
@@ -32,7 +32,7 @@ export default function BuilderTabs({ isLoaded }) {
     /** When one of the inactive tabs is clicked, change the ID in the Redux store. */
     const onClick = (event) => {
         const currId = Number(event.target.id.split('-')[2]);
-        currId !== tabId && dispatch(changeTab(currId));
+        currId !== tabId && dispatch(updateTab(currId));
     }
 
     /** Set the active tab to the one defined in the Redux store. */
