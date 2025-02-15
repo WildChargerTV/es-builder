@@ -25,9 +25,9 @@ export default function Navigation({ isLoaded }) {
         <div id='site-nav-logo'>
             <NavLink to='/'>
                 <img 
-                    src='https://upload.wikimedia.org/wikipedia/fr/2/2b/Everspace_Logo.png' 
-                    alt='ES1 logo' 
-                /> Builder <span style={{ fontSize: '20pt' }}>Beta</span>
+                    src='https://raw.githubusercontent.com/WildChargerTV/es-builder/refs/heads/main/frontend/src/assets/img/Logo.png' 
+                    alt='Site Logo' 
+                />
             </NavLink>
             
         </div>
