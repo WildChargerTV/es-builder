@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 // Local Module Imports
 import Navigation from './components/Navigation/Navigation';
+import MobileNotice from './components/MobileNotice/MobileNotice';
 import LandingPage from './components/Landing/Landing';
 import RecentLoadouts from './components/Loadouts/RecentLoadouts';
 import LoadoutBuilderMain from './components/LoadoutBuilder/LoadoutBuilder';
@@ -45,16 +46,16 @@ function Layout() {
 
     /** Determine whether or not the current window's width is below 720p. */
     useEffect(() => {
-        if(isLoaded && screenX < 1280)
+        if(isLoaded && screenX < 720)
             console.warn('⚠️ App Warning: Screen width is below minimum compatible standard.');
         else if(isLoaded && screenX > 2560)
-            console.warn('⚠️ App Warning: SCreen width is above maximum compatible standard.');
+            console.warn('⚠️ App Warning: Screen width is above maximum compatible standard.');
     }, [screenX, isLoaded]);
 
     /** Return the page content. */
     return (<>
         <Navigation isLoaded={isLoaded} />
-        {isLoaded && <Outlet />}
+        {isLoaded && (screenX < 720 ? <MobileNotice /> : <Outlet />)}
         <Footer isLoaded={isLoaded} />
     </>);
 }

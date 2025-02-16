@@ -82,7 +82,7 @@ export default function Footer({ isLoaded }) {
             </div>
             <p>
                 Special thanks to <Link to='https://steamcommunity.com/id/ITS_YFP'>ITS_YFP </Link>
-                for the background image used in the Recent Loadouts page.
+                for additional background images.
             </p>
         </div>
     </footer>);

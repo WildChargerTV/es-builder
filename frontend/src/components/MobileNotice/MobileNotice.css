@@ -1,0 +1,29 @@
+#site-mobile-notice {
+    background-image: url('https://i.postimg.cc/fMZRJ9ZF/loadoutlist.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+#site-mobile-notice-content {
+    display: flex;
+        flex-direction: column;
+}
+
+#site-mobile-notice-content h1 {
+    backdrop-filter: brightness(40%);
+    border: 3px solid #acdbf9;
+    border-radius: 5px;
+    margin: 4vw 0 0 5vw;
+    max-width: fit-content;
+    padding: 1vw 3vw;
+}
+
+#site-mobile-notice-content p {
+    backdrop-filter: brightness(33%);
+    border-top: 5px solid #acdbf9;
+    margin-bottom: 0;
+    padding: 3.3vw 5vw 5vw 5vw;
+}
+#site-mobile-notice-content a {
+    font-weight: 700;
+}

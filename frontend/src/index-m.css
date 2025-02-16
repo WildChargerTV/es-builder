@@ -2,6 +2,9 @@
 
 @media screen and (max-width: 719px) {
     h1 {
-        font-size: 9vw;
+        font-size: 8vw;
+    }
+    p {
+        font-size: 4vw;
     }
 }
