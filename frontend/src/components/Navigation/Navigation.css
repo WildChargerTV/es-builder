@@ -2,55 +2,54 @@
 
 /* Site Navigation - Global Definitions */
 #site-nav {
-    align-items: center;
     background-color: rgba(64, 64, 64, 0.5);
     display: flex;
+        align-items: center;
+        justify-content: space-between;
     font-weight: 600;
-    justify-content: space-around;
+    overflow: hidden;
+    padding: 0 4%;
     position: sticky;
         top: 0px;
         left: 0px;
         bottom: 0;
         right: 0;
     text-transform: uppercase;
-    width: 100%;
+    width: 92%;
     z-index: 98;
 }
 
 /* Site Logo */
 #site-nav-logo {
-    margin: 15px 0;
-    height: 75px;
+    margin: 1vw 0;
 }
 #site-nav-logo a { 
-    -webkit-text-stroke: 1.25px black;
-    color: white;
-    display: inline-flex;
-    font-size: 36pt;
-    font-weight: 700;
-    letter-spacing: 3px;
+    display: flex;
+        align-items: center;
     text-decoration: none; 
 }
-#site-nav-logo img { max-height: 75px; }
+#site-nav-logo img { 
+    height: 3.55vw; 
+    max-height: 150px;
+}
 
 /* Site Navigation Links (including Profile Button) */
 #site-nav-links {
     display: flex;
-    column-gap: 8%;
-    font-size: clamp(14pt, 1.3vw, 22pt);
+        column-gap: 2vw;
+    font-size: 1.5vw;
     font-weight: 700;
     justify-content: flex-end;
     letter-spacing: 1px;
-    min-width: 390px;
     padding-top: 3px;
-    width: 40%;
 }
 #site-nav-links button {
     background: none;
     border: none;
-    font-size: clamp(14pt, 1.3vw, 22pt);
+    font-size: 1.5vw;
     font-weight: 700;
     height: fit-content;
+    padding: 0 4px;
 }
 #site-nav-profile-btn button {
     display: grid;
