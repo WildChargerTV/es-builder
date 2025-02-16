@@ -6,14 +6,18 @@
 import { csrfFetch } from './csrf';
 
 //* --------------------[Thunk Action Identifiers]-------------------- *//
+// ? Action Identifiers utilize ADD/GET/SET/DEL terminology.
 const ADD_ENTRY = 'aws/addEntry';
 const SET_URL = 'aws/setUrl';
 
 //* --------------------[Thunk Action Creators]-------------------- *//
+// ? Action Creators utilize Add/Get/Set/Remove terminology.
 const addEntry = (dir) => ({ type: ADD_ENTRY, payload: dir });
 const setUrl = (dir, url) => ({ type: SET_URL, payload: { dir, url }});
 
 //* --------------------[Thunk Middlewares]-------------------- *//
+// ? Middlewares utilize Create/Read/Update/Delete terminology.
+
 /**
  * Thunk action to retrieve a presigned URL referencing an asset in the AWS bucket.
  * @param {string} dir 

@@ -12,14 +12,6 @@ EVERSPACE Colors:
     Blue: #94b4c3
     Yellow: #f9e2ad
     Borders: #acdbf9 (Note varying border opacity!)
-Z-Index Directory:
-    0: #site-landing-bg (Landing.css)
-    1: #site-landing-content (Landing.css)
-    2: .builder-equip-row (LoadoutBuilder.css)
-    3: .builder-equip-row img (LoadoutBuilder.css)
-    4: .builder-equip-row h4 (LoadoutBuilder.css)
-    98: #site-nav (Navigation.css)
-    99: #site-modal (Modal.css)
 */
 
 /* Global Site Element Definitions */

@@ -89,8 +89,8 @@ export const deleteLoadout = (id) => async (dispatch) => {
 };
 
 export const resetSlice = (sliceName) => (dispatch) => {
-    for(const slice in initialState)
-        if(slice === sliceName) dispatch(resetStateSlice(sliceName))
+    if(Object.keys(initialState).includes(sliceName))
+        dispatch(resetStateSlice(sliceName));
 };
 
 //* --------------------[Initial State]-------------------- *//
