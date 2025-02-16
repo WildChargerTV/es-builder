@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 // Local Module Imports
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import './Navigation-m.css';
 
 /**
  * Renders the website's navbar. The navbar is sticky-positioned at a high Z-Index, ensuring it is
@@ -29,7 +30,6 @@ export default function Navigation({ isLoaded }) {
                     alt='Site Logo' 
                 />
             </NavLink>
-            
         </div>
 
         {/* Nav Links & Profile Button */}
