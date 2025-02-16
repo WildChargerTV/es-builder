@@ -12,6 +12,7 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import configureStore from './store/store';
 import './index.css';
+import './index-m.css';
  
 /**
  * Determines if the current environment is development or production.
