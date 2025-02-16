@@ -7,6 +7,7 @@ import { FaAws } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 // Local Module Imports
 import './Footer.css';
+import './Footer-m.css';
 
 /**
  * Renders the website footer, primarily responsible for displaying credits & legal info.

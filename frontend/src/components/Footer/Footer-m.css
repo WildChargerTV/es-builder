@@ -1,0 +1,22 @@
+@media screen and (max-width: 719px) {
+    #site-footer {
+        display: flex;
+            flex-direction: column;
+    }
+    #site-footer p {
+        font-size: 3.6vw;
+    }
+
+    #site-footer-rockfish, #site-footer-tech {
+        border-bottom: 1px solid #94b4c3;
+    }
+
+    .site-footer__text-icon {
+        font-size: 5.25vw;
+        margin-right: 1.5vw;
+    }
+
+    #site-footer-socials * { 
+        font-size: 8vw; 
+    }
+}
