@@ -67,63 +67,48 @@ function EquipListRow({ type, loadoutData }) {
     };
 
     /** 
-     * Given the loadout data and its type, load an array of AWS URLs that refer to the appropriate
-     * piece(s) of equipment.
+     * Load the icon array using the passed-in loadout data.
+     * ? Note: The only context in which loadout data can be non-existent is if the loadout has the
+     * ? Ancient Weapon equipped. Any other case of null loadout data must be fixed upstream.
      */
-    useEffect((res=[]) => {
-        // Different ID extraction methods apply between Primary Weapons/Devices & Secondary
-        // Weapons/Consumables.
+    useEffect(() => {
+        // Different icon retrieval methods apply between Primary Weapons/Devices & Secondary
+        // Weapons/Consumables. However, both methods involve array mapping through object values.
         if(['Primary', 'Devices'].includes(type)) {
             // Reference the appropriate datafile.
             const equipmentData = type === 'Primary'
             ? dataFiles.primaryWeaponData
             : dataFiles.deviceData;
 
-            // Iterate through the loadout data.
-            for(const equipment of Object.entries(loadoutData)) {
-                // Deconstruct the ID from the data object value.
-                const { id } = equipment[1];
-
-                // If there is no ID, move on to the next one.
+            // Load the icon array. If the equipment is enhanced, retrieve its base weapon ID.
+            // Unloaded custom equippables will have an empty box until their data is retrieved.
+            setIconArr(Object.values(loadoutData).map(({ id }) => {
                 if(id === null)
-                    continue;
-                // If the ID is a number, it is not enhanced. Push the appropriate asset URL.
+                    return null;
                 else if(typeof id === 'number')
-                    res.push(equipmentData[id].icon);
-                // If the ID is a string, then it is enhanced. Get the appropriate custom
-                // equippable, and then push the appropriate asset URL associated with the
-                // `equippableId`.
-                else {
-                    const customId = Number(id.split('c')[1]);
-                    if(!loadedIds[customId])
-                        dispatch(readCustomEquippable(customId));
-                    else {
-                        const iconName = equipmentData[loadedIds[customId].id].icon;
-                        res.push(iconName.split('.')[0] + '-enhanced.png');
-                    }
-                }
-            }
+                    return equipmentData[id].icon;
+
+                id = Number(id.split('c')[1]);
+                if(!loadedIds[id]) {
+                    dispatch(readCustomEquippable(id));
+                    return 'null';
+                } else 
+                    return equipmentData[loadedIds[id].id].icon.split('.')[0] + '-enhanced.png';
+            }));
         } else if(['Secondary', 'Consumables'].includes(type)) {
             // Reference the appropriate datafile.
             const equipmentData = type === 'Secondary'
             ? dataFiles.secondaryWeaponData
             : dataFiles.consumableData;
 
-            // If the loadout data exists, extract the ID from the data string value, and then push
-            // the appropriate asset URL if it is not null. Non-existent Secondary Weapon data can
-            // occur if the Ancient Weapon is equipped on the loadout. Concatenate the resulting
-            // array to the return value.
-            res = res.concat(loadoutData
-                ? Object.entries(loadoutData).map((equipment) => {
-                    const id = equipment[1] !== null && equipment[1].split('x')[0];
-                    return id ? equipmentData[id].icon : null;
-                })
-                : []
+            // If the loadout data exists, load the icon array.
+            setIconArr(loadoutData
+                ? Object.values(loadoutData).map((equipment) => equipment 
+                    ? equipmentData[equipment.split('x')[0]].icon 
+                    : null
+                ) : []
             );
         }
-
-        // After the iteration has completed, load the icon array.
-        setIconArr(res);
     }, [dispatch, type, loadoutData, loadedIds]);
 
     /** Return the equipment list. */
