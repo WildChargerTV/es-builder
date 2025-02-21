@@ -51,13 +51,10 @@
     padding: 0 4px;
 }
 #site-nav-profile-btn button {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-}
-#site-nav-profile-btn button span { 
-    font-size: clamp(8pt, 1.3vw, 16pt);
-    margin-left: 5px;
-    padding-top: 5px; 
+    display: flex;
+        align-items: center;
+        column-gap: 0.25vw;
+        flex-wrap: nowrap;
 }
 
 /* Site Navigation - Profile Dropdown Menu */
@@ -71,10 +68,10 @@
     background-color: rgba(64, 80, 87, 0.95);
     border: 3px solid rgba(148, 180, 195, 0.9);
         border-radius: 5px;
-    padding: 3px 20px;
+    display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+    line-height: 125%;
+    padding: 0.5vw 0.85vw;
     position: absolute;
-}
-#site-nav-btn-logout {
-    margin-left: 0;
-    padding-left: 0;
 }

@@ -72,11 +72,11 @@ export default function ProfileButton({ sessionUser }) {
             {/* User Dropdown Button */}
             <button onClick={toggleDropdown}>
                 {sessionUser.username}
-                <span>{showDropdown ? <FaAngleUp />:<FaAngleDown />}</span>
+                {showDropdown ? <FaAngleUp />:<FaAngleDown />}
             </button>
             {showDropdown && <div id='site-nav-rel-container'>
                 <div id='site-nav-profile-dropdown' ref={menuRef} style={{ left: dropdownLeft }}>
-                    <NavLink to='/profile'>Profile</NavLink><br />
+                    <NavLink to='/profile'>Profile</NavLink>
                     <NavLink id='site-nav-btn-logout' to='/' onClick={userLogout}>Logout</NavLink>
                 </div>
             </div>}
