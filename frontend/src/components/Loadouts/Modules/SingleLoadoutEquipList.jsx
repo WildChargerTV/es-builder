@@ -25,6 +25,7 @@ export default function SingleLoadoutEquipList({ loadoutData }) {
     // Deconstructed Props
     const { primaryWeapons, secondaryWeapons, devices, consumables } = loadoutData;
 
+    /* Return the loadout equipment list, grouped by the four equipment categories. */
     return (<div className='single-loadout-list'>
         <ul>
             <EquipListRow type='Primary' loadoutData={primaryWeapons} />
@@ -58,7 +59,7 @@ function EquipListRow({ type, loadoutData }) {
     // Local State Values
     const [iconArr, setIconArr] = useState([]);
 
-    /** Create a key counter for the equipment cells. */
+    /* Create a key counter for the equipment cells. */
     let keyCounter = 0;
     const key = (increment) => {
         const res = keyCounter;
@@ -111,7 +112,7 @@ function EquipListRow({ type, loadoutData }) {
         }
     }, [dispatch, type, loadoutData, loadedIds]);
 
-    /** Return the equipment list. */
+    /* Return the equipment list. */
     return (<li>
         {iconArr?.map((dir) => dir && 
             <BucketImage key={`${type.toLowerCase()}-${key(true)}`} dir={dir} />

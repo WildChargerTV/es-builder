@@ -1,14 +1,20 @@
+/* * frontend/src/components/MobileNotice/MobileNotice.css */
+/* ? This stylesheet manages a component that is only visible on mobile. */
+
+/* Mobile Notice Page: Global Definitions */
 #site-mobile-notice {
     background-image: url('https://i.postimg.cc/fMZRJ9ZF/loadoutlist.jpg');
     background-position: center;
     background-size: cover;
 }
 
+/* Mobile Notice Page: Content Box */
 #site-mobile-notice-content {
     display: flex;
         flex-direction: column;
 }
 
+/* Mobile Notice Page: Element Definitions */
 #site-mobile-notice-content h1 {
     backdrop-filter: brightness(40%);
     border: 3px solid #acdbf9;

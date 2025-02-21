@@ -1,12 +1,32 @@
+// * frontend/src/components/MobileNotice/MobileNotice.jsx
+// ? This component is only visible on mobile.
+
+// Local Module Imports
 import useWindowSize from '../../hooks/useWindowSize';
 import './MobileNotice.css';
 
+/**
+ * Renders a static notice informing the user that ESBuilder does not support their current screen
+ * or viewport width. {@linkcode useWindowSize} is utilized to let the user know what their current
+ * viewport width is in real time.
+ * 
+ * This component links directly to the `Layout` component in `App.jsx`.
+ * @component `MobileNotice`
+ * @requires {@linkcode useWindowSize}
+ * @returns {ReactElement}
+ */
 export default function MobileNotice() {
+    // React Hooks
     const [screenX] = useWindowSize();
+
+    /* Return the page content. */
     return (<main id='site-mobile-notice'>
-        
+        {/* Content Container Element */}
         <div id='site-mobile-notice-content'>
+            {/* Page Title */}
             <h1>Hello, pilot!</h1>
+
+            {/* Page Content */}
             <p>
                 Thank you for your interest in the EVERSPACE™ Builder beta. Unfortunately, the site
                 does not yet support &quot;mobile&quot; viewport resolutions. Until further notice,
