@@ -12,13 +12,13 @@ export default function MobileNotice() {
                 does not yet support &quot;mobile&quot; viewport resolutions. Until further notice,
                 your screen <i>width</i> must be at least 720 pixels.
                 <br /><br />
+                Your current viewport width is: {screenX}px.
+                <br /><br />
                 Right now, core features of ESBuilder are intended to reflect the UI/UX structure
                 of EVERSPACE™, which has necessitated that a screen width minimum be imposed until
                 an alternative can be created. This implementation is on the roadmap, and likely
                 will be added as the site nears completion; until then, I encourage you to access
                 ESBuilder from a device that meets the compatible minimum viewport width.
-                <br /><br />
-                At present, your viewport width is: {screenX}px.
                 <br /><br />
                 I greatly apologize for the inconvenience, and appreciate your patience as the beta
                 continues! For more information about ESBuilder, please visit the site&apos;s <a href='https://github.com/WildChargerTV/es-builder' target='_blank' rel='noreferrer'>
