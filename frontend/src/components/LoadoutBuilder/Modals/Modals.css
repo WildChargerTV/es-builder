@@ -38,15 +38,15 @@
     row-gap: 10px;
     width: 100%;
 }
-.modal-preset-grid-list {
+.modal-preset-grid-tile {
     aspect-ratio: 13 / 9;
     border: 1px solid rgba(148, 180, 195, 0.7);
     display: flex;
     flex-direction: column;
     position: relative;
 }
-.modal-preset-grid-list img { max-width: 100%; }
-.modal-preset-grid-list p { 
+.modal-preset-grid-tile img { max-width: 100%; }
+.modal-preset-grid-tile p { 
     color: #94b4c3;
     margin: 0 3px 0 0;
     position: absolute;

@@ -105,17 +105,26 @@ export default function SelectPresetModal() {
  * @param {{ data: object, preset: string, onClick: Function }} props 
  */
 function SinglePreset({ data, preset, onClick }) {
-    /* Split up the IDs & Quantities of Secondary Weapons & Consumables. */
-    const secondaryList = data.secondary.map((str) => {
-        if(str === null) return { id: null, quantity: null };
+    /* Create a function that splits the string data of Secondary Weapons & Consumables. */
+    const splitStringData = (arr) => arr.map((str) => {
+        console.log(str);
+        if(str === null) 
+            return { id: null, quantity: null };
         const [id, quantity] = str.split('x');
         return { id, quantity };
     });
-    const consumableList = data.consumable.map((str) => {
-        if(str === null) return { id: null, quantity: null };
-        const [id, quantity] = str.split('x');
-        return { id, quantity };
-    });
+
+    /* Create a function that assembles a single column of equipment in the preset. */
+    const mapEquipment = (arr, dataFile) => {
+        return (<ul className='modal-preset-grid-column'>
+            {arr.map((equipment) => equipment.id && (
+                <li key={crypto.randomUUID()} className='modal-preset-grid-tile'>
+                    <BucketImage dir={dataFile[equipment.id].icon} />
+                    {equipment?.quantity && <p>{equipment.quantity}</p>}
+                </li>
+            ))}
+        </ul>);
+    };
 
     /* Return the button & its content. */
     return (<button className='modal-ship-preset' id={preset.toLowerCase()} onClick={onClick}>
@@ -124,46 +133,10 @@ function SinglePreset({ data, preset, onClick }) {
 
         {/* Preset Equipment Lists */}
         <div className='modal-preset-grid'>
-            <ul className='modal-preset-grid-column'>
-                {data.primary.map((weapon) => weapon.id && <PresetTile 
-                    key={crypto.randomUUID()} 
-                    url={dataFiles.primaryWeaponData[weapon.id].icon} 
-                />)}
-            </ul>
-            <ul className='modal-preset-grid-column'>
-                {secondaryList.map((weapon) => weapon.id && <PresetTile 
-                    key={crypto.randomUUID()} 
-                    url={dataFiles.secondaryWeaponData[weapon.id].icon} 
-                    quantity={weapon.quantity} 
-                />)}
-            </ul>
-            <ul className='modal-preset-grid-column'>
-                {data.device.map((device) => device.id && <PresetTile 
-                    key={crypto.randomUUID()} 
-                    url={dataFiles.deviceData[device.id].icon} 
-                />)}
-            </ul>
-            <ul className='modal-preset-grid-column'>
-                {consumableList.map((consumable) => consumable.id && <PresetTile 
-                    key={crypto.randomUUID()} 
-                    url={dataFiles.consumableData[consumable.id].icon} 
-                    quantity={consumable.quantity} 
-                />)}
-            </ul>
+            {mapEquipment(data.primary, dataFiles.primaryWeaponData)}
+            {mapEquipment(splitStringData(data.secondary), dataFiles.secondaryWeaponData)}
+            {mapEquipment(data.device, dataFiles.deviceData)}
+            {mapEquipment(splitStringData(data.consumable), dataFiles.consumableData)}
         </div>
     </button>);
-}
-
-/**
- * Sub-component of {@linkcode SinglePreset} that renders a single tile representing one piece of
- * equipment. Where applicable, a quantity will be displayed.
- * @component `PresetTile`
- * @param {{ url: string, quantity?: number }} props 
- */
-function PresetTile({ url, quantity }) {
-    /* Return the list item. */
-    return (<li className='modal-preset-grid-list'>
-        <BucketImage dir={url} />
-        {quantity !== undefined && <p>{quantity}</p>}
-    </li>);
 }
