@@ -38,22 +38,10 @@ function CurrentEnhancementGroup() {
     const dispatch = useDispatch();
     const { shipId, enhancements } = useSelector((state) => state.builder);
 
-    /** Dynamically update the group's data array based on the current enhancements state. */
-    const groupData = useMemo(() => {
-        // Declare the array.
-        const res = [];
-
-        // Iterate through the enhancements state.
-        for(let key in enhancements) {
-            // Ignore the 'selected' key (prevents the group having four slots).
-            if(key === 'selected') continue;
-
-            // Push the enhancement's object into the array.
-            res.push({ index: key, id: enhancements[key] });
-        }
-
-        // Return the array.
-        return res;
+    /* Convert the enhancements state into an array of objects, removing the "selected" entry. */
+    const groupData = useMemo((clone=structuredClone(enhancements)) => {
+        delete clone.selected;
+        return Object.entries(clone).map(([index, id]) => ({ index: Number(index), id }));
     }, [enhancements]);
 
     /* Automatically remove incompatible enhancements if a new ship is selected. */
