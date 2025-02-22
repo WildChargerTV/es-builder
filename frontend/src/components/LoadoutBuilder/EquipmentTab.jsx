@@ -8,10 +8,10 @@ import './Styles/equipment.css';
 /**
  * Abstraction layer that renders the "Equipment" tab in the Loadout Builder. Whether or not it is
  * loaded depends on if the `LoadoutBuilderMain` component is also loaded. This component renders
- * the `EquipmentList` and `EquipmentInfo` compoenents, in that order.
+ * the {@linkcode EquipmentList} and {@linkcode EquipmentInfo} compoenents, in that order.
  * @component `EquipmentTab`
+ * @requires {@linkcode EquipmentList}, {@linkcode EquipmentInfo}
  * @param {{ isLoaded: boolean }} 
- * @returns {null | ReactElement}
  */
 export default function EquipmentTab({ isLoaded }) {
     /** If the loadout builder has successfully loaded, render the child components. */

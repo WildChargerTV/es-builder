@@ -10,7 +10,8 @@ import './MobileNotice.css';
  * or viewport width. {@linkcode useWindowSize} is utilized to let the user know what their current
  * viewport width is in real time.
  * 
- * This component links directly to the `Layout` component in `App.jsx`.
+ * This component links directly to the `Layout` component in `App.jsx`, and is not tied to a
+ * specific route.
  * @component `MobileNotice`
  * @requires {@linkcode useWindowSize}
  * @returns {ReactElement}

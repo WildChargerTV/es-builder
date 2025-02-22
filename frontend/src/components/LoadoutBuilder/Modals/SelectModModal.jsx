@@ -1,17 +1,32 @@
-// TODO docs
+// * frontend/src/components/LoadoutBuilder/Modals/SelectModModal.jsx
+// TODO docs & generally refactor (this one's a doozy)
 
+// Node Module Imports
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useFitText from 'use-fit-text';
+// Local Module Imports
 import { useModal } from '../../../context/Modal';
 import * as dataFiles from '../../../data';
 import * as builderActions from '../../../store/builder';
 import BucketImage from '../../../utils/BucketImage';
 
+/**
+ * Modal component that renders a list of available mods to be added to a selected piece of
+ * equipment in the Loadout Builder.
+ * @component `SelectEquipModal`
+ * @requires {@linkcode useModal}
+ * @requires {@linkcode dataFiles}
+ * @requires {@linkcode SingleMod}
+ * @param {{ currEquip: object }} props  
+ */
 export default function SelectModModal({ currEquip }) {
+    // Deconstructed Props
     const { eIndex, eType } = currEquip;
+    // React Hooks
     const { closeModal } = useModal();
     const { primaryWeapons, devices } = useSelector((state) => state.builder);
+    // Local State Values
     const [title, setTitle] = useState(eType);
 
     const [presetData, eData, mIndex] = (() => {

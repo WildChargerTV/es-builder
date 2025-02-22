@@ -11,12 +11,8 @@ import BucketImage from '../../../utils/BucketImage';
 
 /**
  * Renders a 2x2 grid of buttons, allowing the user to select one of EVERSPACE's four available
- * ships. Selecting any one of the ships will load that ship's ID into the Redux state. This
- * component is directly reliant on its parent component `ShipsTab`.
- * 
- * See {@linkcode shipData} for more information about the ships in EVERSPACE.
+ * ships.
  * @component `ShipList`
- * @returns {ReactElement}
  * @requires {@linkcode shipData}, {@linkcode updateShip}
  * @requires {@linkcode BucketImage}
  */
@@ -29,24 +25,23 @@ export default function ShipList() {
     /** 
      * When one of the inactive ships is clicked, change the ID in the Redux store. 
      * ? The Redux store will clear all equipment data alongside this change.
+     * TODO verify that this clears focused equipment data as well
      */
     const onClick = (event) => {
         const currId = Number(event.target.id.split('-')[2]);
         currId !== shipId && dispatch(updateShip(currId));
     }
 
-    /** Set the active ship to the one defined in the Redux store. */
+    /* Set the active ship to the one defined in the Redux store. */
     useEffect(() => {
-        // Iterate through the four ship buttons, and set their active status accordingly.
         for(const btn of Object.values(document.getElementById('builder-ship-select').children)) {
             const currId = Number(btn.id.split('-')[2]);
             btn.className = currId === shipId ? 'ship-active' : '';
         }
     }, [shipId]);
 
-    /** Return the button grid. */
+    /* Return the button grid. */
     return (<div id='builder-ship-select'>
-        {/* Ship Buttons */}
         {Object.values(shipData).map((ship) => (
             <button key={`ship-${ship.id}`} id={`builder-ship-${ship.id}`} ref={ref} onClick={onClick} disabled={mode !== 'create'}>
                 {/* Ship Name */}

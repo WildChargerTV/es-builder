@@ -13,7 +13,7 @@ import { allowedProfanity } from '../../data';
 import * as builderActions from '../../store/builder';
 import * as loadoutActions from '../../store/loadout';
 
-/** Declare the profanity filter, and remove some common swears. */
+/* Declare the profanity filter, and remove some common swears. */
 const filter = new Filter();
 filter.removeWords(...allowedProfanity);
 
@@ -29,8 +29,7 @@ filter.removeWords(...allowedProfanity);
  * @requires {@linkcode StartBlankButton} {@linkcode PresetLoadoutButton}
  * @requires {@linkcode ClearEnhancementsButton}
  * @requires {@linkcode SubmitLoadoutButton}
- * @param {{ isLoaded: boolean }} 
- * @returns {null | ReactElement}
+ * @param {{ isLoaded: boolean }} props
  */
 export default function BuilderControls({ isLoaded }) {
     return isLoaded && (<div id='builder-controls'>
@@ -42,10 +41,10 @@ export default function BuilderControls({ isLoaded }) {
 }
 
 /**
- * Renders the button responsible for submitting the loadout. On submission, this component will
- * assemble all of the necessary sections of the Redux state and send them to the backend.
+ * Sub-component of {@linkcode BuilderControls} that renders the button responsible for submitting
+ * the loadout. On submission, this component will properly organize the loadout data before
+ * sending it to the backend.
  * @component `SubmitLoadoutButton` 
- * @returns {null | ReactElement}
  * @requires {@linkcode loadoutActions}
  */
 function SubmitLoadoutButton() {
@@ -58,11 +57,10 @@ function SubmitLoadoutButton() {
     const { sessionUser } = useSelector((state) => state.session);
     // Local State Values
     const [disabled, setDisabled] = useState(true);
-
-    
     
     /** 
-     * In order for the button to be enabled: 
+     * Determine whether or not the submission button should be enabled, based on the following
+     * criteria:
      * 1. There must be an active session user.
      * 2. The loadout's name must be between 4 and 30 characters, inclusive, must not be the same
      *    as the predefined name, and must not contain profanity.
@@ -70,6 +68,7 @@ function SubmitLoadoutButton() {
      * 4. A preset loadout was selected, or the user chose to start from scratch (create mode).
      * 5. The loadout has at least one Primary or Secondary Weapon. This check is bypassed if the
      *    `ancientWeaponEquipped` flag is true.
+     * TODO look into standardizing disabled functionality across components, e.g. some work using a function instead of useEffect
      */
     useEffect(() => {
         const sessionUserExists = sessionUser !== null;
@@ -91,7 +90,7 @@ function SubmitLoadoutButton() {
     }, [sessionUser, mode, flags, name, shipId, shipPreset, primaryWeapons, secondaryWeapons]);
 
     
-    /** When the Submit button is clicked, send the data to the backend. */
+    /* When the button is clicked, organize the Redux data & create the loadout. */
     const onClick = (event) => {
         event.stopPropagation();
 
@@ -112,8 +111,8 @@ function SubmitLoadoutButton() {
         ).then(navigate('/loadouts'));
     };
 
-    /** Return the button. */
     return <button onClick={onClick} disabled={disabled}>
+    /* Return the submission button. */
         {mode === 'create'
         ? <>Submit <span className='site-text-icon'><PiMouseLeftClickFill /></span></>
         : <>Submit Changes <span className='site-text-icon'><PiMouseLeftClickFill /></span></>}
@@ -121,15 +120,13 @@ function SubmitLoadoutButton() {
 }
 
 /**
- * Renders a button that sets the `shipPreset` slice to `false`. Rendered alongside the
- * {@linkcode PresetLoadoutButton}. Visible only on the Ships tab.
+ * Sub-component of {@linkcode BuilderControls} that renders a button allowing the user to start
+ * building a loadout from scratch, rather than using a ship preset. Visible only on the Ships tab.
  * 
- * It's important to note that setting `shipPreset` to `false` is meant to indicate to the Loadout
- * Builder that the user has chosen to start from a clean slate. This should be treated separately
- * to `shipPreset` being set to `null`, which means a choice has not been made yet. This is crucial
- * for controlling access to other Loadout Builder controls.
+ * This component simply sets the `shipPreset` state slice to `false`, indicating that the user has 
+ * chosen to start from a clean slate. This should be treated separately from `shipPreset` being 
+ * set to `null`, which means a choice has not been made yet.
  * @component `StartBlankButton`
- * @returns {null | ReactElement}
  * @requires {@linkcode builderActions}
  */
 function StartBlankButton() {
@@ -137,9 +134,9 @@ function StartBlankButton() {
     const dispatch = useDispatch();
     const { mode, tabId, shipId, shipPreset } = useSelector((state) => state.builder);
 
-    /** When the button is clicked, set `shipPreset` to `false`. */
     const onClick = () => {
     }
+    /* When the button is clicked, set `shipPreset` to `false`. */
         dispatch(builderActions.updateShipPreset(false));
 
     /**
@@ -150,19 +147,18 @@ function StartBlankButton() {
      */
     const disabled = mode !== 'create' || (shipId === null || shipPreset !== null);
 
-    /** Return the button if the Loadout Builder is currently on the Ships tab. */
     return tabId === 0 && <button onClick={onClick} disabled={disabled}>
+    /* Return the button if the Loadout Builder is currently on the Ships tab. */
         Start from Scratch <span className='site-text-icon'><PiMouseLeftClickFill /></span>
     </button>;
 }
 
 /**
- * Renders a button that allows the user to select one of the three ingame loadout presets based on
- * their currently selected ship. Visible only on the Ships tab.
+ * Sub-component of {@linkcode BuilderControls} that renders a button allowing the user to select
+ * an ingame loadout preset based on their currently selected ship. Visible only on the Ships tab.
  * 
  * This button on its own only opens the {@linkcode SelectPresetModal}. See its documentation for
  * more information on its functionality.
- * @returns {ReactElement}
  * @component `SelectPresetButton`
  * @requires {@linkcode OpenModal} {@linkcode SelectPresetModal}
  */
@@ -178,8 +174,8 @@ function SelectPresetButton() {
      */
     const disabled = mode !== 'create' || (shipId === null || shipPreset !== null);
 
-    /** Return the button if the Loadout Builder is currently on the Ships tab. */
     return tabId === 0 && <div id='builder-ctrl-preset'>
+    /* Return the button if the Loadout Builder is currently on the Ships tab. */
         <OpenModal
             elementText={<>
                 Choose Preset <span className='site-text-icon'><PiMouseLeftClickFill /></span>
@@ -191,10 +187,9 @@ function SelectPresetButton() {
 }
 
 /**
- * Renders a button that allows the user to clear all of their currently selected enhancements.
- * Visible only on the Enhancements tab.
+ * Sub-component of {@linkcode BuilderControls} that renders a button allowing the user to clear
+ * all of their currently selected enhancements. Visible only on the Enhancements tab.
  * @component `ClearEnhancementsButton`
- * @returns {null | ReactElement}
  * @requires {@linkcode builderActions}
  */
 function ClearEnhancementsButton() {
@@ -204,13 +199,16 @@ function ClearEnhancementsButton() {
     // Local State Values
     const [disabled, setDisabled] = useState(true);
 
-    /** When the button is clicked, clear the enhancements state. */
+    /** 
+     * When the button is clicked, clear the enhancements state. 
+     * TODO should use a state slice resetter, reset as a param should be deprecated
+     */
     const onClick = (event) => {
         event.stopPropagation();
         dispatch(builderActions.updateEnhancement('reset', null));
     };
 
-    /** In order for the button to be enabled, one or more enhancements must be not null. */
+    /* In order for the button to be enabled, one or more enhancements must be not null. */
     useEffect(() => {
         setDisabled((() => {
             for(let key in enhancements) {
@@ -221,8 +219,8 @@ function ClearEnhancementsButton() {
         })());
     }, [tabId, enhancements]);
 
-    /** Return the button if the Loadout Builder is currently on the Enhancements tab. */
     return tabId === 1 && <button onClick={onClick} disabled={disabled}>
+    /* Return the button if the Loadout Builder is currently on the Enhancements tab. */
         Clear Enhancements <span className='site-text-icon'><PiMouseLeftClickFill /></span>
     </button>;
 }

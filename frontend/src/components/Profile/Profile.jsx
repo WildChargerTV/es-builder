@@ -13,17 +13,16 @@ import './Profile.css';
  * users, and the homepage for logged-out users. A more comprehensive profile system will be 
  * implemented at a later time.
  * @component `UserProfile`
- * @returns {ReactElement}
  */
 export default function UserProfile() {
     // React Hooks
     const sessionUser = useSelector((state) => state.session.user);
 
-    /** Determine where to redirect the user. */
+    /* Determine where to redirect the user. */
     const redirectTarget = sessionUser
     ? `/users/${sessionUser.id}/loadouts`
     : '/';
 
-    /** Return the redirection element. */
+    /* Return the redirection element. */
     return <Navigate to={redirectTarget} />
 }

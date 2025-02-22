@@ -8,15 +8,13 @@ import './Styles/ships.css';
 /**
  * Abstraction layer that renders the "Ships" tab in the Loadout Builder. Whether or not it is
  * loaded depends on if the `LoadoutBuilderMain` component is also loaded. This component renders
- * the `ShipList` and `ShipInfo` components, in that order.
- * 
- * This component uses its own stylesheet.
+ * the {@linkcode ShipList} and {@linkcode ShipInfo} components, in that order.
  * @component `ShipsTab`
- * @param {{ isLoaded: boolean }} 
- * @returns {null | ReactElement}
+ * @requires {@linkcode ShipList}, {@linkcode ShipInfo}
+ * @param {{ isLoaded: boolean }} props
  */
 export default function ShipsTab({ isLoaded }) {
-    /** If the loadout builder has successfully loaded, render the child components. */
+    /* If the loadout builder has successfully loaded, render the child components. */
     return isLoaded && (<>
         <ShipList />
         <ShipInfo />

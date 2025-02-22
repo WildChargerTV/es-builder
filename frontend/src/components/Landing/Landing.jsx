@@ -10,19 +10,20 @@ import OpenModal from '../../utils/OpenModal';
 import './Landing.css';
 
 /**
- * Component to display a site landing page to all logged-out users. Logged-in users are redirected
- * to `/loadouts`.
- * @component LandingPage
+ * Renders the site's landing (aka 'splash') page to all logged-out users. Logged-in users are
+ * redirected to `/loadouts`.
+ * @component `LandingPage`
+ * @requires {@linkcode SignUpModal}, {@linkcode OpenModal}
  * @returns {ReactElement}
  */
 export default function LandingPage() {
     // React Hooks
     const sessionUser = useSelector((state) => state.session.user);
 
-    // If a user is currently logged in, redirect to `/loadouts`.
+    /* If a user is currently logged in, navigate to `/loadouts`. */
     if(sessionUser) return <Navigate to='/loadouts' />;
 
-    // Return the page content.
+    /* Return the page content. */
     return (<main id='site-landing'>
         {/* Page Title (Hidden) - for search engines */}
         <h1 style={{ display: 'none' }}>

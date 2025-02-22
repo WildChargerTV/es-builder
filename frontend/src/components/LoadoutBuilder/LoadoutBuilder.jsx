@@ -22,9 +22,7 @@ import './Modals/Modals.css';
 const VALID_BUILDER_MODES = ['create', 'view', 'edit'];
 
 /**
- * The primary component that renders the entire Loadout Builder. Although it can function as a
- * standalone component, its intent is to be a route only called from `App.jsx`. **DO NOT CALL THIS
- * ANYWHERE ELSE.**
+ * The primary route component that renders the entire Loadout Builder.
  * 
  * The Loadout Builder allows logged-in users to create, view, and edit loadouts. All loadout data
  * shown onscreen is pulled from a _local Redux state_ - meaning that none of the data is stored
@@ -51,10 +49,9 @@ const VALID_BUILDER_MODES = ['create', 'view', 'edit'];
  * @component `LoadoutBuilderMain`
  * @requires {@linkcode BuilderTabMenu}
  * @requires {@linkcode ShipsTab}, {@linkcode EnhancementsTab}, {@linkcode EquipmentTab}
- * @requires {@linkcode BuilderControls}
+ * @requires {@linkcode LoadoutName}, {@linkcode BuilderControls}
  * @requires {@linkcode builderActions}, {@linkcode getLoadout}
- * @param {{ mode: 'create' | 'view' | 'edit' }} 
- * @returns {null | ReactElement}
+ * @param {{ mode: 'create' | 'view' | 'edit' }} props
  */
 export default function LoadoutBuilderMain({ mode }) {
     // React Hooks
@@ -67,7 +64,7 @@ export default function LoadoutBuilderMain({ mode }) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [pageTitle, setPageTitle] = useState('');
 
-    /** Prepare the Redux state for rendering. */
+    /* Prepare the Redux state for rendering. */
     useEffect(() => {
         // Unrender the page in order to prevent any potential tampering on re-visits.
         setIsLoaded(false);
@@ -85,6 +82,7 @@ export default function LoadoutBuilderMain({ mode }) {
         // If in create mode, set the page title appropriately, then allow the page to render.
         // ? Because the other two modes require pseudo-asynchronous dispatch calls, it's easier to 
         // ? return early here if in create mode.
+        // TODO these should not be alerts forever
         if(mode === 'create') {
             if(!sessionUser) {
                 alert(`Must be logged in to create a Loadout. If you are logged in and see this message, please submit a bug report via GitHub.`);
@@ -100,6 +98,7 @@ export default function LoadoutBuilderMain({ mode }) {
 
         // Fetch the loadoutId specified in the URL parameters & load it into Redux, then allow the
         // page to render.
+        // TODO these should not be alerts forever
         dispatch(getLoadout(params.loadoutId))
         .then((loadoutData) => {
             if(mode === 'edit' && (!sessionUser || loadoutData.userId !== sessionUser.id)) {
@@ -114,7 +113,7 @@ export default function LoadoutBuilderMain({ mode }) {
         });
     }, [dispatch, navigate, mode, params.loadoutId, sessionUser]);
 
-    /** Return the Loadout Builder. */
+    /* Return the Loadout Builder. */
     return isLoaded && (<main id='site-loadout-builder'>
         {/* Header: Page Title, Loadout Name, Link to Creator's Profile */}
         <div id='loadout-builder-head'>
@@ -139,11 +138,12 @@ export default function LoadoutBuilderMain({ mode }) {
 }
 
 /**
+ * Sub-component of {@linkcode LoadoutBuilder} that renders an editable `<h2>` responsible for
+ * managing the loadout's name.
  * Renders an editable `<h2>` that sets the loadout's name in the Loadout Builder.
  * @component `LoadoutName`
  * @requires {@linkcode builderActions}
- * @param {{contentEditable: boolean}} 
- * @returns {ReactElement}
+ * @param {{ contentEditable: boolean }} props
  */
 function LoadoutName({ contentEditable }) {
     // React Hooks
@@ -152,7 +152,7 @@ function LoadoutName({ contentEditable }) {
     // Local State Values
     const [localName, setLocalName] = useState('');
 
-    /** On focus loss, apply the new name to the Redux store, if eligible. Otherwise, revert. */
+    /* On focus loss, apply the new name to the Redux store, if eligible. Otherwise, revert. */
     const onBlur = (event) => {
         // Get the current name & its length.
         const [currName, length] = [event.target.innerText, event.target.innerText.length];
@@ -162,7 +162,7 @@ function LoadoutName({ contentEditable }) {
             dispatch(builderActions.updateName(currName));
     }
 
-    /** Implement maximum length restriction & color indication onto the h2 field. */
+    /* Implement maximum length restriction & color indication onto the h2 field. */
     const onInput = (event) => {
         // Get the current name & its length.
         const [currName, length] = [event.target.innerText, event.target.innerText.length];
@@ -177,7 +177,7 @@ function LoadoutName({ contentEditable }) {
         length > 30 && (event.target.innerText = localName);
     }
 
-    /** Return the input field. */
+    /* Return the input field. */
     return <h2
         id='builder-loadout-name'
         contentEditable={contentEditable} 

@@ -21,21 +21,20 @@ import { updateTab } from '../../store/builder';
  * - `2`: Equipment Selection & Customization
  * @component `BuilderTabs`
  * @requires {@linkcode updateTab}
- * @param {{ isLoaded: boolean }}
- * @returns {null | ReactElement}
+ * @param {{ isLoaded: boolean }} props
  */
 export default function BuilderTabs({ isLoaded }) {
     // React Hooks
     const dispatch = useDispatch();
     const { mode, shipId, shipPreset, tabId } = useSelector((state) => state.builder);
 
-    /** When one of the inactive tabs is clicked, change the ID in the Redux store. */
+    /* When one of the inactive tabs is clicked, change the ID in the Redux store. */
     const onClick = (event) => {
         const currId = Number(event.target.id.split('-')[2]);
         currId !== tabId && dispatch(updateTab(currId));
     }
 
-    /** Set the active tab to the one defined in the Redux store. */
+    /* Set the active tab to the one defined in the Redux store. */
     useEffect(() => {
         // Return early if the tab menu is not yet loaded.
         if(!isLoaded) return;
@@ -54,7 +53,7 @@ export default function BuilderTabs({ isLoaded }) {
      */
     const disabled = mode === 'create' && (shipId === null || shipPreset === null);
     
-    /** Return tab menu content. */
+    /* Return the tab menu. */
     return isLoaded && (<div id='builder-tabs'>
         <button id='builder-tab-0' onClick={onClick}>Ships</button>
         <button id='builder-tab-1' onClick={onClick} disabled={disabled}>Enhancements</button>

@@ -11,12 +11,15 @@ import './Footer-m.css';
 
 /**
  * Renders the website footer, primarily responsible for displaying credits & legal info.
- * @component Footer
- * @param {{ isLoaded: boolean; }} isLoaded Flag from `App.jsx` determining if the React app is currently loaded.
+ * 
+ * This component links directly to the `Layout` component in `App.jsx`, and is not tied to a
+ * specific route.
+ * @component `Footer`
+ * @param {{ isLoaded: boolean; }} props
  * @returns {ReactElement}
  */
 export default function Footer({ isLoaded }) {
-    /** If the site is loaded, return the footer content. */
+    /* If the site is loaded, return the footer content. */
     return isLoaded && (<footer id='site-footer'>
         {/* Credits: Rockfish Games */}
         <div id='site-footer-rockfish'>

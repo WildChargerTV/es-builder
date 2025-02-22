@@ -11,13 +11,11 @@ import { updateDevice, updatePrimary } from '../../../store/builder';
 import { createCustomEquippable } from '../../../store/customEquippable';
 
 /**
- * Renders a modal that allows the user to enhance a piece of eligible equipment. The modal will
- * present the user with a dynamic form element listing out the equipment's stats, allowing the
- * user to modify them at will. Upon confirming the enhances stats, the data will be submitted as a
- * Custom Equippable. Enhancement is irreversible.
+ * Modal component that allows the user to enhance a piece of eligible equipment. 
  * 
- * Each stat is rendered in its own sub-component. See {@linkcode SingleStat} for more information
- * on its functionality. 
+ * The modal will present the user with a form listing out the equipment's stats, all of which can
+ * be modified at will. Upon confirming the enhanced stats, the data will be submitted as a Custom
+ * Equippable. Equipment enhancement is irreversible.
  * @component `EnhanceModal`
  * @requires {@linkcode useModal} {@linkcode primaryWeaponData} {@linkcode deviceData}
  * @requires {@linkcode updatePrimary} {@linkcode updateDevice} {@linkcode createCustomEquippable}
@@ -31,17 +29,18 @@ export default function EnhanceModal() {
     const { primaryWeapons, devices } = useSelector((state) => state.builder);
     const { category, id, index } = useSelector((state) => state.builder.focusedEquipment);
 
-    /** Get the stats from the appropriate datafile. */
+    /* Reference the appropriate datafile. */
     const focusData = structuredClone(category === 'Primary'
         ? primaryWeaponData[id]
         : deviceData[id]
     );
 
-    /** Convert the stats into an array for easier iteration. */
+    /* Convert the stats into an array for easier iteration. */
     const focusStats = Object.entries(focusData.stats);
 
-    /** When the Submit button is clicked, submit the modified stats to the backend. */
+    /* On form submission, create a new Custom Equippable containing the modified stats. */
     const onSubmit = (event) => {
+        // Prevent a redirect/refresh.
         event.stopPropagation();
 
         // Organize the data as needed, then stringify it for submission.
@@ -61,12 +60,15 @@ export default function EnhanceModal() {
         .then(closeModal());
     };
 
-    /** Apply a custom class name to the Modal. Required for custom stylization. */
+    /** 
+     * Apply a custom class name to the modal. 
+     * TODO native modals should be able to receive custom class names.
+     */
     useEffect(() => {
         document.getElementById('site-modal-content').className = 'equip-enhance-modal';
     }, []);
 
-    /** Return the Modal content. */
+    /* Return the modal content. */
     return (<>
         {/* Modal Title */}
         <h2 className='modal-title'>Enhance {category === 'Primary' ? ' Weapon' : ' Device'}</h2>
@@ -115,7 +117,8 @@ export default function EnhanceModal() {
  * Sub-component of {@linkcode EnhanceModal} that renders an input field (number/text type) that
  * represents one of the equipment's stats. The input field will update the passed-in data object
  * every time the field changes.
- * @param {{ stat: [string, number], focusData: object }} 
+ * @component `SingleStat`
+ * @param {{ stat: [string, number], focusData: object }} props
  * @returns {ReactElement}
  */
 function SingleStat({ stat, focusData }) {
@@ -124,17 +127,21 @@ function SingleStat({ stat, focusData }) {
     // Local State Values
     const [fieldVal, setFieldVal] = useState(val);
     
-    /** Set the input field's type depending on the type of the stat value. */
+    /* Set the input field's type depending on the type of the stat value. */
     const fieldType = (() => {
         switch(typeof val) {
             case 'number': return 'number';
             case 'string': return 'text';
         }
     })();
-    /** Set the input field's name to reflect that of the actual stat name. */
+
+    /** 
+     * Set the input field's name to reflect that of the actual stat name. 
+     * TODO why is this needed if stat names are in the datafile?
+     */
     const fieldName = name.toLowerCase().split(' ').join('-'); 
 
-    /** When the field's value changes, apply that change to the passed-in data object. */
+    /* When the field's value changes, apply that change to `focusData`. */
     const onChange = (event) => {
         if(typeof val === 'number')
             focusData.stats[name] = Number(event.target.value);
@@ -143,7 +150,7 @@ function SingleStat({ stat, focusData }) {
         setFieldVal(event.target.value);
     }
     
-    /** Return the input field & its label. */
+    /* Return the input field & its label. */
     return (<div id={fieldName} className='modal-form-stat'>
         <label htmlFor={fieldName}>{name} </label>
         <input type={fieldType} className='modal-stat-field' name={fieldName} value={fieldVal} onChange={onChange} />

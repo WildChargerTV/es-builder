@@ -1,4 +1,5 @@
 // * frontend/src/components/LoadoutBuilder/Modules/ShipInfo.jsx
+// TODO revisit instructions, maybe dynamic based on mode
 
 // Node Module Imports
 import { useEffect, useState } from 'react';
@@ -11,14 +12,13 @@ import shipData from '../../../data/ships';
  * currently selected.
  * @component `ShipInfo`
  * @requires {@linkcode shipData}
- * @returns {ReactElement}
  */
 export default function ShipInfo() {
     // React Hooks
     const { shipId } = useSelector((state) => state.builder);
     const [currShip, setCurrShip] = useState(null);
 
-    /** Get the relevant data associated with the ship ID in the Redux store. */
+    /* Get the relevant data associated with the ship ID in the Redux store. */
     useEffect(() => {
         shipId === null 
         ? setCurrShip(null)
@@ -53,7 +53,7 @@ export default function ShipInfo() {
         </p>
     </div>);
 
-    /** Return the ship information. */
+    /* Return the ship's information. */
     return (<div id='builder-ship-info'>
         {/* Ship Name, Class, & Description */}
         <h2 id='ship-info-name'>{currShip.name}</h2>

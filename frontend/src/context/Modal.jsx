@@ -35,14 +35,16 @@ export const useModal = () => useContext(ModalContext); //eslint-disable-line re
  * @returns {ReactElement} The elements to be rendered on the webpage.
  */
 export function ModalProvider({ children }) {
-    // Refers to the Modal container <div>.
-    // ? Remember that a ref acts like an unrendered store that is persistent across re-renders.
-    const modalRef = useRef();
-    // Refers to the component rendered as Modal content.
-    const [modalContent, setModalContent] = useState(null);
-    // Refers to the function that is called when the Modal is closing.
-    const [onModalClose, setOnModalClose] = useState(null);
-    // Handles the Modal closure. 
+    // React Hooks
+    const modalRef = useRef(); // The Modal container <div>.
+    // Local State Values
+    const [modalContent, setModalContent] = useState(null); // The component rendered as Modal content.
+    const [onModalClose, setOnModalClose] = useState(null); // The function that is called when the Modal is closing.
+
+    /**
+     * Handle the Modal closure by nulling the component in local state. If a closure function was
+     * provided, call it here as well.
+     */
     const closeModal = useCallback(() => {
         setModalContent(null);
         if(typeof onModalClose === 'function') {
@@ -51,10 +53,10 @@ export function ModalProvider({ children }) {
         }
     }, [onModalClose]);
 
-    // Put the necessary components together as the contextValue.
+    /* Put the necessary components together as the contextValue. */
     const contextValue = useMemo(() => ({ modalRef, modalContent, setModalContent, setOnModalClose, closeModal }), [modalContent, closeModal]);
 
-    // Return the contents of the Modal provider.
+    /* Return the contents of the Modal provider. */
     return (<>
         <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>
         <div ref={modalRef} />
@@ -69,15 +71,17 @@ export function ModalProvider({ children }) {
  * @returns {ReactPortal} The rendered modal, as assigned by the `ModalProvider`.
  */
 export function Modal() {
-    // Extract the necessary components from the context.
+    // React Contexts
     const { modalRef, modalContent, closeModal } = useContext(ModalContext);
     
-    // If modalRef is empty or no modalContent exists, render nothing.
+    /* If modalRef is empty or no modalContent exists, render nothing. */
     if(!modalRef?.current || !modalContent) return null;
 
-    // Render the Modal.
-    // ? ReactDOM.createPortal assigns the elements defined in the first argument to the <div>
-    // ? assigned to modalRef (the one returned by ModalProvider).
+    /**
+     * Render the Modal.
+     * ? ReactDOM.createPortal assigns the elements defined in the first argument to the <div>
+     * ? assigned to modalRef (the one returned by ModalProvider).
+     */
     return ReactDOM.createPortal(
         <div id='site-modal'>
             <button id='site-modal-background' onClick={closeModal} />

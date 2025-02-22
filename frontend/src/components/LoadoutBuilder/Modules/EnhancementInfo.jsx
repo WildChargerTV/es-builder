@@ -1,4 +1,6 @@
 // * frontend/src/components/LoadoutBuilder/Modules/EnhancementInfo.jsx
+// TODO currently selected enhancement and currently selected equipment should be merged
+// TODO revisit instructions, maybe dynamic based on mode
 
 // Node Module Imports
 import { useEffect, useMemo } from 'react';
@@ -10,13 +12,14 @@ import BucketImage from '../../../utils/BucketImage';
 
 /**
  * Renders the group of currently equipped enhancements, as well as information about the currently
- * selected enhancement (or instructional data if no enhancement is currently selected).
+ * selected enhancement (or instructional data if no enhancement is currently selected). These
+ * are handled as sub-components so that they can re-render independently of one another.
  * @component `EnhancementInfo`
  * @requires {@linkcode CurrentEnhancementGroup}, {@linkcode CurrentEnhancementInfo}
  * @returns {ReactElement}
  */
 export default function EnhancementInfo() {
-    /** Render the child components. */
+    /* Render the child components. */
     return (<div id='builder-enhancement-info-select'>
         <CurrentEnhancementGroup />
         <CurrentEnhancementInfo />
@@ -24,11 +27,9 @@ export default function EnhancementInfo() {
 }
 
 /**
- * Sub-component of `EnhancementInfo` that renders the group of enhancements currently added to the
- * loadout. Although visually identical to the Enhancement Groups found in `EnhancementList.jsx`,
- * its functionality is different, and therefore does not violate DRY.
+ * Sub-component of {@linkcode EnhancementInfo} that renders the group of enhancements currently
+ * added to the loadout.
  * @component `CurrentEnhancementGroup`
- * @returns {ReactElement}
  * @requires {@linkcode dataFiles}, {@linkcode builderActions}
  * @requires {@linkcode CurrentEnhancementCell}
  */
@@ -55,10 +56,7 @@ function CurrentEnhancementGroup() {
         return res;
     }, [enhancements]);
 
-    /** 
-     * Whenever the current ship changes, and one of the currently equipped enhancements becomes
-     * incompatible with that new ship, remove the enhancement from the group.
-     */
+    /* Automatically remove incompatible enhancements if a new ship is selected. */
     useEffect(() => {
         // Return early if no group data exists yet.
         if(!groupData) return;
@@ -77,7 +75,7 @@ function CurrentEnhancementGroup() {
         }
     }, [dispatch, groupData, shipId]);
 
-    /** Return the Enhancement Group. */
+    /* Return the enhancement group. */
     return (<div id='builder-selected-enhancements' className='builder-enhancement-group'>
         {/* Group Title */}
         <p className='enhancement-group-title' style={{textAlign: 'center'}}>Selected</p>
@@ -95,31 +93,28 @@ function CurrentEnhancementGroup() {
 }
 
 /**
- * Sub-component of `CurrentEnhancementGroup` that renders a single enhancement cell based on the
- * provided ID. When selected in Create/Edit mode, the enhancement is removed from the loadout, and
- * the cell it once occupied becomes disabled until a new enhancement is added in its place. See 
- * `EnhancementList.jsx` for more information on adding enhancements. When selected in View mode,
- * the enhancement will become focused, and its details will be provided. Although visually
- * identical to the Enhancement Cells found in `EnhancementList.jsx`, its functionality is
- * different, and therefore does not violate DRY.
+ * Sub-component of {@linkcode CurrentEnhancementGroup} that renders a single enhancement cell.
+ * 
+ * When selected in Create/Edit mode, the enhancement is removed from the loadout, and the cell it 
+ * once occupied becomes disabled until a new enhancement is added in its place. When selected in 
+ * View mode, the enhancement will become focused, and its details will be provided.
  * 
  * Removing the **Ancient Weapon** or **Splitter** enhancements will set their appropriate flags.
  * @component `CurrentEnhancementCell`
- * @param {{ id: number }}
- * @returns {ReactElement}
  * @requires {@linkcode dataFiles}, {@linkcode builderActions}
  * @requires {@linkcode BucketImage}
+ * @param {{ index: number, id: number }} props
  */
 function CurrentEnhancementCell({ index, id }) {
     // React Hooks
     const dispatch = useDispatch();
     const { mode } = useSelector((state) => state.builder);
 
-    /** Get the enhancement data, if it exists. */
+    /* Get the enhancement data, if it exists. */
     const enhancement = id !== null && dataFiles.enhancementData[id];
     
-    /** Execute the appropriate behavior when the cell is clicked. */
     const onClick = () => {
+    /* Execute the appropriate behavior when the cell is clicked. */
         // In View mode, set the selected enhancement to this cell's ID, and return early.
         if(mode === 'view') {
             dispatch(builderActions.updateEnhancement('selected', id));
@@ -134,26 +129,27 @@ function CurrentEnhancementCell({ index, id }) {
         id === 2 && dispatch(builderActions.updateFlag('ancientWeaponEquipped', false));
         id === 24 && dispatch(builderActions.updateFlag('splitterEquipped', false));
 
-    /** Return the enhancement cell. */
     return <button className='enhancement-group-cell selected' onClick={onClick} disabled={id === null}>
+    /* Return the enhancement cell. */
         {id !== null && <BucketImage dir={enhancement.icon} />}
     </button>;
 }
 
 /**
- * Renders information about the currently selected enhancement, or instructional data if no
- * enhancement is currently selected.
+ * Sub-component of {@linkcode EnhancementInfo} that renders information about the currently
+ * selected enhancement, or instructional data if no enhancement is currently selected.
  * @component `CurrentEnhancementInfo`
- * @requires {@linkcode enhancementData}, {@linkcode BucketImage}
- * @returns {ReactElement}
+ * @requires {@linkcode dataFiles}
+ * @requires {@linkcode BucketImage}
  */
 function CurrentEnhancementInfo() {
     // React Hooks
     const currEnhancement = useSelector((state) => state.builder.enhancements.selected);
 
-    /** Get the enhancement data, if it exists. */
+    /* Get the enhancement data, if it exists. */
     const currData = currEnhancement !== null && dataFiles.enhancementData[currEnhancement];
 
+    /* If no enhancement is selected, return instructional data. */
     if(currEnhancement === null) return (<div id='builder-enhancement-info'>
         <h2 id='enhancement-info-name'>
             Select Enhancements
@@ -176,7 +172,7 @@ function CurrentEnhancementInfo() {
         </p>
     </div>);
 
-    /** Return the enhancement's information. */
+    /* Return the enhancement's information. */
     return currEnhancement !== null && (<div id='builder-enhancement-info'>
         {/* Enhancement Name */}
         <h2 id='enhancement-info-name'>{currData.name}</h2>
