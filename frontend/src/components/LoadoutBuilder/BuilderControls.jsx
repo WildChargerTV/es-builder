@@ -10,8 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SelectPresetModal from './Modals/SelectPresetModal';
 import OpenModal from '../../utils/OpenModal';
 import { allowedProfanity } from '../../data';
-import * as builder from '../../store/builder';
-import { createLoadout, updateLoadout } from '../../store/loadout';
+import * as builderActions from '../../store/builder';
+import * as loadoutActions from '../../store/loadout';
 
 /** Declare the profanity filter, and remove some common swears. */
 const filter = new Filter();
@@ -46,6 +46,7 @@ export default function BuilderControls({ isLoaded }) {
  * assemble all of the necessary sections of the Redux state and send them to the backend.
  * @component `SubmitLoadoutButton` 
  * @returns {null | ReactElement}
+ * @requires {@linkcode loadoutActions}
  */
 function SubmitLoadoutButton() {
     // React Hooks
@@ -106,8 +107,8 @@ function SubmitLoadoutButton() {
         
         // Send the data to create or change the loadout respectively.
         (mode === 'create'
-            ? dispatch(createLoadout(submissionData))
-            : dispatch(updateLoadout(params.loadoutId, submissionData))
+            ? dispatch(loadoutActions.createLoadout(submissionData))
+            : dispatch(loadoutActions.updateLoadout(params.loadoutId, submissionData))
         ).then(navigate('/loadouts'));
     };
 
@@ -129,6 +130,7 @@ function SubmitLoadoutButton() {
  * for controlling access to other Loadout Builder controls.
  * @component `StartBlankButton`
  * @returns {null | ReactElement}
+ * @requires {@linkcode builderActions}
  */
 function StartBlankButton() {
     // React Hooks
@@ -137,8 +139,8 @@ function StartBlankButton() {
 
     /** When the button is clicked, set `shipPreset` to `false`. */
     const onClick = () => {
-        dispatch(builder.updateShipPreset(false));
     }
+        dispatch(builderActions.updateShipPreset(false));
 
     /**
      * In order for the button to be enabled:
@@ -160,9 +162,9 @@ function StartBlankButton() {
  * 
  * This button on its own only opens the {@linkcode SelectPresetModal}. See its documentation for
  * more information on its functionality.
- * @requires {@linkcode OpenModal} {@linkcode PresetLoadoutModal}
  * @returns {ReactElement}
  * @component `SelectPresetButton`
+ * @requires {@linkcode OpenModal} {@linkcode SelectPresetModal}
  */
 function SelectPresetButton() {
     // React Hooks
@@ -193,6 +195,7 @@ function SelectPresetButton() {
  * Visible only on the Enhancements tab.
  * @component `ClearEnhancementsButton`
  * @returns {null | ReactElement}
+ * @requires {@linkcode builderActions}
  */
 function ClearEnhancementsButton() {
     // React Hooks
@@ -204,7 +207,7 @@ function ClearEnhancementsButton() {
     /** When the button is clicked, clear the enhancements state. */
     const onClick = (event) => {
         event.stopPropagation();
-        dispatch(builder.updateEnhancement('reset', null));
+        dispatch(builderActions.updateEnhancement('reset', null));
     };
 
     /** In order for the button to be enabled, one or more enhancements must be not null. */

@@ -4,8 +4,8 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
-import { enhancementData, shipData } from '../../../data';
-import { updateEnhancement, updateFlag } from '../../../store/builder';
+import * as dataFiles from '../../../data';
+import * as builderActions from '../../../store/builder';
 import BucketImage from '../../../utils/BucketImage';
 
 /**
@@ -28,8 +28,9 @@ export default function EnhancementInfo() {
  * loadout. Although visually identical to the Enhancement Groups found in `EnhancementList.jsx`,
  * its functionality is different, and therefore does not violate DRY.
  * @component `CurrentEnhancementGroup`
- * @requires {@linkcode enhancementData}, {@linkcode CurrentSingleEnhancement}
  * @returns {ReactElement}
+ * @requires {@linkcode dataFiles}, {@linkcode builderActions}
+ * @requires {@linkcode CurrentEnhancementCell}
  */
 function CurrentEnhancementGroup() {
     // React Hooks
@@ -68,11 +69,11 @@ function CurrentEnhancementGroup() {
             if(!enhancement.id) continue;
 
             // Get the details of the current enhancement from its ID.
-            const eData = enhancementData[enhancement.id];
+            const eData = dataFiles.enhancementData[enhancement.id];
 
             // If the enhancement cannot be equipped on the current ship, remove it from the group.
             if(eData?.allowed_ships && (shipId === null || eData.allowed_ships.indexOf(shipId) === -1))
-                dispatch(updateEnhancement(enhancement.i, null));
+                dispatch(builderActions.updateEnhancement(enhancement.i, null));
         }
     }, [dispatch, groupData, shipId]);
 
@@ -104,9 +105,10 @@ function CurrentEnhancementGroup() {
  * 
  * Removing the **Ancient Weapon** or **Splitter** enhancements will set their appropriate flags.
  * @component `CurrentEnhancementCell`
- * @requires {@linkcode enhancementData}, {@linkcode shipData}, {@linkcode BucketImage}
  * @param {{ id: number }}
  * @returns {ReactElement}
+ * @requires {@linkcode dataFiles}, {@linkcode builderActions}
+ * @requires {@linkcode BucketImage}
  */
 function CurrentEnhancementCell({ index, id }) {
     // React Hooks
@@ -114,23 +116,23 @@ function CurrentEnhancementCell({ index, id }) {
     const { mode } = useSelector((state) => state.builder);
 
     /** Get the enhancement data, if it exists. */
-    const enhancement = id !== null && enhancementData[id];
+    const enhancement = id !== null && dataFiles.enhancementData[id];
     
     /** Execute the appropriate behavior when the cell is clicked. */
     const onClick = () => {
         // In View mode, set the selected enhancement to this cell's ID, and return early.
         if(mode === 'view') {
-            dispatch(updateEnhancement('selected', id));
+            dispatch(builderActions.updateEnhancement('selected', id));
             return;
         }
 
         // Remove the enhancement in this cell.
-        dispatch(updateEnhancement(index, null));
+        dispatch(builderActions.updateEnhancement(index, null));
 
         // Account for the remvoal of Ancient Weapon or Splitter.
-        id === 2 && dispatch(updateFlag('ancientWeaponEquipped', false));
-        id === 24 && dispatch(updateFlag('splitterEquipped', false));
     }
+        id === 2 && dispatch(builderActions.updateFlag('ancientWeaponEquipped', false));
+        id === 24 && dispatch(builderActions.updateFlag('splitterEquipped', false));
 
     /** Return the enhancement cell. */
     return <button className='enhancement-group-cell selected' onClick={onClick} disabled={id === null}>
@@ -150,7 +152,7 @@ function CurrentEnhancementInfo() {
     const currEnhancement = useSelector((state) => state.builder.enhancements.selected);
 
     /** Get the enhancement data, if it exists. */
-    const currData = currEnhancement !== null && enhancementData[currEnhancement];
+    const currData = currEnhancement !== null && dataFiles.enhancementData[currEnhancement];
 
     if(currEnhancement === null) return (<div id='builder-enhancement-info'>
         <h2 id='enhancement-info-name'>

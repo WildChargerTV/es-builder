@@ -5,7 +5,7 @@ import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 // Local Module Imports
 import EnhanceModal from '../Modals/EnhanceModal';
-import { AddEquipIcon, AddModIcon, RemoveEquipIcon } from '../../../assets/svg';
+import * as SVGIcons from '../../../assets/svg';
 import * as dataFiles from '../../../data';
 import OpenModal from '../../../utils/OpenModal';
 
@@ -24,14 +24,14 @@ export default function EquipmentInfo() {
             <p id='equip-info-desc'>
                 If you have selected a preset loadout, it should appear here.
                 <br /><br />
-                <AddEquipIcon height='1.3vw' /> - Adds a new piece of equipment to the
+                <SVGIcons.AddEquipIcon height='1.3vw' /> - Adds a new piece of equipment to the
                 loadout in an empty slot. Equipment will be added exactly in the specified slot,
                 and will remain there even if there is an empty slot above it.
                 <br />
-                <AddModIcon height='1.3vw' /> - Adds a new modification to eligible piece
+                <SVGIcons.AddModIcon height='1.3vw' /> - Adds a new modification to eligible piece
                 of existing equipment. Once added, mods cannot be removed.
                 <br />
-                <RemoveEquipIcon height='1.3vw' /> - Removes a piece of existing 
+                <SVGIcons.RemoveEquipIcon height='1.3vw' /> - Removes a piece of existing 
                 equipment from the loadout.
                 <br /><br />
                 <span className='yellow'>Note for Testers:</span> The ability to add equipment

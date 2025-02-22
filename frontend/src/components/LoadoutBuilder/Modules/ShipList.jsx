@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useFitText from 'use-fit-text';
 // Local Module Imports
-import { shipData } from '../../../data';
+import shipData from '../../../data/ships';
 import { updateShip } from '../../../store/builder';
 import BucketImage from '../../../utils/BucketImage';
 
@@ -16,8 +16,9 @@ import BucketImage from '../../../utils/BucketImage';
  * 
  * See {@linkcode shipData} for more information about the ships in EVERSPACE.
  * @component `ShipList`
- * @requires {@linkcode BucketImage}, {@linkcode shipData}, {@linkcode updateShip}
  * @returns {ReactElement}
+ * @requires {@linkcode shipData}, {@linkcode updateShip}
+ * @requires {@linkcode BucketImage}
  */
 export default function ShipList() {
     // React Hooks

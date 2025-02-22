@@ -4,7 +4,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
 import enhancementData from '../../../data/enhcancements';
-import { updateEnhancement, updateFlag } from '../../../store/builder';
+import * as builderActions from '../../../store/builder';
 import BucketImage from '../../../utils/BucketImage';
 
 /** List of all valid Enhancement Categories. */
@@ -64,6 +64,7 @@ function EnhancementGroup({ category }) {
  * wiped, and the Ancient Weapon is automatically installed into the first Primary Weapon slot with
  * no mods.
  * @component `EnhancementCell`
+ * @requires {@linkcode builderActions}
  * @requires {@linkcode BucketImage}
  * @param {{data: object}} 
  * @returns {ReactElement}
@@ -76,7 +77,7 @@ function EnhancementCell({ data }) {
     /** When an enhancement is selected, add it to the selected enhancements. */
     const onClick = () => {
         // Set the currently selected enhancement to the current one.
-        dispatch(updateEnhancement('selected', data.id));
+        dispatch(builderActions.updateEnhancement('selected', data.id));
 
         // Iterate through the enhancements state. If a null index is found, equip the enhancement
         // to it. Account for the addition of Ancient Weapon & Splitter.
@@ -84,9 +85,9 @@ function EnhancementCell({ data }) {
         // ? then Ancient Weapon, as the latter still makes the former functionally null.
         for(const key in enhancements) {
             if(enhancements[key] === null && key !== 'selected') {
-                dispatch(updateEnhancement(key, data.id));
-                data.id === 2 && dispatch(updateFlag("ancientWeaponEquipped", true));
-                data.id === 24 && dispatch(updateFlag("splitterEquipped", true));
+                dispatch(builderActions.updateEnhancement(key, data.id));
+                data.id === 2 && dispatch(builderActions.updateFlag("ancientWeaponEquipped", true));
+                data.id === 24 && dispatch(builderActions.updateFlag("splitterEquipped", true));
                 return;
             }
         }   

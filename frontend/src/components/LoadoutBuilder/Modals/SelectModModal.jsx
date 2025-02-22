@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFitText from 'use-fit-text';
 import { useModal } from '../../../context/Modal';
 import * as dataFiles from '../../../data';
-import { updateDevice, updatePrimary } from '../../../store/builder';
+import * as builderActions from '../../../store/builder';
 import BucketImage from '../../../utils/BucketImage';
 
 export default function SelectModModal({ currEquip }) {
@@ -76,8 +76,10 @@ function SingleMod({ data }) {
         eData.mods[mIndex] = mData.id;
         closeModal();
         switch(eType) {
-            case 'Primary': return dispatch(updatePrimary(eIndex, eData.id, eData.mods));
-            case 'Devices': return dispatch(updateDevice(eIndex, eData.id, eData.mods));
+            case 'Primary': 
+                return dispatch(builderActions.updatePrimary(eIndex, eData.id, eData.mods));
+            case 'Devices': 
+                return dispatch(builderActions.updateDevice(eIndex, eData.id, eData.mods));
         }
     }
 
