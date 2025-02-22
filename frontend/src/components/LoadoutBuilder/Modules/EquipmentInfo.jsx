@@ -61,74 +61,82 @@ export default function EquipmentInfo() {
             </p>
         </div>);
 
-    const focusData = (() => {
     /* Create an object containing the data required by the info box. */
+    const equipment = (() => {
         // Determine if the equipment is a Custom Equippable. If so, get its data.
         const isCustomEquippable = 
             ['Primary', 'Devices'].includes(category) && 
             typeof id === 'string';
         const customEquippable = isCustomEquippable && loadedIds[Number(id.split('c')[1])];
 
-        const clone = structuredClone((() => {
         // Create a clone of the equipment's data from its respective dataFile.
+        const equipmentData = structuredClone((() => {
             switch(category) {
                 case 'Primary':
                     return dataFiles.primaryWeaponData[isCustomEquippable 
-                        ? customEquippable.equippableId : id];
+                        ? customEquippable.equippableId 
+                        : id
+                    ];
                 case 'Secondary':
                     return dataFiles.secondaryWeaponData[id];
                 case 'Devices':
                     return dataFiles.deviceData[isCustomEquippable
-                        ? customEquippable.equippableId : id];
+                        ? customEquippable.equippableId 
+                        : id
+                    ];
                 case 'Consumables':
                     return dataFiles.consumableData[id];
             }
         })());
 
-        clone.stats && (
-            clone.stats = Object.entries(isCustomEquippable ? customEquippable.stats : clone.stats)
         // Convert the stats into an array, if they exist.
+        equipmentData.stats && (
+            equipmentData.stats = Object.entries(isCustomEquippable 
+                ? customEquippable.stats 
+                : equipmentData.stats
+            )
         );
 
         // Secondary Weapons & Consumables require no further data, and can be returned here.
         // ? For the remaining two categories, enhancement flags & mod data must be added.
         if(['Secondary', 'Consumables'].includes(category))
-            return clone;
+            return equipmentData;
 
         // Add an indicator for whether or not the equipment is enhanced.
-        clone.enhanced = isCustomEquippable;
+        equipmentData.enhanced = isCustomEquippable;
 
-        clone.enhanceable = (category === 'Primary' && id !== 0) || 
         // Add an indicator for whether or not the equipment can be enhanced.
         // ? All Primary Weapons are enhanceable except the Ancient Weapon.
         // ? Only the Gatling Turret, Laser Turret, and Missile Turret devices are enhanceable.
+        equipmentData.enhanceable = 
+            (category === 'Primary' && id !== 0) || 
             (category === 'Devices' && [39, 40, 47].includes(id));
         
         // Insert an array of the equipment's mod data from the appropriate Redux state.
         const reduxData = category === 'Primary' 
-        ? builder.primaryWeapons[index] 
-        : builder.devices[index];
-        clone.mods = reduxData.mods ? Object.entries(reduxData.mods) : null;
+            ? builder.primaryWeapons[index] 
+            : builder.devices[index];
+            equipmentData.mods = reduxData.mods ? Object.entries(reduxData.mods) : null;
         
         // Return the data.
-        return clone;
+        return equipmentData;
     })();
     
-    return focusData && (<div id='builder-equipment-info'>
     /* Return the equipment information. */
+    return equipment && (<div id='builder-equipment-info'>
         {/* Equipment Name */}
         <h2>
-            {focusData.enhanced && '★ '}
-            {focusData.name}
-            {focusData?.mods?.[0][1] && 
-            ` (${focusData.mods.map((mod) => mod[1] && '+').join('')})`}
+            {equipment.enhanced && '★ '}
+            {equipment.name}
+            {equipment?.mods?.[0][1] && 
+            ` (${equipment.mods.map((mod) => mod[1] && '+').join('')})`}
         </h2>
 
         {/* Equipment Type */}
-        <h3>{focusData.enhanced && 'Enhanced '}{focusData.type}</h3>
+        <h3>{equipment.enhanced && 'Enhanced '}{equipment.type}</h3>
 
         {/* Equipment Enhancement Button (Where Applicable) */}
-        {focusData?.enhanceable && !focusData.enhanced && builder.mode !== 'view' && <OpenModal 
+        {equipment?.enhanceable && !equipment.enhanced && builder.mode !== 'view' && <OpenModal 
             elementText={<>
                 Enhance <span className='site-text-icon'><PiMouseLeftClickFill /></span>
             </>}
@@ -137,23 +145,23 @@ export default function EquipmentInfo() {
 
         {/* Equipment Description */}
         <p id='equip-info-desc'>
-            {focusData.description}
-            {focusData.manufacturer && (<><br /><br />Manufacturer: {focusData.manufacturer}</>)}
+            {equipment.description}
+            {equipment.manufacturer && (<><br /><br />Manufacturer: {equipment.manufacturer}</>)}
         </p>
 
         {/* Equipment Mods (Where Applicable) */}
-        {focusData?.mods?.[0][1] && <div id='equip-info-mods'>
+        {equipment?.mods?.[0][1] && <div id='equip-info-mods'>
             <p>Mods</p>
             <ul>
-                {focusData.mods.map(([key, id]) => id && 
+                {equipment.mods.map(([key, id]) => id && 
                     <li key={`mod-${key}`} title={modsArr[id].description}>{modsArr[id].name}</li>
                 )}
             </ul>
         </div>}
 
         {/* Equipment Stats (Where Applicable) */}
-        {focusData?.stats && (<div id='equip-info-stats'>
-            {focusData.stats.map(([name, stat]) => 
+        {equipment?.stats && (<div id='equip-info-stats'>
+            {equipment.stats.map(([name, stat]) => 
                 (<div key={name.split(' ').join('-')} className='equip-info-single-stat'>
                     <p>{name}</p>
                     <p>{stat}</p>
