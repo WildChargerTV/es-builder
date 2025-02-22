@@ -5,9 +5,9 @@ import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 // Local Module Imports
 import EnhanceModal from '../Modals/EnhanceModal';
-import OpenModal from '../../Modal/OpenModal';
 import { AddEquipIcon, AddModIcon, RemoveEquipIcon } from '../../../assets/svg';
 import * as dataFiles from '../../../data';
+import OpenModal from '../../../utils/OpenModal';
 
 export default function EquipmentInfo() {
     // React Hooks

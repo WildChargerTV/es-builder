@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useFitText from 'use-fit-text';
 // Local Module Imports
-import BucketImage from '../../Bucket/BucketImage';
 import { shipData } from '../../../data';
 import { updateShip } from '../../../store/builder';
+import BucketImage from '../../../utils/BucketImage';
 
 /**
  * Renders a 2x2 grid of buttons, allowing the user to select one of EVERSPACE's four available

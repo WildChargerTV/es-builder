@@ -8,13 +8,13 @@ import useFitText from 'use-fit-text';
 import ChangeQuantityModal from '../Modals/ChangeQuantityModal';
 import SelectEquipModal from '../Modals/SelectEquipModal';
 import SelectModModal from '../Modals/SelectModModal';
-import BucketImage from '../../Bucket/BucketImage';
-import OpenModal from '../../Modal/OpenModal';
 import * as SVGIcon from '../../../assets/svg';
 import * as dataFile from '../../../data';
 import * as builderActions from '../../../store/builder';
 import { readCustomEquippable } from '../../../store/customEquippable';
 import * as loadoutActions from '../../../store/loadout';
+import BucketImage from '../../../utils/BucketImage';
+import OpenModal from '../../../utils/OpenModal';
 
 
 /**
