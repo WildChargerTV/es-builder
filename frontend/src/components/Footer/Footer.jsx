@@ -64,7 +64,7 @@ export default function Footer({ isLoaded }) {
         <div id='site-footer-wctv'>
             <p>ESBuilder created by WildCharger</p>
             <div id='site-footer-socials'>
-                <Link to='https://github.com/WildChargerTV/aa-capstone-es-builder'>
+                <Link to='https://github.com/WildChargerTV/es-builder'>
                     <AiFillGithub />
                 </Link>
                 <Link to='https://www.linkedin.com/in/ethan-guan-ba453a2a0/'>
@@ -83,6 +83,8 @@ export default function Footer({ isLoaded }) {
             <p>
                 Special thanks to <Link to='https://steamcommunity.com/id/ITS_YFP'>ITS_YFP </Link>
                 for additional background images.
+                <br /><br />
+                <Link to='https://github.com/WildChargerTV/es-builder/issues'>Report a bug</Link>
             </p>
         </div>
     </footer>);
