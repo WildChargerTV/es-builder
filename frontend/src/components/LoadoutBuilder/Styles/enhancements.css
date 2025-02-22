@@ -46,15 +46,15 @@
     padding: 25px;
     width: 100%;
 }
-#builder-enhancements-0 { grid-area: a; }
-#builder-enhancements-1 { grid-area: b; }
-#builder-enhancements-2 { grid-area: c; }
-#builder-enhancements-3 { grid-area: d; }
-#builder-enhancements-4 { grid-area: e; }
-#builder-enhancements-5 { grid-area: f; }
-#builder-enhancements-6 { grid-area: g; }
-#builder-enhancements-7 { grid-area: h; }
-#builder-enhancements-8 { grid-area: i; }
+#builder-enhancements-category-0 { grid-area: a; }
+#builder-enhancements-category-1 { grid-area: b; }
+#builder-enhancements-category-2 { grid-area: c; }
+#builder-enhancements-category-3 { grid-area: d; }
+#builder-enhancements-category-4 { grid-area: e; }
+#builder-enhancements-category-5 { grid-area: f; }
+#builder-enhancements-category-6 { grid-area: g; }
+#builder-enhancements-category-7 { grid-area: h; }
+#builder-enhancements-category-8 { grid-area: i; }
 
 /* Enhancements Tab: Currently Selected Enhancements */
 #builder-enhancement-info-select {

@@ -42,8 +42,11 @@ function EnhancementGroup({ category }) {
     /** Filter the list of enhancements down to the ones that apply to the current category. */
     const res = enhancementData.filter((enhancement) => enhancement.category === category);
 
-    /** Return the Enhancement Group, as well as its child `SingleEnhancement`s. */
-    return (<div id={`builder-enhancements-${CATEGORIES.indexOf(category)}`} className='builder-enhancement-group'>
+    /* Give the enhancement group its ID number based on its position in the `CATEGORIES` array. */
+    const groupId = `builder-enhancements-category-${CATEGORIES.indexOf(category)}`;
+
+    /* Return the enhancement group & the enhancements within it. */
+    return (<div id={groupId} className='builder-enhancement-group'>
         {/* Group Title */}
         <p className='enhancement-group-title'>{category}</p>
         {/* Group List */}
