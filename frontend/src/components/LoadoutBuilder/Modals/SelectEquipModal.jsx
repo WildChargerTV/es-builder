@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useFitText from 'use-fit-text';
-import BucketImage from '../../Bucket/BucketImage';
 import { useModal } from '../../../context/Modal';
 import * as dataFiles from '../../../data';
 import { updateConsumable, updateDevice, updatePrimary, updateSecondary } from '../../../store/builder';
+import BucketImage from '../../../utils/BucketImage';
 
 export default function SelectEquipModal({ currEquip }) {
     const { index, type } = currEquip;

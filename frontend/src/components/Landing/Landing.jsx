@@ -5,9 +5,9 @@ import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 // Local Module Imports
+import SignUpModal from './Modals/SignUpModal';
+import OpenModal from '../../utils/OpenModal';
 import './Landing.css';
-import OpenModal from '../Modal/OpenModal';
-import SignUpModal from './SignUpModal';
 
 /**
  * Component to display a site landing page to all logged-out users. Logged-in users are redirected

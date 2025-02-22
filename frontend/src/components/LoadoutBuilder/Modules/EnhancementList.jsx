@@ -3,9 +3,9 @@
 // Node Module Imports
 import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
-import BucketImage from '../../Bucket/BucketImage';
 import enhancementData from '../../../data/enhcancements';
 import { updateEnhancement, updateFlag } from '../../../store/builder';
+import BucketImage from '../../../utils/BucketImage';
 
 /** List of all valid Enhancement Categories. */
 const CATEGORIES = [

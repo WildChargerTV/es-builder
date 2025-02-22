@@ -4,7 +4,7 @@
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 // Local Module Imports
-import ProfileButton from './ProfileButton';
+import ProfileButton from './Modules/ProfileButton';
 import './Navigation.css';
 import './Navigation-m.css';
 

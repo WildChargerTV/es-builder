@@ -27,15 +27,15 @@ export default function RecentLoadouts() {
     // Local State Values
     const [isLoaded, setIsLoaded] = useState(false);
 
-    /** Get recent loadouts from the backend. */
+    /* Get recent loadouts from the backend. */
     useEffect(() => { dispatch(getRecentLoadouts()); }, [dispatch]);
 
-    /** Allow the page to render if a list has been returned to the state. */
+    /* Allow the page to render if a list has been returned to the state. */
     useEffect(() => {
         setIsLoaded(recentLoadouts?.list && typeof recentLoadouts.list === 'object');
     }, [isLoaded, recentLoadouts]);
 
-    /** Return the Recent Loadouts page. */
+    /* Return the Recent Loadouts page. */
     return isLoaded && (<main id='site-recent-loadouts-container'>
         <div id='site-recent-loadouts'>
             <h1>Recent Loadouts</h1>
@@ -49,4 +49,3 @@ export default function RecentLoadouts() {
         </div>
     </main>);
 }
-

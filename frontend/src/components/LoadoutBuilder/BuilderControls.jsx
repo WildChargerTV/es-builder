@@ -7,8 +7,8 @@ import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 // Local Module Imports
-import PresetLoadoutModal from './Modals/PresetLoadoutModal';
-import OpenModal from '../Modal/OpenModal';
+import SelectPresetModal from './Modals/SelectPresetModal';
+import OpenModal from '../../utils/OpenModal';
 import { allowedProfanity } from '../../data';
 import * as builder from '../../store/builder';
 import { createLoadout, updateLoadout } from '../../store/loadout';
@@ -35,7 +35,7 @@ filter.removeWords(...allowedProfanity);
 export default function BuilderControls({ isLoaded }) {
     return isLoaded && (<div id='builder-controls'>
         <StartBlankButton />
-        <PresetLoadoutButton />
+        <SelectPresetButton />
         <ClearEnhancementsButton />
         <SubmitLoadoutButton />
     </div>);
@@ -158,13 +158,13 @@ function StartBlankButton() {
  * Renders a button that allows the user to select one of the three ingame loadout presets based on
  * their currently selected ship. Visible only on the Ships tab.
  * 
- * This button on its own only opens the {@linkcode PresetLoadoutModal}. See its documentation for
+ * This button on its own only opens the {@linkcode SelectPresetModal}. See its documentation for
  * more information on its functionality.
- * @component `PresetLoadoutButton`
  * @requires {@linkcode OpenModal} {@linkcode PresetLoadoutModal}
  * @returns {ReactElement}
+ * @component `SelectPresetButton`
  */
-function PresetLoadoutButton() {
+function SelectPresetButton() {
     // React Hooks
     const { mode, tabId, shipId, shipPreset } = useSelector((state) => state.builder);
 
@@ -182,7 +182,7 @@ function PresetLoadoutButton() {
             elementText={<>
                 Choose Preset <span className='site-text-icon'><PiMouseLeftClickFill /></span>
             </>}
-            modalComponent={<PresetLoadoutModal />}
+            modalComponent={<SelectPresetModal />}
             disabled={disabled}
         />
     </div>;

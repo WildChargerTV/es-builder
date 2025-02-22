@@ -4,9 +4,9 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
-import BucketImage from '../../Bucket/BucketImage';
 import { enhancementData, shipData } from '../../../data';
 import { updateEnhancement, updateFlag } from '../../../store/builder';
+import BucketImage from '../../../utils/BucketImage';
 
 /**
  * Renders the group of currently equipped enhancements, as well as information about the currently
