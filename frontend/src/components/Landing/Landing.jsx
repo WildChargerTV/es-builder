@@ -24,13 +24,19 @@ export default function LandingPage() {
 
     // Return the page content.
     return (<main id='site-landing'>
-        {/* This is a transparent black overlay rendered over the background image. */}
+        {/* Page Title (Hidden) - for search engines */}
+        <h1 style={{ display: 'none' }}>
+            ESBuilder: Build & Share EVERSPACE™ Loadouts
+        </h1>
+
+        {/* Background Image Overlay */}
         <div id='site-landing-bg' />
 
         {/* Main Content Box */ }
         <div id='site-landing-content'>
             {/* Page Title */}
-            <h1>Shoot. Loot. Share.</h1>
+            <h2>Shoot. Loot. Share.</h2>
+
             {/* Site Information */}
             <p>
                 ESBuilder is a new way to store, share, &amp; immortalize your most memorable 
@@ -39,13 +45,15 @@ export default function LandingPage() {
                 visualize your own perfect build? Our online loadout builder&apos;s got you 
                 covered. Sign up and create one today!
             </p>
+
             {/* Sign Up Button */}
             <OpenModal
                 elementText={<>Sign Up <span className='site-text-icon'><PiMouseLeftClickFill /></span></>}
                 modalComponent={<SignUpModal />}
             />
+
             {/* Message for Testers */}
-            <h2>Important Information for All Testers:</h2>
+            <h3>Important Information for All Testers:</h3>
             <p>
                 Thank you for giving ESBuilder a try! This web application is currently 
                 in <span className='yellow'>early beta</span>. This means that the core mechanics are
