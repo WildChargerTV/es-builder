@@ -30,28 +30,32 @@ export default function ShipInfo() {
      * ? This returns separately for code readability, as using a ternary operator in this scenario
      * ? may look rather confusing.
      */
-    if(!currShip) return (<div id='builder-ship-info'>
-        <h2 id='ship-info-name'>Select Your Ship</h2>
-        <p id='ship-info-desc'>
-            You will not be able to change ships once your loadout has been submitted.<br />
-            <span className='red'>WARNING:</span> Changing your ship at any point during loadout
-            creation will reset all of your currently selected equipment!
-            <br /><br />
-            <span className='yellow'>Notes for Testers: </span>
-            ESBuilder currently ignores any aspect of player progression, as it is currently 
-            considered out-of-scope. Until further notice, assume that you have the Encounters DLC,
-            and that you have unlocked all possible preset loadouts & maximized all perks on all
-            ships.
-            <br /><br />
-            It is currently a known issue that ship & equipment stats only display as numbers, and 
-            do not have any units of measurement alongside them. Currently, the intent is that on
-            release, applicable ship stats will be influenced by installed equipment, and equipment
-            stats will be influenced by installed mods. Creating these interactions will take a LOT
-            of time, and is being saved for later in favor of fleshing out core functionality.
-            <br /><br />
-            Please feel free to report any other issues you may encounter with the Loadout Builder.
-        </p>
-    </div>);
+    if(!currShip) 
+        return (<div id='builder-ship-info'>
+            <h2 id='ship-info-name'>Select Your Ship</h2>
+            <p id='ship-info-desc'>
+                You will not be able to change ships once your loadout has been submitted.
+                <br />
+                <span className='red'>WARNING:</span> Changing your ship at any point during 
+                loadout creation will reset all of your currently selected equipment!
+                <br /><br />
+                <span className='yellow'>Notes for Testers: </span>
+                ESBuilder currently ignores any aspect of player progression, as it is currently 
+                considered out-of-scope. Until further notice, assume that you have the Encounters
+                DLC, and that you have unlocked all possible preset loadouts & maximized all perks
+                on all ships.
+                <br /><br />
+                It is currently a known issue that ship & equipment stats only display as numbers,
+                and do not have any units of measurement alongside them. Currently, the intent is
+                that on release, applicable ship stats will be influenced by installed equipment,
+                and equipment stats will be influenced by installed mods. Creating these 
+                interactions will take a LOT of time, and is being saved for later in favor of 
+                fleshing out core functionality.
+                <br /><br />
+                Please feel free to report any other issues you may encounter with the Loadout 
+                Builder.
+            </p>
+        </div>);
 
     /* Return the ship's information. */
     return (<div id='builder-ship-info'>
@@ -59,6 +63,7 @@ export default function ShipInfo() {
         <h2 id='ship-info-name'>{currShip.name}</h2>
         <h3 id='ship-info-class'>{currShip.class}</h3>
         <p id='ship-info-desc'>{currShip.description}</p>
+
         {/* Ship Stats */}
         {currShip?.stats && (<div id='ship-info-stats'>
             {Object.entries(currShip.stats).map(([statName, statVal]) => (
@@ -69,6 +74,4 @@ export default function ShipInfo() {
             ))}
         </div>)}
     </div>);
-
 }
-

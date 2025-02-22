@@ -101,7 +101,13 @@ export default function EnhanceModal() {
                 <h4>{focusData.type}</h4>
             </div>
             {/* Equipment Stats */}
-            {focusStats.map((stat) => <SingleStat key={`${stat[0].split(' ').join('-')}`} stat={stat} focusData={focusData} />)}
+            {focusStats.map((stat) => 
+                <SingleStat 
+                    key={`${stat[0].split(' ').join('-')}`} 
+                    stat={stat} 
+                    focusData={focusData} 
+                />
+            )}
         </form>
 
         {/* Modal Controls (Submit Button) */}

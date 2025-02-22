@@ -20,8 +20,8 @@ export default function UserProfile() {
 
     /* Determine where to redirect the user. */
     const redirectTarget = sessionUser
-    ? `/users/${sessionUser.id}/loadouts`
-    : '/';
+        ? `/users/${sessionUser.id}/loadouts`
+        : '/';
 
     /* Return the redirection element. */
     return <Navigate to={redirectTarget} />

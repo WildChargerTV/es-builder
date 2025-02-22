@@ -29,8 +29,10 @@ export default function SelectModModal({ currEquip }) {
     // Local State Values
     const [title, setTitle] = useState(eType);
 
-    const [presetData, eData, mIndex] = (() => {
-        const res = [];
+    /**
+     * 
+     */
+    const [presetData, eData, mIndex] = ((res=[]) => {
         if(eType === 'Primary')
             res.push(...[dataFiles.weaponMods, primaryWeapons[eIndex]]);
         else if(eType === 'Devices')
@@ -75,16 +77,16 @@ function SingleMod({ data }) {
     
     
     const id = typeof eData.id === 'string'
-    ? loadedIds[eData.id.split('c')[1]].equippableId
-    : eData.id;
+        ? loadedIds[eData.id.split('c')[1]].equippableId
+        : eData.id;
 
     const pData = eType === 'Primary'
-    ? dataFiles.primaryWeaponData[id]
-    : dataFiles.deviceData[id];
+        ? dataFiles.primaryWeaponData[id]
+        : dataFiles.deviceData[id];
 
     const dir = mData.id < 28
-    ? '/weapon-mod.png'
-    : '/device-mod.png';
+        ? '/weapon-mod.png'
+        : '/device-mod.png';
 
     const onClick = (event) => {
         event.stopPropagation();

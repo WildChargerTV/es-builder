@@ -67,6 +67,7 @@ function CurrentEnhancementGroup() {
     return (<div id='builder-selected-enhancements' className='builder-enhancement-group'>
         {/* Group Title */}
         <p className='enhancement-group-title' style={{textAlign: 'center'}}>Selected</p>
+        
         {/* Group List */}
         <div className='enhancement-group-list'>
             {groupData.map((enhancement) => 
@@ -101,8 +102,10 @@ function CurrentEnhancementCell({ index, id }) {
     /* Get the enhancement data, if it exists. */
     const enhancement = id !== null && dataFiles.enhancementData[id];
     
-    const onClick = () => {
     /* Execute the appropriate behavior when the cell is clicked. */
+    const onClick = (event) => {
+        event.stopPropagation();
+
         // In View mode, set the selected enhancement to this cell's ID, and return early.
         if(mode === 'view') {
             dispatch(builderActions.updateEnhancement('selected', id));
@@ -113,14 +116,14 @@ function CurrentEnhancementCell({ index, id }) {
         dispatch(builderActions.updateEnhancement(index, null));
 
         // Account for the remvoal of Ancient Weapon or Splitter.
-    }
         id === 2 && dispatch(builderActions.updateFlag('ancientWeaponEquipped', false));
         id === 24 && dispatch(builderActions.updateFlag('splitterEquipped', false));
+    };
 
-    return <button className='enhancement-group-cell selected' onClick={onClick} disabled={id === null}>
     /* Return the enhancement cell. */
+    return (<button className='enhancement-group-cell selected' onClick={onClick} disabled={id === null}>
         {id !== null && <BucketImage dir={enhancement.icon} />}
-    </button>;
+    </button>);
 }
 
 /**
@@ -179,7 +182,9 @@ function CurrentEnhancementInfo() {
         {currData.allowed_ships && <div id='enhancement-info-allowed-ships'>
             <p>Class Restriction</p>
             <p className='enhancement-ship-name' >
-                {currData.allowed_ships.map((id) => <>{shipData[id].name.split('Colonial ')[1]}<br /></> )}
+                {currData.allowed_ships.map((id) => <>
+                    {dataFiles.shipData[id].name.split('Colonial ')[1]}<br />
+                </>)}
             </p>
         </div>}
     </div>);

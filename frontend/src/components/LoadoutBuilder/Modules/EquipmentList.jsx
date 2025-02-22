@@ -182,7 +182,7 @@ function EquipmentColumn({ name, slots, reduxData }) {
         if(['Primary', 'Devices'].includes(name)) {
             res.id = slot.id;
             res.mods = slot.mods;
-        } else { // Assuming Secondary or Consumables
+        } else if(['Secondary', 'Consumables'].includes(name)) {
             const [id, quantity] = slot ? slot.split('x') : [null, null];
             res.id = id;
             res.quantity = quantity;

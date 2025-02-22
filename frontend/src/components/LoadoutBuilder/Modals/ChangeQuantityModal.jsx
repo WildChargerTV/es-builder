@@ -40,10 +40,10 @@ export default function ChangeQuantityModal({ data }) {
     const onSubmit = (event) => {
         event.preventDefault();
         (type === 'Secondary')
-        ? dispatch(updateSecondary(index, equipId, formQuantity))
-        : dispatch(updateConsumable(index, equipId, formQuantity));
+            ? dispatch(updateSecondary(index, equipId, formQuantity))
+            : dispatch(updateConsumable(index, equipId, formQuantity));
         closeModal();
-    }
+    };
 
     /* If the current quantity is negative or greater than the max stack size, disable submission. */
     useEffect(() => {

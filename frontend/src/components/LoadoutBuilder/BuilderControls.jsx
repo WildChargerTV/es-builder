@@ -111,12 +111,13 @@ function SubmitLoadoutButton() {
         ).then(navigate('/loadouts'));
     };
 
-    return <button onClick={onClick} disabled={disabled}>
     /* Return the submission button. */
+    return (<button onClick={onClick} disabled={disabled}>
         {mode === 'create'
-        ? <>Submit <span className='site-text-icon'><PiMouseLeftClickFill /></span></>
-        : <>Submit Changes <span className='site-text-icon'><PiMouseLeftClickFill /></span></>}
-    </button>;   
+            ? <>Submit <span className='site-text-icon'><PiMouseLeftClickFill /></span></>
+            : <>Submit Changes <span className='site-text-icon'><PiMouseLeftClickFill /></span></>
+        }
+    </button>);   
 }
 
 /**
@@ -134,10 +135,11 @@ function StartBlankButton() {
     const dispatch = useDispatch();
     const { mode, tabId, shipId, shipPreset } = useSelector((state) => state.builder);
 
-    const onClick = () => {
-    }
     /* When the button is clicked, set `shipPreset` to `false`. */
+    const onClick = (event) => {
+        event.stopPropagation();
         dispatch(builderActions.updateShipPreset(false));
+    };
 
     /**
      * In order for the button to be enabled:
@@ -147,10 +149,10 @@ function StartBlankButton() {
      */
     const disabled = mode !== 'create' || (shipId === null || shipPreset !== null);
 
-    return tabId === 0 && <button onClick={onClick} disabled={disabled}>
     /* Return the button if the Loadout Builder is currently on the Ships tab. */
+    return tabId === 0 && (<button onClick={onClick} disabled={disabled}>
         Start from Scratch <span className='site-text-icon'><PiMouseLeftClickFill /></span>
-    </button>;
+    </button>);
 }
 
 /**
@@ -174,8 +176,8 @@ function SelectPresetButton() {
      */
     const disabled = mode !== 'create' || (shipId === null || shipPreset !== null);
 
-    return tabId === 0 && <div id='builder-ctrl-preset'>
     /* Return the button if the Loadout Builder is currently on the Ships tab. */
+    return tabId === 0 && (<div id='builder-ctrl-preset'>
         <OpenModal
             elementText={<>
                 Choose Preset <span className='site-text-icon'><PiMouseLeftClickFill /></span>
@@ -183,7 +185,7 @@ function SelectPresetButton() {
             modalComponent={<SelectPresetModal />}
             disabled={disabled}
         />
-    </div>;
+    </div>);
 }
 
 /**
@@ -219,8 +221,8 @@ function ClearEnhancementsButton() {
         })());
     }, [tabId, enhancements]);
 
-    return tabId === 1 && <button onClick={onClick} disabled={disabled}>
     /* Return the button if the Loadout Builder is currently on the Enhancements tab. */
+    return tabId === 1 && (<button onClick={onClick} disabled={disabled}>
         Clear Enhancements <span className='site-text-icon'><PiMouseLeftClickFill /></span>
-    </button>;
+    </button>);
 }

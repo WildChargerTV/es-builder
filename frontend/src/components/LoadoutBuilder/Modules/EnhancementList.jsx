@@ -25,7 +25,9 @@ const CATEGORIES = [
 export default function EnhancementList() {
     /* Return the grid of enhancement groups. */
     return (<div id='builder-enhancement-select'>
-        {CATEGORIES.map((catName) => <EnhancementGroup key={CATEGORIES.indexOf(catName)} category={catName} />)}
+        {CATEGORIES.map((catName) => 
+            <EnhancementGroup key={CATEGORIES.indexOf(catName)} category={catName} />
+        )}
     </div>);
 }
 
@@ -48,6 +50,7 @@ function EnhancementGroup({ category }) {
     return (<div id={groupId} className='builder-enhancement-group'>
         {/* Group Title */}
         <p className='enhancement-group-title'>{category}</p>
+
         {/* Group List */}
         <div className='enhancement-group-list'>
             {res.map((enhancement) => <EnhancementCell key={enhancement.id} data={enhancement} />)}
@@ -71,8 +74,10 @@ function EnhancementCell({ data }) {
     const dispatch = useDispatch();
     const { mode, shipId, enhancements } = useSelector((state) => state.builder);
 
-    const onClick = () => {
     /* When an enhancement is selected, add it to the selected enhancements. */
+    const onClick = (event) => {
+        event.stopPropagation();
+        
         // Set the currently selected enhancement to the one in this cell.
         dispatch(builderActions.updateEnhancement('selected', data.id));
 
@@ -105,8 +110,8 @@ function EnhancementCell({ data }) {
         return (data.allowed_ships && (!shipId || data.allowed_ships.indexOf(shipId) === -1));
     };
     
-    return <button className='enhancement-group-cell' title={data.name} onClick={onClick} disabled={disabled()}>
     /* Return the enhancement cell. */
+    return (<button className='enhancement-group-cell' title={data.name} onClick={onClick} disabled={disabled()}>
         <BucketImage dir={data.icon} />
-    </button>;
+    </button>);
 }
