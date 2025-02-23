@@ -177,15 +177,13 @@ function SelectPresetButton() {
     const disabled = mode !== 'create' || (shipId === null || shipPreset !== null);
 
     /* Return the button if the Loadout Builder is currently on the Ships tab. */
-    return tabId === 0 && (<div id='builder-ctrl-preset'>
-        <OpenModal
-            elementText={<>
-                Choose Preset <span className='site-text-icon'><PiMouseLeftClickFill /></span>
-            </>}
-            modalComponent={<SelectPresetModal />}
-            disabled={disabled}
-        />
-    </div>);
+    return tabId === 0 && <OpenModal
+        elementText={<>
+            Choose Preset <span className='site-text-icon'><PiMouseLeftClickFill /></span>
+        </>}
+        modalComponent={<SelectPresetModal />}
+        disabled={disabled}
+    />;
 }
 
 /**
