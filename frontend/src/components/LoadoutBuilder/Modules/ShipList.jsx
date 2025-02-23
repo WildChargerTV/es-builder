@@ -3,7 +3,6 @@
 // Node Module Imports
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useFitText from 'use-fit-text';
 // Local Module Imports
 import shipData from '../../../data/ships';
 import { updateShip } from '../../../store/builder';
@@ -19,7 +18,6 @@ import BucketImage from '../../../utils/BucketImage';
 export default function ShipList() {
     // React Hooks
     const dispatch = useDispatch();
-    const { ref, fontSize } = useFitText();
     const { mode, shipId } = useSelector((state) => state.builder);
 
     /** 
@@ -43,9 +41,9 @@ export default function ShipList() {
     /* Return the button grid. */
     return (<div id='builder-ship-select'>
         {Object.values(shipData).map((ship) => (
-            <button key={`ship-${ship.id}`} id={`builder-ship-${ship.id}`} ref={ref} onClick={onClick} disabled={mode !== 'create'}>
+            <button key={`ship-${ship.id}`} id={`builder-ship-${ship.id}`} onClick={onClick} disabled={mode !== 'create'}>
                 {/* Ship Name */}
-                <h2 className='builder-ship-name' style={{fontSize}} >{ship.name}</h2>
+                <h2 className='builder-ship-name'>{ship.name}</h2>
 
                 {/* Ship Graphic - Contains Top & Front Views */}
                 <div className='builder-ship-graphic'>
@@ -54,7 +52,7 @@ export default function ShipList() {
                 </div>
 
                 {/* Ship Class Name */}
-                <h3 className='builder-ship-class' style={{fontSize: `calc(${fontSize} * 0.66)`}} >{ship.class}</h3>
+                <h3 className='builder-ship-class'>{ship.class}</h3>
             </button>
         ))}
     </div>);
