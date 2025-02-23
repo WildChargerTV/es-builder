@@ -7,7 +7,7 @@
     width: fit-content; 
 }
 .enhancement-group-title { 
-    font-size: clamp(16px, 1.25vw, 24px);
+    font-size: 1.25vw;
     letter-spacing: 0.6px;
     margin: 0 0 5px 0;
     text-transform: uppercase;
@@ -16,16 +16,16 @@
     backdrop-filter: brightness(30%);
     border: 2px solid rgba(148, 180, 195, 0.7);
     display: flex;
-        column-gap: 10px;
-    padding: clamp(7px, 0.5vw, 20px);
+        column-gap: 1vw;
+    padding: 0.5vw;
     width: min-content;
 }
 .enhancement-group-cell {
     aspect-ratio: 1 / 1;
     border: 2px solid rgba(148, 180, 195, 0.7);
         border-radius: 5px;
-    padding: 5px;
-    width: clamp(50px, 4vw, 125px);
+    padding: 0.33vw;
+    width: 4vw
 }
 .enhancement-group-cell img { 
     pointer-events: none;
@@ -37,13 +37,13 @@
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
     display: grid;
-        column-gap: 25px;
+        column-gap: 1.75vw;
         grid-template-areas:
             'a b b b b b b'
             'c d d e e f f'
             'g h h h i i i';
     overflow: hidden;
-    padding: 25px;
+    padding: 2.15vw 1.25vw 1.25vw 2.15vw;
     width: 100%;
 }
 #builder-enhancements-category-0 { grid-area: a; }
