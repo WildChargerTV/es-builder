@@ -10,8 +10,9 @@ import { useModal } from '../context/Modal';
  * @requires {@linkcode useModal}
  * @param {{ 
  *      element: 'button' | 'checkbox',
- *      elementText: string | ReactElement, 
- *      modalComponent: ReactElement, 
+ *      elementText: string | React.JSX.Element, 
+ *      modalComponent: React.JSX.Element, 
+ *      elementClass?: string | null,
  *      disabled: boolean,
  *      onModalOpen?: function, 
  *      onModalClose?: function 
@@ -22,16 +23,17 @@ import { useModal } from '../context/Modal';
  * - `elementText`: Where applicable, the text to display inside the element. Defaults to `'Open'`.
  *                  Does not reject inner HTML, but should be avoided if possible.
  * - `modalComponent`: The component to display as the modal's content.
+ * - `elementClass`: _(Optional)_ The class name of the element.
  * - `disabled`: _(Optional)_ (Button Only) A boolean determining if the modal is disabled or not.
  *               Recommended to be a dynamic prop.
  * - `onModalOpen`: _(Optional)_ A function to be called whenever the modal is _opened_.
  * - `onModalClose`: _(Optional)_ A function to be called whenever the modal is _closed_.
- * @returns {ReactElement}
  */
 export default function OpenModal({
     element = 'button',
     elementText = 'Open',
     modalComponent, 
+    elementClass,
     disabled=false,
     onModalOpen, 
     onModalClose
@@ -54,7 +56,9 @@ export default function OpenModal({
     // TODO make this only return a button.
     switch(element) {
         case 'button':
-            return <button onClick={onClick} disabled={disabled}>{elementText}</button>;
+            return <button className={elementClass || ''} onClick={onClick} disabled={disabled}>
+                {elementText}
+            </button>;
         case 'checkbox':
             return (<label onClick={onClick} aria-hidden>
                     <input type='checkbox' onChange={onClick}/>
@@ -62,6 +66,8 @@ export default function OpenModal({
                 </label>);
         default:
             console.error('Please provide a valid element type!');
-            return <button onClick={onClick} disabled={disabled}>{elementText}</button>;
+            return <button className={elementClass || ''} onClick={onClick} disabled={disabled}>
+            {elementText}
+        </button>;
     }
 }
