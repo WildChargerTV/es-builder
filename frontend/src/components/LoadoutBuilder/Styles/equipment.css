@@ -133,24 +133,11 @@
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
     overflow-y: scroll;
-    padding: 10px;
+    padding: 0.75vw;
     width: 100%;
 }
-#builder-equipment-info h2 { 
-    font-size: 1.5vw;
-    letter-spacing: 0.75px;
-    line-height: 1;
-    margin: 2.5% 0; 
-    text-align: center;
-    text-wrap: balance;
-}
 #builder-equipment-info h3 { 
-    color: #acdbf9;
-    font-size: 1.1vw;
-    letter-spacing: 0.5px;
-    margin: 0 0 2.5px 0; 
-    text-align: center;
-    white-space: nowrap;
+
 }
 #builder-equipment-info button {
     background-color: rgba(148, 180, 195, 0.3);
@@ -169,6 +156,22 @@
 }
 
 /* Equipment Tab: Equipment Info Description Box */
+#equip-info-name { 
+    font-size: 1.75vw;
+    letter-spacing: 0.75px;
+    line-height: 1;
+    margin: 0.9vw 0; 
+    text-align: center;
+    text-wrap: balance;
+}
+#equip-info-type {
+    color: #acdbf9;
+    font-size: 1.1vw;
+    letter-spacing: 0.5px;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+}
 #equip-info-desc {
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;

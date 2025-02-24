@@ -58,24 +58,40 @@
 
 /* Enhancements Tab: Currently Selected Enhancements */
 #builder-enhancement-info-select {
-    border: 2px solid rgba(148, 180, 195, 0.7);
-    box-sizing: border-box;
-    font-size: clamp(18pt, 1.65vw, 32pt);
+    /* border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box; */
     overflow-y: scroll;
-    padding: 10px;
-        padding-top: 25px;
+    /* padding: 0.75vw; */
     width: 100%;
 }
 
-#builder-selected-enhancements { margin: auto; }
+#builder-selected-enhancements { 
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    height: 30%;
+    margin: auto; 
+    overflow: hidden;
+    padding: 0 0.75vw 0.75vw 0.75vw;
+    width: 100%;
+}
 
 /* Enhancements Tab: Enhancement Information */
 #builder-enhancement-info {
-    margin-top: 20px;
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    height: calc(70% - 1vw);
+    margin-top: 1vw;
+    overflow-y: scroll;
+    padding: 0.75vw;
     width: 100%;
 }
 #enhancement-info-name {
     font-size: 1.75vw;
+    line-height: 2;
     margin: 0;
     text-align: center;
     text-wrap: balance;
