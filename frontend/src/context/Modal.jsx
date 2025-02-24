@@ -36,8 +36,9 @@ export const useModal = () => useContext(ModalContext); //eslint-disable-line re
  */
 export function ModalProvider({ children }) {
     // React Hooks
-    const modalRef = useRef(); // The Modal container <div>.
+    const modalRef = useRef(); // The ref to be attached to the Modal container <div>.
     // Local State Values
+    const [modalClass, setModalClass] = useState(null); // The 
     const [modalContent, setModalContent] = useState(null); // The component rendered as Modal content.
     const [onModalClose, setOnModalClose] = useState(null); // The function that is called when the Modal is closing.
 
@@ -54,7 +55,10 @@ export function ModalProvider({ children }) {
     }, [onModalClose]);
 
     /* Put the necessary components together as the contextValue. */
-    const contextValue = useMemo(() => ({ modalRef, modalContent, setModalContent, setOnModalClose, closeModal }), [modalContent, closeModal]);
+    const contextValue = useMemo(() => ({ 
+        modalClass, modalContent, modalRef,
+        closeModal, setModalClass, setModalContent, setOnModalClose }), 
+    [modalClass, modalContent, closeModal]);
 
     /* Return the contents of the Modal provider. */
     return (<>
@@ -72,20 +76,23 @@ export function ModalProvider({ children }) {
  */
 export function Modal() {
     // React Contexts
-    const { modalRef, modalContent, closeModal } = useContext(ModalContext);
+    const { modalClass, modalContent, modalRef, closeModal } = useContext(ModalContext);
+
+    console.warn(modalClass);
     
     /* If modalRef is empty or no modalContent exists, render nothing. */
-    if(!modalRef?.current || !modalContent) return null;
+    if(!modalRef?.current || !modalContent) 
+        return null;
 
     /**
      * Render the Modal.
      * ? ReactDOM.createPortal assigns the elements defined in the first argument to the <div>
-     * ? assigned to modalRef (the one returned by ModalProvider).
+     * ? assigned to `modalRef` (the one returned by `ModalProvider`).
      */
     return ReactDOM.createPortal(
         <div id='site-modal'>
             <button id='site-modal-background' onClick={closeModal} />
-            <div id='site-modal-content'>{modalContent}</div>
+            <div id='site-modal-content' className={modalClass}>{modalContent}</div>
         </div>, 
         modalRef.current
     );
