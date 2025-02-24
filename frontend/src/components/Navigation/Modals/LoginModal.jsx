@@ -5,8 +5,11 @@ import { useEffect, useState } from 'react';
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch } from 'react-redux';
 // Local Module Imports
-import * as sessionActions from '../../../store/session';
+import SignUpModal from '../../Landing/Modals/SignUpModal';
 import { useModal } from '../../../context/Modal';
+import useOpenModal from '../../../hooks/useOpenModal';
+import * as sessionActions from '../../../store/session';
+
 
 /**
  * Modal component to display a user login form. Closes itself once the login succeeds.
@@ -18,14 +21,14 @@ import { useModal } from '../../../context/Modal';
 export default function LoginModal() {
     // React Hooks
     const dispatch = useDispatch();
+    const { closeModal } = useModal();
+    const openModal = useOpenModal();
     // Local State Values
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(true);
     const [errors, setErrors] = useState({});
     const [demoLoginWarning, setDemoLoginWarning] = useState(false);
-    // Context Hooks
-    const { closeModal } = useModal();
 
     /** 
      * Manual flag to allow demo logins on the site. 
@@ -35,8 +38,8 @@ export default function LoginModal() {
 
     /** Perform a demo login, but only after showing a warning. */
     const demoLogin = (event) => {
-        // Prevent a redirect/refresh.
         event.preventDefault();
+
         // Clear the Errors object.
         setErrors({});
 
@@ -71,15 +74,18 @@ export default function LoginModal() {
             });
         }
     };
+
+    /* Switch to the signup modal. */
+    const switchToSignup = (event) => {
+        event.stopPropagation();
+        openModal(<SignUpModal />);
+    };
     
-    /** Attempt to dispatch the login attempt, and close the Modal if no errors were found. */
+    /* Attempt to dispatch the login attempt, and close the modal if no errors were found. */
     const onSubmit = (event) => {
-        // Prevent a redirect/refresh.
         event.preventDefault();
         // Clear the Errors object.
-        setErrors({});
-
-        // Attempt to log in. If errors exist, they will be caught before the Modal is closed.
+        setErrors({}); 
         return dispatch(sessionActions.login({ credential, password }))
             .then(async (res) => res.ok && closeModal())
             .catch(async (res) => {
@@ -100,10 +106,15 @@ export default function LoginModal() {
         password?.length < 6
     ), [credential, password]);
 
-    // Return the Modal content.
+    /* Return the modal content. */
     return (<>
         {/* Modal Title */}
         <h2 className='modal-title'>Log In</h2>
+
+        <p className='modal-paragraph'>
+            New user? <span className='clickable-span' onClick={switchToSignup} aria-hidden>
+            Click here to sign up!</span>
+        </p>
 
         {/* Login Form */}
         <form className='modal-form' onSubmit={onSubmit}>

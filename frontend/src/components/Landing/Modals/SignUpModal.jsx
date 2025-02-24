@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch } from 'react-redux';
 // Local Module Imports
+import LoginModal from '../../Navigation/Modals/LoginModal';
 import { useModal } from '../../../context/Modal';
 import { allowedProfanity } from '../../../data';
+import useOpenModal from '../../../hooks/useOpenModal';
 import * as sessionActions from '../../../store/session';
 
 /* Declare the profanity filter, and remove some common swears. */
@@ -25,17 +27,24 @@ export default function SignUpModal() {
     // React Hooks
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const openModal = useOpenModal();
     // Local State Values
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(true);
     const [errors, setErrors] = useState({});
+
+    /* Switch to the login modal. */
+    const switchToLogin = (event) => {
+        event.stopPropagation();
+        openModal(<LoginModal />);
+    }
     
     /* On form submission, dispatch the signup, and close the modal if no errors were found. */
     const onSubmit = (event) => {
-        // Prevent a redirect/refresh.
         event.preventDefault();
+
         // Clear the Errors object.
         setErrors({});
 
@@ -74,6 +83,9 @@ export default function SignUpModal() {
         {/* Modal Title & Information */}
         <h2 className='modal-title' style={{ marginBottom: 0 }}>Sign Up</h2>
         <p className='modal-paragraph'>
+            Already made an account? <span className='clickable-span' onClick={switchToLogin} aria-hidden>
+            Click here to log in!</span>
+            <br /><br />
             At present, <span className='yellow'>accounts on ESBuilder are entirely on the honor
             system</span>. No information is verified, tracked, or shared; however, no guarantee
             can be made as to its permanent security. <span className='red'>Please do not use your
