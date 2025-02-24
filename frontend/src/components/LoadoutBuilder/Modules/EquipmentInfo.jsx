@@ -1,5 +1,4 @@
 // * frontend/src/components/LoadoutBuilder/Modules/EquipmentInfo.jsx
-// TODO revisit instructions, maybe dynamic based on mode
 
 // Node Module Imports
 import { PiMouseLeftClickFill } from 'react-icons/pi';
@@ -14,7 +13,8 @@ import OpenModal from '../../../utils/OpenModal';
  * Renders information about the currently selected equipment item, or instructional data if no
  * equipment is currently selected. A button to enhance eligible equipment is also shown here.
  * @component `EquipmentInfo`
- * @requires {@linkcode EnhanceModal}, {@linkcode SVGIcons}, {@linkcode OpenModal}
+ * @requires {@linkcode EnhanceModal}, {@linkcode SVGIcons}, {@linkcode OpenModal},
+ * {@linkcode EquipmentInfoInstructions}
  * @requires {@linkcode dataFiles}
  */
 export default function EquipmentInfo() {
@@ -30,36 +30,7 @@ export default function EquipmentInfo() {
 
     /** If there is no data, return instructional information. */
     if(id === null)
-        return (<div id='builder-equipment-info'>
-            <h2 style={{ marginBottom: '5%' }}>Select Equipment</h2>
-            <p id='equip-info-desc'>
-                If you have selected a preset loadout, it should appear here.
-                <br /><br />
-                <SVGIcons.AddEquipIcon height='1.3vw' /> - Adds a new piece of equipment to the
-                loadout in an empty slot. Equipment will be added exactly in the specified slot,
-                and will remain there even if there is an empty slot above it.
-                <br />
-                <SVGIcons.AddModIcon height='1.3vw' /> - Adds a new modification to eligible piece
-                of existing equipment. Once added, mods cannot be removed.
-                <br />
-                <SVGIcons.RemoveEquipIcon height='1.3vw' /> - Removes a piece of existing 
-                equipment from the loadout.
-                <br /><br />
-                <span className='yellow'>Note for Testers:</span> The ability to add equipment
-                slots via G&B Tuning Stations is not currently supported, but is slated for
-                addition at a later time, alongide indicators for all other run-length Tuning
-                Station upgrades. 
-                <br /><br />
-                Primary Weapons & eligible Devices can be enhanced using the &quot;Click to 
-                Enhance&quot; button that will appear beneath its title in this panel, when 
-                selected. You will be prompted to set the stats that changed with the enhancement. 
-                This process is irreversible, unless the equipment is removed and replaced.
-                <br /><br />
-                Secondary Weapons & Consumables will all have quantity indicators. Selecting the
-                quantity will give you the option to change it. The quantity can be modified at any
-                time, and will persist after loadout submission.
-            </p>
-        </div>);
+        return <EquipmentInfoInstructions />;
 
     /* Create an object containing the data required by the info box. */
     const equipment = (() => {
@@ -125,7 +96,7 @@ export default function EquipmentInfo() {
     /* Return the equipment information. */
     return equipment && (<div id='builder-equipment-info'>
         {/* Equipment Name */}
-        <h2>
+        <h2 id='equip-info-name'>
             {equipment.enhanced && '★ '}
             {equipment.name}
             {equipment?.mods?.[0][1] && 
@@ -133,7 +104,9 @@ export default function EquipmentInfo() {
         </h2>
 
         {/* Equipment Type */}
-        <h3>{equipment.enhanced && 'Enhanced '}{equipment.type}</h3>
+        <h3 id='equip-info-type'>
+            {equipment.enhanced && 'Enhanced '}{equipment.type}
+        </h3>
 
         {/* Equipment Enhancement Button (Where Applicable) */}
         {equipment?.enhanceable && !equipment.enhanced && builder.mode !== 'view' && <OpenModal 
@@ -161,12 +134,101 @@ export default function EquipmentInfo() {
 
         {/* Equipment Stats (Where Applicable) */}
         {equipment?.stats && (<div id='equip-info-stats'>
-            {equipment.stats.map(([name, stat]) => 
-                (<div key={name.split(' ').join('-')} className='equip-info-single-stat'>
+            {equipment.stats.map(([name, stat]) => (
+                <div key={name.split(' ').join('-')} className='equip-info-single-stat'>
                     <p>{name}</p>
                     <p>{stat}</p>
-                </div>)
-            )}
+                </div>
+            ))}
         </div>)}
+    </div>);
+}
+
+/**
+ * Sub-component of {@linkcode EquipmentInfo} that renders content for the component when no piece
+ * of equipment is currently selected.
+ * 
+ * This component will provide different instructions, depending on whether it is in Create/Edit
+ * mode or View mode.
+ * @component `ShipInfoInstructions`
+ */
+function EquipmentInfoInstructions() {
+    // React Hooks
+    const { mode } = useSelector((state) => state.builder);
+
+    /* Determine if the current builder mode is set to 'view'. */
+    const isViewMode = mode === 'view';
+
+    /* Return the infobox content. */
+    return (<div id='builder-equipment-info'>
+        {/* Infobox Header */}
+        <h2 id='equip-info-name' style={{ lineHeight: 2, margin: 0 }}>
+            {isViewMode ? 'View Equipment' : 'Select Equipment'}
+        </h2>
+
+        {/* View Mode Instructions */}
+        {isViewMode && <p id='equip-info-desc'>
+            The amount of available equipment slots varies depending on the loadout&apos;s chosen
+            ship. If either the Ancient Weapon or Splitter enhancements are installed, the amount
+            of Primary or Secondary Weapons slots are modified accordingly. Selecting any piece of
+            equipment shown on the left will display its information here.
+            <br /><br />
+            <span className='yellow'>Primary Weapons & Devices</span> can be modded & enhanced,
+            where eligible. Installed mods are listed above the equipment&apos;s stats, and
+            enhanced equipment will have a star next to it&apos;s name.
+            <br /><br />
+            <span className='yellow'>Secondary Weapons & Consumables</span> all have a quantity,
+            which can be seen at the upper-left corner of their respective tiles. 
+        </p>}
+
+        {/* Create & Edit Mode Instructions */}
+        {!isViewMode && <p id='equip-info-desc'>
+            Equipment makes up the backbone of your loadout, which means it&apos;s also the most
+            complex section of the loadout builder! If you selected a loadout preset after choosing
+            a ship, it will appear here. Read on for more information about this section!
+            <br />
+            <span className='yellow'>Veteran pilots:</span> You can expect a similar experience to
+            the ingame equipment system. Just note that you can select the quantity of an equipped
+            Secondary Weapon or Consumable to change it.
+            <br /><br />
+            The amount of available equipment tiles depends on the amount of slots allocated by the 
+            currently selected ship. If either the Ancient Weapon or Splitter enhancements are 
+            installed, the amount of Primary or Secondary Weapons slots are modified accordingly. 
+            Each equipment tile can be controlled using the buttons in their upper-right corner:
+            <br /><br />
+            <SVGIcons.AddEquipIcon height='1.3vw' /> - Adds a new piece of equipment to an empty
+            tile. Equipment will be added exactly in the specified tile, and will remain there even
+            if an empty tile is above it.
+            <br />
+            <SVGIcons.AddModIcon height='1.3vw' /> - Adds a new modification to an existing piece
+            of equipment, if it is eligible. You can install up to three mods per equip (or four,
+            if you are using the Colonial Sentinel). Installed mods are listed above the
+            equipment&apos;s stats. Modding is irreversible, unless the equipment is removed and
+            replaced.
+            <br />
+            <SVGIcons.RemoveEquipIcon height='1.3vw' /> - Removes a piece of equipment from the 
+            loadout, as well as its installed mods & enhancements where applicable. If you have 
+            equipped the <span className='yellow'>Ancient Weapon</span>, you must uninstall the 
+            enhancement in order to remove it here.
+            <br /><br />
+            Selecting an occupied equipment tile will display it&apos;s information here. Selecting
+            an empty tile will allow you to see these instructions again.
+            <br /><br />
+            <span className='yellow'>Eligible Primary Weapons & Devices</span> can be enhanced by
+            selecting the button that will appear above its description. Doing so opens a popup,
+            where you will be prompted to set the stats that changed with the enhancement. 
+            Enhancement is irreversible, unless the equipment is removed and replaced.
+            <br /><br />
+            <span className='yellow'>Secondary Weapons & Consumables</span> all have their own
+            quantity indicators, which appear in the upper-left hand corner of their respective
+            tiles. Selecting that indicator will open a popup allowing you to change it at will.
+            These quantities can be modified at any time, and will all persist after the loadout 
+            has been submitted.
+            <br /><br />
+            <span className='yellow'>In order to submit your loadout,</span> it must have at least
+            one equipped Primary or Secondary Weapon, and must have received a unique name. You can 
+            change the loadout&apos;s name by selecting the &quot;Loadout Name Here&quot; box next
+            to the page title.
+        </p>}
     </div>);
 }

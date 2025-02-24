@@ -19,7 +19,6 @@ import BucketImage from '../../../utils/BucketImage';
  * @returns {ReactElement}
  */
 export default function EnhancementInfo() {
-    /* Render the child components. */
     return (<div id='builder-enhancement-info-select'>
         <CurrentEnhancementGroup />
         <CurrentEnhancementInfo />
@@ -66,7 +65,7 @@ function CurrentEnhancementGroup() {
     /* Return the enhancement group. */
     return (<div id='builder-selected-enhancements' className='builder-enhancement-group'>
         {/* Group Title */}
-        <p className='enhancement-group-title' style={{textAlign: 'center'}}>Selected</p>
+        <p className='enhancement-group-title'>Installed</p>
         
         {/* Group List */}
         <div className='enhancement-group-list'>
@@ -141,27 +140,8 @@ function CurrentEnhancementInfo() {
     const currData = currEnhancement !== null && dataFiles.enhancementData[currEnhancement];
 
     /* If no enhancement is selected, return instructional data. */
-    if(currEnhancement === null) return (<div id='builder-enhancement-info'>
-        <h2 id='enhancement-info-name'>
-            Select Enhancements
-        </h2>
-        <p id='enhancement-info-desc'>
-            Select any one of the available enhancements to add it to your loadout. You may add
-            up to three unique enhancements. If an enhancement is greyed out & cannot be clicked,
-            that means it is not compatible with your current ship. Clicking on any one of the 
-            enhancements in the &quot;Selected&quot; group above will remove it from your loadout.
-            <br /><br />
-            <span className='red'>WARNING:</span> The <span className='yellow'> Ancient 
-            Weapon</span> enhancement replaces your existing Primary & Secondary Weapons when 
-            equipped. Similarly, the <span className='yellow'> Splitter</span> enhancement will 
-            remove all but the first Secondary Weapons slot when equipped.
-            <br /><br />
-            The Loadout Builder will cache this data the moment you equip either enhancement, so
-            you can unequip it later and retain your prior configuration. However, this data is
-            not persistent; submitting your loadout, or your changes to it, will cause the cached
-            data to be <span className='red'>wiped</span>. Be careful!
-        </p>
-    </div>);
+    if(currEnhancement === null) 
+        return <EnhancementInfoInstructions />;
 
     /* Return the enhancement's information. */
     return currEnhancement !== null && (<div id='builder-enhancement-info'>
@@ -187,5 +167,58 @@ function CurrentEnhancementInfo() {
                 </>)}
             </p>
         </div>}
+    </div>);
+}
+
+/**
+ * Sub-component of {@linkcode CurrentEnhancementInfo} that renders content for the component when 
+ * no enhancement is currently selected.
+ * 
+ * This component will provide different instructions, depending on whether it is in Create/Edit
+ * mode or View mode.
+ * @component `ShipInfoInstructions`
+ */
+function EnhancementInfoInstructions() {
+    // React Hooks
+    const { mode } = useSelector((state) => state.builder);
+    
+    /* Determine if the current builder mode is set to 'view'. */
+    const isViewMode = mode === 'view';
+
+    /* Return the infobox content. */
+    return (<div id='builder-enhancement-info'>
+        {/* Infobox Header */}
+        <h2 id='enhancement-info-name'>
+            {isViewMode ? 'View Enhancements' : 'Select Enhancements'}
+        </h2>
+
+        {/* View Mode Instructions */}
+        {isViewMode && <p id='enhancement-info-desc'>
+            All loadouts can install up to three unique enhancements, which can be seen within the 
+            &quot;Installed&quot; group above. 
+            <br /><br />
+            Selecting an installed enhancement will display its information here.
+        </p>}
+
+        {/* Create & Edit Mode Instructions */}
+        {!isViewMode && <p id='enhancement-info-desc'>
+            Enhancements are unique, run-length modifications you can install to your ship in order
+            to tweak various aspects of your gameplay experience. All loadouts can install up to
+            three unique enhancements; however, ones which appear disabled are incompatible with
+            your current ship.
+            <br /><br />
+            Use the menu of icons shown on the left to install enhancements to your loadout. 
+            Hovering your cursor over an icon will reveal it&apos;s name, and selecting it will
+            install it, at which point it will appear in the &quot;Installed&quot; group above.
+            Similarly, selecting any enhancement within that group will uninstall it from your
+            loadout.
+            <br /><br />
+            <span className='red'>WARNING: The</span> <span className='yellow'>Ancient
+            Weapon</span> <span  className='red'>&</span> <span className='yellow'>Splitter
+            </span> <span className='red'>enhancements both modify the amount of available
+            equipment slots in your loadout!</span> Your prior equipment configurations are cached 
+            upon installation of either enhancement; however, this data is lost once you have
+            submitted the loadout.
+        </p>}
     </div>);
 }

@@ -12,6 +12,7 @@ import shipData from '../../../data/ships';
  * currently selected.
  * @component `ShipInfo`
  * @requires {@linkcode shipData}
+ * @requires {@linkcode ShipInfoInstructions}
  */
 export default function ShipInfo() {
     // React Hooks
@@ -25,37 +26,9 @@ export default function ShipInfo() {
         : setCurrShip(shipData[shipId]);
     }, [shipId]);
 
-    /**
-     * If no ship is currently selected, return some instructions for users & testers.
-     * ? This returns separately for code readability, as using a ternary operator in this scenario
-     * ? may look rather confusing.
-     */
+    /* If no ship has yet been selected, return instructional data instead. */
     if(!currShip) 
-        return (<div id='builder-ship-info'>
-            <h2 id='ship-info-name'>Select Your Ship</h2>
-            <p id='ship-info-desc'>
-                You will not be able to change ships once your loadout has been submitted.
-                <br />
-                <span className='red'>WARNING:</span> Changing your ship at any point during 
-                loadout creation will reset all of your currently selected equipment!
-                <br /><br />
-                <span className='yellow'>Notes for Testers: </span>
-                ESBuilder currently ignores any aspect of player progression, as it is currently 
-                considered out-of-scope. Until further notice, assume that you have the Encounters
-                DLC, and that you have unlocked all possible preset loadouts & maximized all perks
-                on all ships.
-                <br /><br />
-                It is currently a known issue that ship & equipment stats only display as numbers,
-                and do not have any units of measurement alongside them. Currently, the intent is
-                that on release, applicable ship stats will be influenced by installed equipment,
-                and equipment stats will be influenced by installed mods. Creating these 
-                interactions will take a LOT of time, and is being saved for later in favor of 
-                fleshing out core functionality.
-                <br /><br />
-                Please feel free to report any other issues you may encounter with the Loadout 
-                Builder.
-            </p>
-        </div>);
+        return <ShipInfoInstructions />;
 
     /* Return the ship's information. */
     return (<div id='builder-ship-info'>
@@ -73,5 +46,38 @@ export default function ShipInfo() {
                 </div>
             ))}
         </div>)}
+    </div>);
+}
+
+/**
+ * Sub-component of {@linkcode ShipInfo} that renders content for the component when no ship has
+ * been selected yet.
+ * 
+ * This component should only be visible within Create mode, as View and Edit modes already have
+ * a ship selected.
+ * @component `ShipInfoInstructions`
+ */
+function ShipInfoInstructions() {
+    return (<div id='builder-ship-info'>
+        <h2 id='ship-info-name'>Select Ship</h2>
+        <p id='ship-info-desc'>
+            <span className='yellow'>Welcome to the Loadout Builder!</span> This is where all the
+            magic happens. If you know your way around EVERSPACE™ already, this should (hopefully)
+            be easy to navigate; but if not, these infoboxes will provide some instructions for
+            you!
+            <br /><br />
+            To begin, select one of the four ships on the left to equip it to your loadout, and 
+            it&apos;s information & stats will appear here. You are allowed to change your ship at 
+            any time until the loadout is submitted, at which point it will no longer be editable.
+            <br /><br />
+            Once you&apos;ve chosen a ship, you&apos;ll be able to choose whether to start your
+            loadout from scratch, or select one of the loadout presets provided to you by the game.
+            Upon selecting your desired option, the Enhancements & Equipment tabs will become
+            available!
+            <br /><br />
+            <span className='yellow'>Be advised:</span> Changing your ship at any point during 
+            loadout creation will <span className='red'>reset</span> all of your currently selected
+            equipment, so be careful!
+        </p>
     </div>);
 }
