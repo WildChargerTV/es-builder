@@ -23,7 +23,7 @@ import { useModal } from '../context/Modal';
  * - `elementText`: Where applicable, the text to display inside the element. Defaults to `'Open'`.
  *                  Does not reject inner HTML, but should be avoided if possible.
  * - `modalComponent`: The component to display as the modal's content.
- * - `elementClass`: _(Optional)_ The class name of the element.
+ * - `modalClass`: _(Optional)_ The class name of the modal container.
  * - `disabled`: _(Optional)_ (Button Only) A boolean determining if the modal is disabled or not.
  *               Recommended to be a dynamic prop.
  * - `onModalOpen`: _(Optional)_ A function to be called whenever the modal is _opened_.
@@ -33,19 +33,20 @@ export default function OpenModal({
     element = 'button',
     elementText = 'Open',
     modalComponent, 
-    elementClass,
+    modalClass,
     disabled=false,
     onModalOpen, 
     onModalClose
 }) {
     /* React Contexts */
-    const { setModalContent, setOnModalClose } = useModal();
+    const { setModalClass, setModalContent, setOnModalClose } = useModal();
 
     /* Create an onClick listener for the returned element. */
     const onClick = () => {
         // If a closing function was provided, attach it here.
         if(onModalClose) setOnModalClose(onModalClose);
         // Set the modal content to the provided element/component.
+        if(modalClass) setModalClass(modalClass);
         setModalContent(modalComponent);
         // If an opening function was provided, call it now.
         if(onModalOpen) onModalOpen();
@@ -56,9 +57,9 @@ export default function OpenModal({
     // TODO make this only return a button.
     switch(element) {
         case 'button':
-            return <button className={elementClass || ''} onClick={onClick} disabled={disabled}>
+            return (<button onClick={onClick} disabled={disabled}>
                 {elementText}
-            </button>;
+            </button>);
         case 'checkbox':
             return (<label onClick={onClick} aria-hidden>
                     <input type='checkbox' onChange={onClick}/>
@@ -66,8 +67,8 @@ export default function OpenModal({
                 </label>);
         default:
             console.error('Please provide a valid element type!');
-            return <button className={elementClass || ''} onClick={onClick} disabled={disabled}>
+            return (<button onClick={onClick} disabled={disabled}>
             {elementText}
-        </button>;
+        </button>);
     }
 }
