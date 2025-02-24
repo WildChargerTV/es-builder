@@ -1,16 +1,16 @@
 // * frontend/src/context/Modal.jsx
 
 // Node Module Imports
-import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 // Local Module Imports
+import useWindowSize from '../hooks/useWindowSize';
 import './Modal.css';
 
 /**
  * React context to render modal pop-ups on the screen.
- * @type {React.Context}
  */
-const ModalContext = createContext();
+const ModalContext = React.createContext();
 
 /**
  * Invokes the Modal context for application in other components.
@@ -24,29 +24,32 @@ const ModalContext = createContext();
  * @returns {() => useContext} The current value of the Modal context.
  * @example const { modalContent, setModalContent } = useModal();
  */
-export const useModal = () => useContext(ModalContext); //eslint-disable-line react-refresh/only-export-components
+export const useModal = () => React.useContext(ModalContext); //eslint-disable-line react-refresh/only-export-components
 
 /**
  * Provider for the Modal context. Applied in `frontend/src/main.jsx`. **Should not be used
  * anywhere else.**
- * @component ModalProvider
+ * @component `ModalProvider`
  * @requires {@linkcode ModalContext}
- * @param {{children: ReactElement}} children The children of the returned element. See `main.jsx`.
- * @returns {ReactElement} The elements to be rendered on the webpage.
+ * @param {{children: React.JSX.Element}} children
  */
 export function ModalProvider({ children }) {
     // React Hooks
-    const modalRef = useRef(); // The ref to be attached to the Modal container <div>.
+    const modalRef = React.useRef();
+    const [screenX] = useWindowSize();
     // Local State Values
-    const [modalClass, setModalClass] = useState(null); // The 
-    const [modalContent, setModalContent] = useState(null); // The component rendered as Modal content.
-    const [onModalClose, setOnModalClose] = useState(null); // The function that is called when the Modal is closing.
+    // ? Optional: An ID name to be passed to the Modal's content `<div>`.
+    const [modalId, setModalId] = React.useState(null);
+    // ? Required: A component providing the inner content of the Modal.
+    const [modalContent, setModalContent] = React.useState(null);
+    // ? Optional: A function to call when the Modal closes.
+    const [onModalClose, setOnModalClose] = React.useState(null);
 
     /**
      * Handle the Modal closure by nulling the component in local state. If a closure function was
      * provided, call it here as well.
      */
-    const closeModal = useCallback(() => {
+    const closeModal = React.useCallback(() => {
         setModalContent(null);
         if(typeof onModalClose === 'function') {
             onModalClose();
@@ -54,11 +57,20 @@ export function ModalProvider({ children }) {
         }
     }, [onModalClose]);
 
-    /* Put the necessary components together as the contextValue. */
-    const contextValue = useMemo(() => ({ 
-        modalClass, modalContent, modalRef,
-        closeModal, setModalClass, setModalContent, setOnModalClose }), 
-    [modalClass, modalContent, closeModal]);
+    /** 
+     * Force-close the Modal if the viewport width goes below the minimum threshold. 
+     * ? This should be considered a "controlled crash" that bypasses any Modal closure functions.
+     */
+    React.useEffect(() => {
+        if(modalContent !== null && screenX < 720)
+            setModalContent(null);
+    }, [modalContent, screenX]);
+
+    /* Put the necessary components together as the `contextValue`. */
+    const contextValue = React.useMemo(() => ({ 
+        modalContent, modalId, modalRef,
+        closeModal, setModalContent, setModalId, setOnModalClose }), 
+    [modalContent, modalId, closeModal]);
 
     /* Return the contents of the Modal provider. */
     return (<>
@@ -70,15 +82,13 @@ export function ModalProvider({ children }) {
 /**
  * Component to render a Modal on a webpage. Only one Modal can exist at a time. Applied in
  * `frontend/src/main.jsx`. **Should not be used anywhere else.**
- * @component Modal
+ * @component `Modal`
  * @requires {@linkcode ModalContext}
  * @returns {ReactPortal} The rendered modal, as assigned by the `ModalProvider`.
  */
 export function Modal() {
     // React Contexts
-    const { modalClass, modalContent, modalRef, closeModal } = useContext(ModalContext);
-
-    console.warn(modalClass);
+    const { modalContent, modalId, modalRef, closeModal } = React.useContext(ModalContext);
     
     /* If modalRef is empty or no modalContent exists, render nothing. */
     if(!modalRef?.current || !modalContent) 
@@ -92,7 +102,7 @@ export function Modal() {
     return ReactDOM.createPortal(
         <div id='site-modal'>
             <button id='site-modal-background' onClick={closeModal} />
-            <div id='site-modal-content' className={modalClass}>{modalContent}</div>
+            <div id={modalId} className='site-modal-content'>{modalContent}</div>
         </div>, 
         modalRef.current
     );
