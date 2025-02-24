@@ -44,6 +44,8 @@ export default function BuilderControls({ isLoaded }) {
  * Sub-component of {@linkcode BuilderControls} that renders the button responsible for submitting
  * the loadout. On submission, this component will properly organize the loadout data before
  * sending it to the backend.
+ * 
+ * TODO The button should display a modal listing criteria not yet met, rather than be disabled
  * @component `SubmitLoadoutButton` 
  * @requires {@linkcode loadoutActions}
  */
