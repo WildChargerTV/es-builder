@@ -23,7 +23,7 @@ import { useModal } from '../context/Modal';
  * - `elementText`: Where applicable, the text to display inside the element. Defaults to `'Open'`.
  *                  Does not reject inner HTML, but should be avoided if possible.
  * - `modalComponent`: The component to display as the modal's content.
- * - `modalClass`: _(Optional)_ The class name of the modal container.
+ * - `modalId`: _(Optional)_ The ID of the modal container.
  * - `disabled`: _(Optional)_ (Button Only) A boolean determining if the modal is disabled or not.
  *               Recommended to be a dynamic prop.
  * - `onModalOpen`: _(Optional)_ A function to be called whenever the modal is _opened_.
@@ -33,20 +33,20 @@ export default function OpenModal({
     element = 'button',
     elementText = 'Open',
     modalComponent, 
-    modalClass,
+    modalId,
     disabled=false,
     onModalOpen, 
     onModalClose
 }) {
     /* React Contexts */
-    const { setModalClass, setModalContent, setOnModalClose } = useModal();
+    const { setModalContent, setModalId, setOnModalClose } = useModal();
 
     /* Create an onClick listener for the returned element. */
     const onClick = () => {
         // If a closing function was provided, attach it here.
         if(onModalClose) setOnModalClose(onModalClose);
         // Set the modal content to the provided element/component.
-        if(modalClass) setModalClass(modalClass);
+        if(modalId) setModalId(modalId);
         setModalContent(modalComponent);
         // If an opening function was provided, call it now.
         if(onModalOpen) onModalOpen();
