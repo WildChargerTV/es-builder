@@ -51,6 +51,7 @@ export function ModalProvider({ children }) {
      */
     const closeModal = React.useCallback(() => {
         setModalContent(null);
+        setModalId(null);
         if(typeof onModalClose === 'function') {
             onModalClose();
             setOnModalClose(null);
@@ -62,8 +63,10 @@ export function ModalProvider({ children }) {
      * ? This should be considered a "controlled crash" that bypasses any Modal closure functions.
      */
     React.useEffect(() => {
-        if(modalContent !== null && screenX < 720)
+        if(modalContent !== null && screenX < 720) {
             setModalContent(null);
+            setModalId(null);
+        }
     }, [modalContent, screenX]);
 
     /* Put the necessary components together as the `contextValue`. */
