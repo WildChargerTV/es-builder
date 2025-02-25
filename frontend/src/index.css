@@ -73,6 +73,10 @@ li { text-transform: uppercase; }
 p { font-weight: 600; }
 
 /* Global Site Class Definitions */
+.clickable-span:hover {
+    color: #f9e2ad;
+    cursor: pointer;
+}
 .lightblue { color: #acdbf9; }
 .red, .site-text-icon { color: #ff5d51; }
 .yellow { color: #f9e2ad; }
