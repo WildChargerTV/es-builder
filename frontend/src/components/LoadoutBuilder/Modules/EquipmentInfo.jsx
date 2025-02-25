@@ -114,6 +114,7 @@ export default function EquipmentInfo() {
                 Enhance <span className='site-text-icon'><PiMouseLeftClickFill /></span>
             </>}
             modalComponent={<EnhanceModal />}
+            modalId='equip-enhance-modal'
         />}
 
         {/* Equipment Description */}

@@ -41,8 +41,6 @@ export default function SelectEquipModal({ currEquip }) {
      * TODO native modals should be able to receive custom class names.
      */
     useEffect(() => {
-        const modal = document.getElementById('site-modal-content');
-        modal.className = 'item-select-menu';
         if(['Primary', 'Secondary'].includes(title))
             setTitle(title + ' Weapon');
         else if(['Devices', 'Consumables'].includes(title))

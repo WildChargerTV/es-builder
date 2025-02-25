@@ -52,8 +52,6 @@ export default function SelectModModal({ currEquip }) {
     })();
 
     useEffect(() => {
-        const modal = document.getElementById('site-modal-content');
-        modal.className = 'item-select-menu';
         if(title === 'Primary')
             setTitle('Weapon Modification');
         else if(title === 'Devices')

@@ -3,7 +3,6 @@
 
 /* Preset Loadout Modal */
 #select-preset-modal {
-    overflow: scroll;
     width: 75vw;
 }
 
@@ -40,9 +39,7 @@
     box-sizing: border-box;
     display: flex;
         column-gap: 0.5vw;
-        grid-template-columns: repeat(4, 25%);
     margin-bottom: 0.5vw;
-    
     padding: 0.5vw;
     pointer-events: none;
     width: 100%;
@@ -55,8 +52,6 @@
     height: fit-content;
     list-style-type: none;
     margin: 0;
-    min-height: 0;
-    min-width: 0;
     padding: 0;
 }
 .modal-preset-grid-tile {
@@ -66,7 +61,7 @@
     flex-direction: column;
     position: relative;
 }
-.modal-preset-grid-tile img { max-width: 100%; }
+.modal-preset-grid-tile img { width: 100%; }
 .modal-preset-grid-tile p { 
     color: #abcdf9;
     font-size: 0.85vw;
@@ -78,7 +73,7 @@
 
 
 /* Select Equipment/Mod Modal */
-#site-modal-content.item-select-menu {
+#item-select-menu {
     display: flex;
         align-items: center;
         flex-direction: column;
@@ -126,10 +121,9 @@
 .modal-equip-icon img { width: 100%; }
 
 /* Enhance Primary/Device Modal */
-#site-modal-content.equip-enhance-modal {
+#equip-enhance-modal {
     backdrop-filter: brightness(20%);
-    width: 40%;
-        min-width: 875px;
+    width: 70vw;
 }
 
 #enhance-stats-form {
@@ -142,12 +136,23 @@
         align-items: center;
         justify-content: space-between;
 }
-.modal-form-equip-title h2, .modal-form-equip-title h4 { color: #abcdf9; margin: 0 0 10px 0; }
+.modal-form-equip-title h2, .modal-form-equip-title h4 { 
+    color: #abcdf9; 
+    margin: 0; 
+}
+.modal-form-equip-title h2 { font-size: 1.75vw; }
+.modal-form-equip-title h4 { font-size: 1.45vw; }
+
 .modal-form-stat {
     display: flex;
         justify-content: space-between;
     font-size: larger;
     text-align: left;
+}
+
+.modal-form .modal-stat-field { 
+    font-size: 1.05vw; 
+    width: 33%;
 }
 
 #enhance-stats-controls {

@@ -328,11 +328,13 @@ function SingleEquipment({ slotData }) {
             : <OpenModal
                 elementText={<SVGIcon.AddEquipIcon height='1.25vw' />}
                 modalComponent={<SelectEquipModal currEquip={{index, type}} />}
+                modalId='item-select-menu'
             />}
             {moddable && mods && Object.values(mods).includes(null) &&
             <OpenModal
                 elementText={<SVGIcon.AddModIcon height='1.25vw' />}
                 modalComponent={<SelectModModal currEquip={{eIndex: index, eType: type}} />}
+                modalId='item-select-menu'
             />}
         </div>}
 
