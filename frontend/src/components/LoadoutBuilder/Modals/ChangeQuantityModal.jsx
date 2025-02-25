@@ -48,8 +48,8 @@ export default function ChangeQuantityModal({ data }) {
     /* If the current quantity is negative or greater than the max stack size, disable submission. */
     useEffect(() => {
         const maxQuantity = (type === 'Secondary')
-        ? secondaryWeaponData[equipId].stack_size
-        : consumableData[equipId].stack_size;
+            ? secondaryWeaponData[equipId].stack_size
+            : consumableData[equipId].stack_size;
         setDisabled((formQuantity < 1) || (formQuantity > maxQuantity));
     }, [formQuantity, equipId, type]);
 

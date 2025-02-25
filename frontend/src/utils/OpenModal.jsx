@@ -12,11 +12,11 @@ import { useModal } from '../context/Modal';
  *      element: 'button' | 'checkbox',
  *      elementText: string | React.JSX.Element, 
  *      modalComponent: React.JSX.Element, 
- *      elementClass?: string | null,
+ *      modalId?: string | null,
  *      disabled: boolean,
  *      onModalOpen?: function, 
  *      onModalClose?: function 
- * }} params This function has the following parameters:
+ * }} props This function has the following prop parameters:
  * - `element`: Name of the element to return. Defaults to `'button'`. Currently supports:
  * - - `'button'`: Returns a `<button>`.
  * - - `'checkbox'`: Returns a `<label>` element encapsulating an `<input>` and a `<h4>`.
@@ -38,7 +38,7 @@ export default function OpenModal({
     onModalOpen, 
     onModalClose
 }) {
-    /* React Contexts */
+    // React Hooks
     const { setModalContent, setModalId, setOnModalClose } = useModal();
 
     /* Create an onClick listener for the returned element. */
