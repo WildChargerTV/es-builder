@@ -20,64 +20,44 @@ export default function SelectPresetModal() {
     // React Hooks
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    // Local State Values
+    // Redux State Values
     const { shipId } = useSelector((state) => state.builder);
 
     /* Deconstruct the current ship's presets from the datafile. */
     const { a, b, c } = dataFiles.shipData[shipId].presets;
+
+    /* Create a function that will apply all preset equipment of a single type. */
+    const loadEquipment = (equipArr, dispatchAction) => {
+        let slotIndex = 0;
+        for(let equip of equipArr) {
+            console.log(typeof equip)
+            const args = typeof equip === 'object'
+                ? [equip.id, equip.mods]
+                : equip.split('x');
+            dispatch(dispatchAction(slotIndex, args[0], args[1]));
+            slotIndex++;
+        }
+    };
 
     /**
      * When a preset loadout is chosen, apply its data to the builder and close the modal.
      * TODO make sure this accounts for AW/Splitter & generally potentially refactor
      */
     const onClick = (event) => {
-        // Prevent a redirect/refresh.
-        event.preventDefault();
+        event.stopPropagation();
 
         // Update the current ship preset in the Redux state.
         dispatch(builderActions.updateShipPreset(event.target.id));
 
         // Grab the selected loadout from the datafile.
-        // TODO gotta tie this in to the deconstruction somehow???
         const selectedLoadout = dataFiles.shipData[shipId].presets[event.target.id];
 
         // Apply the loadout data to the existing slots.
-        // TODO ugh... for loops......
-        let pIndex = 0;
-        for(let id of selectedLoadout.primary) {
-            dispatch(builderActions.updatePrimary(pIndex, id.id, id.mods));
-            pIndex++;
-        }
-        let sIndex = 0;
-        for(let data of selectedLoadout.secondary) {
-            console.log(selectedLoadout.secondary.length);
-            if(data === null) 
-                dispatch(builderActions.updateSecondary(sIndex, null, null));
-            else {
-                const [id, quantity] = data.split('x');
-                dispatch(builderActions.updateSecondary(
-                    selectedLoadout.secondary.indexOf(data), id, quantity
-                ));
-            }
-            sIndex++;
-        }
-        let dIndex = 0;
-        for(let id of selectedLoadout.device) {
-            dispatch(builderActions.updateDevice(dIndex, id.id, id.mods));
-            dIndex++;
-        }
-        let cIndex = 0;
-        for(let data of selectedLoadout.consumable) {
-            if(data === null)
-                dispatch(builderActions.updateConsumable(cIndex, null, null));
-            else {
-                const [id, quantity] = data.split('x');
-                dispatch(builderActions.updateConsumable(
-                    selectedLoadout.consumable.indexOf(data), id, quantity
-                ));
-            }
-            cIndex++;
-        }
+        // eventuallyTODO Consolidate into a single function call.
+        loadEquipment(selectedLoadout.primary, builderActions.updatePrimary);
+        loadEquipment(selectedLoadout.secondary, builderActions.updateSecondary);
+        loadEquipment(selectedLoadout.device, builderActions.updateDevice);
+        loadEquipment(selectedLoadout.consumable, builderActions.updateConsumable);
 
         // Reset the currently focused equipment.
         // TODO this should be handled on ship switches, not here
@@ -93,21 +73,24 @@ export default function SelectPresetModal() {
         <h2 className='modal-title'>Select a Preset</h2>
 
         {/* Preset Loadout Buttons */}
-        <SinglePreset data={a} preset='A' onClick={onClick} />
-        <SinglePreset data={b} preset='B' onClick={onClick} />
-        <SinglePreset data={c} preset='C' onClick={onClick} />
+        <div className='modal-preset-list'>
+            <SinglePreset data={a} presetId='A' onClick={onClick} />
+            <SinglePreset data={b} presetId='B' onClick={onClick} />
+            <SinglePreset data={c} presetId='C' onClick={onClick} />
+        </div>
     </>);
 }
 
 /**
  * Sub-component of {@linkcode SelectPresetModal} that renders a single selectable ship preset.
- * @requires {@linkcode PresetTile}
- * @param {{ data: object, preset: string, onClick: Function }} props 
+ * @param {{ data: object, presetId: string, onClick: Function }} props 
  */
-function SinglePreset({ data, preset, onClick }) {
+function SinglePreset({ data, presetId, onClick }) {
+    // React Hooks
+    const { shipId } = useSelector((state) => state.builder);
+
     /* Create a function that splits the string data of Secondary Weapons & Consumables. */
     const splitStringData = (arr) => arr.map((str) => {
-        console.log(str);
         if(str === null) 
             return { id: null, quantity: null };
         const [id, quantity] = str.split('x');
@@ -115,21 +98,19 @@ function SinglePreset({ data, preset, onClick }) {
     });
 
     /* Create a function that assembles a single column of equipment in the preset. */
-    const mapEquipment = (arr, dataFile) => {
-        return (<ul className='modal-preset-grid-column'>
-            {arr.map((equipment) => equipment.id && (
-                <li key={crypto.randomUUID()} className='modal-preset-grid-tile'>
-                    <BucketImage dir={dataFile[equipment.id].icon} />
-                    {equipment?.quantity && <p>{equipment.quantity}</p>}
-                </li>
-            ))}
-        </ul>);
-    };
+    const mapEquipment = (arr, dataFile) => (<ul className='modal-preset-grid-column'>
+        {arr.map((equipment) => equipment.id && (
+            <li key={crypto.randomUUID()} className='modal-preset-grid-tile'>
+                <BucketImage dir={dataFile[equipment.id].icon} />
+                {equipment?.quantity && <p>{equipment.quantity}</p>}
+            </li>
+        ))}
+    </ul>);
 
     /* Return the button & its content. */
-    return (<button className='modal-ship-preset' id={preset.toLowerCase()} onClick={onClick}>
+    return (<button className='modal-ship-preset' id={presetId.toLowerCase()} onClick={onClick}>
         {/* Preset Title */}
-        <h3>Preset {preset}</h3>
+        <h3>{dataFiles.shipData[shipId].name} Preset {presetId}</h3>
 
         {/* Preset Equipment Lists */}
         <div className='modal-preset-grid'>

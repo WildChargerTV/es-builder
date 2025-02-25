@@ -184,6 +184,7 @@ function SelectPresetButton() {
             Choose Preset <span className='site-text-icon'><PiMouseLeftClickFill /></span>
         </>}
         modalComponent={<SelectPresetModal />}
+        modalId='select-preset-modal'
         disabled={disabled}
     />;
 }
