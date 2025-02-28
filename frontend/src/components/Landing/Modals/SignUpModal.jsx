@@ -1,4 +1,4 @@
-// * frontend/src/components/Landing/SignUpModal.jsx
+// * frontend/src/components/Landing/Modals/SignUpModal.jsx
 
 // Node Module Imports
 import { Filter } from 'bad-words';
@@ -6,36 +6,45 @@ import { useEffect, useState } from 'react';
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch } from 'react-redux';
 // Local Module Imports
-import { useModal } from '../../context/Modal';
-import { allowedProfanity } from '../../data';
-import * as sessionActions from '../../store/session';
+import LoginModal from '../../Navigation/Modals/LoginModal';
+import { useModal } from '../../../context/Modal';
+import { allowedProfanity } from '../../../data';
+import useOpenModal from '../../../hooks/useOpenModal';
+import * as sessionActions from '../../../store/session';
 
-/** Declare the profanity filter, and remove some common swears. */
+/* Declare the profanity filter, and remove some common swears. */
 const filter = new Filter();
 filter.removeWords(...allowedProfanity);
 
 /**
  * Modal component to display a user signup form. Closes itself once the signup succeeds.
- * @component SignUpModal
- * @require {@linkcode useModal}
- * @require {@linkcode sessionActions}
+ * @component `SignUpModal`
+ * @requires {@linkcode useModal}
+ * @requires {@linkcode sessionActions}
  * @returns {ReactElement}
  */
 export default function SignUpModal() {
     // React Hooks
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const openModal = useOpenModal();
     // Local State Values
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(true);
     const [errors, setErrors] = useState({});
+
+    /* Switch to the login modal. */
+    const switchToLogin = (event) => {
+        event.stopPropagation();
+        openModal(<LoginModal />);
+    }
     
-    /** Attempt to dispatch the signup attempt, and close the Modal if no errors were found. */
+    /* On form submission, dispatch the signup, and close the modal if no errors were found. */
     const onSubmit = (event) => {
-        // Prevent a redirect/refresh.
         event.preventDefault();
+
         // Clear the Errors object.
         setErrors({});
 
@@ -47,7 +56,7 @@ export default function SignUpModal() {
                 by the filter, please report this as a bug!`
             });
 
-        // Attempt to log in. If errors exist, they will be caught before the Modal is closed.
+        // Attempt to sign up. If errors exist, they will be caught before the modal is closed.
         return dispatch(sessionActions.signup({ username, email, password }))
             .then(async (res) => res.ok && closeModal())
             .catch(async (res) => {
@@ -69,12 +78,14 @@ export default function SignUpModal() {
         password?.length < 8
     ), [username, email, password]);
 
-    // Return the Modal content.
+    /* Return the modal content. */
     return (<>
-        {/* Modal Title */}
+        {/* Modal Title & Information */}
         <h2 className='modal-title' style={{ marginBottom: 0 }}>Sign Up</h2>
-
         <p className='modal-paragraph'>
+            Already made an account? <span className='clickable-span' onClick={switchToLogin} aria-hidden>
+            Click here to log in!</span>
+            <br /><br />
             At present, <span className='yellow'>accounts on ESBuilder are entirely on the honor
             system</span>. No information is verified, tracked, or shared; however, no guarantee
             can be made as to its permanent security. <span className='red'>Please do not use your
@@ -89,7 +100,7 @@ export default function SignUpModal() {
             exception, please submit an issue on GitHub.
         </p>
 
-        {/* Signup Form */}
+        {/* User Signup Form */}
         <form className='modal-form' onSubmit={onSubmit}>
             {/* Error Handling */}
             {errors.username && <p className='modal-form__error'>{errors.username}</p>}

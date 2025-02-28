@@ -8,13 +8,13 @@ import useFitText from 'use-fit-text';
 import ChangeQuantityModal from '../Modals/ChangeQuantityModal';
 import SelectEquipModal from '../Modals/SelectEquipModal';
 import SelectModModal from '../Modals/SelectModModal';
-import BucketImage from '../../Bucket/BucketImage';
-import OpenModal from '../../Modal/OpenModal';
 import * as SVGIcon from '../../../assets/svg';
 import * as dataFile from '../../../data';
 import * as builderActions from '../../../store/builder';
 import { readCustomEquippable } from '../../../store/customEquippable';
 import * as loadoutActions from '../../../store/loadout';
+import BucketImage from '../../../utils/BucketImage';
+import OpenModal from '../../../utils/OpenModal';
 
 
 /**
@@ -29,7 +29,6 @@ import * as loadoutActions from '../../../store/loadout';
  * @component `EquipmentList`
  * @requires {@linkcode dataFile} {@linkcode builderActions} {@linkcode loadoutActions}
  * @requires {@linkcode EquipmentColumn}
- * @returns {ReactElement}
  */
 export default function EquipmentList() {
     // React Hooks
@@ -39,9 +38,10 @@ export default function EquipmentList() {
     // Local State Values
     const [weaponSlots, setWeaponSlots] = useState([0, 0]);
     
-    /** Get the currently selected ship data. */
+    /* Get the currently selected ship data. */
     const currShip = (builder.shipId >= 0) && dataFile.shipData[builder.shipId];
-    // Destructure the required flags from the Redux state.
+
+    /* Destructure the required flags from the Redux state. */
     const { ancientWeaponEquipped, splitterEquipped } = builder.flags;
 
     /**
@@ -49,6 +49,7 @@ export default function EquipmentList() {
      * This should change the number of allowed slots sent to sub-components, and also override
      * the Primary & Secondary Weapon states so that when a loadout is submitted, no extraneous
      * data is accidentally left in.
+     * TODO This code block has been flagged by SonarLint as being too complex.
      * ? Both can be equipped at the same time; however, the effect of Ancient Weapon overrides
      * ? that of Splitter.
      * ! This should be the ONLY code to dispatch `overridePrimary` and `overrideSecondary`.
@@ -57,10 +58,10 @@ export default function EquipmentList() {
         // If there is no currently selected ship or ship preset (in create mode), return early.
         if(!currShip || (builder.mode === 'create' && builder.shipPreset === null)) return;
 
-        // If Ancient Weapon is equipped, only 1 Primary slot is allowed.
+        // If the Ancient Weapon is equipped, only 1 Primary slot is allowed.
         const primarySlots = ancientWeaponEquipped ? 1 : currShip.primary_weapons;
 
-        // If Ancient Weapon is equipped, load the data buffers and wipe the Redux state slices.
+        // If the Ancient Weapon is equipped, load the data buffers & wipe the Redux state slices.
         // Does not fire if the Ancient Weapon is already in the first slot.
         if(ancientWeaponEquipped && builder.primaryWeapons[0].id !== 0) {
             dispatch(loadoutActions.updatePrimaryDataBuffer(structuredClone(builder.primaryWeapons)));
@@ -130,7 +131,7 @@ export default function EquipmentList() {
     }, [dispatch, builder.mode, builder.primaryWeapons, builder.secondaryWeapons, builder.shipPreset, currShip, 
         ancientWeaponEquipped, splitterEquipped, primaryWeaponCache, secondaryWeaponCache]);
 
-    /** Return the four equipment columns, each with their own data set. */
+    /* Return the four equipment columns, each with their own data set. */
     return (<div id='builder-equipment-list'>
         <EquipmentColumn name='Primary' slots={weaponSlots[0]} reduxData={builder.primaryWeapons} />
         <EquipmentColumn name='Secondary' slots={weaponSlots[1]} reduxData={builder.secondaryWeapons} />
@@ -157,17 +158,12 @@ export default function EquipmentList() {
  *      slots: number, 
  *      reduxData: object 
  * }} 
- * @returns {ReactElement}
  */
 function EquipmentColumn({ name, slots, reduxData }) {
-    /** Convert the data entries into an array whose length is limited by the given amount of slots. */
+    /* Convert the data entries into an array whose length is limited by the given amount of slots. */
     const reduxDataArr = reduxData ? Object.entries(reduxData).slice(0, slots) : [];
 
-    /** 
-     * Create a key counter for the array mapping in the return statement.
-     * An `increment` boolean allows the function to be called without incrementing, allowing it to
-     * be used as the slot index as well as the key (where the slot index does NOT increment).
-     */
+    /* Create a key counter for the array mapping in the return statement. */
     let keyCounter = 0;
     const key = (increment) => {
         const res = keyCounter;
@@ -175,7 +171,7 @@ function EquipmentColumn({ name, slots, reduxData }) {
         return res;
     }
 
-    /** Create an organized object representing all required data for a single equipment tile. */
+    /* Create an organized object representing all required data for a single equipment tile. */
     const singleCellData = (slot, index, res={
         type: name,
         id: null,
@@ -186,7 +182,7 @@ function EquipmentColumn({ name, slots, reduxData }) {
         if(['Primary', 'Devices'].includes(name)) {
             res.id = slot.id;
             res.mods = slot.mods;
-        } else { // Assuming Secondary or Consumables
+        } else if(['Secondary', 'Consumables'].includes(name)) {
             const [id, quantity] = slot ? slot.split('x') : [null, null];
             res.id = id;
             res.quantity = quantity;
@@ -195,7 +191,7 @@ function EquipmentColumn({ name, slots, reduxData }) {
         return res;
     }
 
-    /** Return the equipment column & its contents. */
+    /* Return the equipment column & its contents. */
     return (<div className='builder-equipment-list-col'>
         <h3 className='builder-equip-col-title'>{name}</h3>
         <ul className='builder-equip-col-slots'>
@@ -212,10 +208,6 @@ function EquipmentColumn({ name, slots, reduxData }) {
  * be empty, or contain a piece of equipment added to the loadout. This component's main purpose is
  * to dynamically update its own contents based on any possible changes, including enhancement,
  * change of quantity, and installation of mods. 
- * 
- * An equipment cell is comprised of the following, in order:
- * 1. An icon that represents what the equipment looks like.
- * 2. 
  * @component `SingleEquipment`
  * @requires {@linkcode dataFile} {@linkcode builderActions} {@linkcode readCustomEquippable} 
  * @requires {@linkcode BucketImage} {@linkcode OpenModal} {@linkcode SelectEquipModal} {@linkcode SelectModModal} {@linkcode ChangeQuantityModal}
@@ -226,7 +218,6 @@ function EquipmentColumn({ name, slots, reduxData }) {
  *      quantity: number,
  *      index: number
  * } }} 
- * @returns {ReactElement}
  */
 function SingleEquipment({ slotData }) {
     // Deconstructed Props
@@ -240,20 +231,18 @@ function SingleEquipment({ slotData }) {
     const [moddable, setModdable] = useState(false);
     const [titleColor, setTitleColor] = useState('#94b4c3');
 
-    /** 
-     * Dynamically update the cell's contents as the equipment is changed or modified. 
-     * ? This was originally a switch statement, but was changed for improved code readability.
-     */
+    /* Dynamically update the cell's contents as the equipment is changed or modified. */
     useEffect(() => {
-        // If the equipment is a Secondary or Consumable, get the ID's respective data and return.
+        // Secondaries & Consumables are simple. Return the data associated with the given ID.
         if(type === 'Secondary')
             return setData(dataFile.secondaryWeaponData[id]);
         else if(type === 'Consumables')
             return setData(dataFile.consumableData[id]);
 
-        // * For the remaining two categories, Custom Equippable IDs must be accounted for. Custom
-        // * Equippable IDs are differentiated by being prefaced with a lowercase 'c'.
-        // Determine which datafile the ID should be referencing.
+        // ? For the remaining two categories, Custom Equippable IDs must be accounted for. Custom
+        // ? Equippable IDs are differentiated by being prefaced with a lowercase 'c'.
+
+        // Reference the appropriate datafile.
         const equipmentData = type === 'Primary' ? dataFile.primaryWeaponData : dataFile.deviceData;
 
         // If the ID is NOT a Custom Equippable, get the ID's respective data and return.
@@ -262,11 +251,11 @@ function SingleEquipment({ slotData }) {
             return setData(equipmentData[id]);
         }
 
-        // Get the custom equippable's ID.
+        // Get the Custom Equippable's ID.
         const customId = Number(id.split('c')[1]);
 
-        // Get the custom equippable's `equippableId` from the database, and get that ID's
-        // respective data. Then, add an `enhanced` flag key, modify the icon file name, & override 
+        // Get the Custom Equippable's `equippableId` from the database, and get that ID's
+        // respective data. Then, add an `enhanced` flag key, modify the icon file name, & override
         // the stats before sending it to the local state.
         dispatch(readCustomEquippable(customId))
             .then((customEquippable) => {
@@ -281,8 +270,8 @@ function SingleEquipment({ slotData }) {
 
     /**
      * Determine if the cell's equipment is moddable.
-     * - All Primary Weapons can be modded except for the Ancient Weapon.
-     * - Devices can only be modded if a -1 is not present inside the device's allowed_mods array.
+     * ? All Primary Weapons can be modded except for the Ancient Weapon.
+     * ? Devices can only be modded if a -1 is not present inside the device's allowed_mods array.
      */
     useEffect(() => {
         setModdable(data && (
@@ -291,7 +280,7 @@ function SingleEquipment({ slotData }) {
         ));
     }, [data, type]);
 
-    /** When the cell is clicked, change the focused equipment data. */
+    /* When the cell is clicked, change the focused equipment data. */
     const showInfo = (event) => {
         event.stopPropagation();
         data
@@ -317,7 +306,7 @@ function SingleEquipment({ slotData }) {
         }
     };
 
-    /** Return the equipment cell. */
+    /* Return the equipment cell. */
     return (<li className='builder-equip-cell' id={id} onClick={showInfo} aria-hidden>
         {/* Equipment Icon */}
         <div className='builder-equip-icon'>
@@ -339,11 +328,13 @@ function SingleEquipment({ slotData }) {
             : <OpenModal
                 elementText={<SVGIcon.AddEquipIcon height='1.25vw' />}
                 modalComponent={<SelectEquipModal currEquip={{index, type}} />}
+                modalId='item-select-menu'
             />}
             {moddable && mods && Object.values(mods).includes(null) &&
             <OpenModal
                 elementText={<SVGIcon.AddModIcon height='1.25vw' />}
                 modalComponent={<SelectModModal currEquip={{eIndex: index, eType: type}} />}
+                modalId='item-select-menu'
             />}
         </div>}
 

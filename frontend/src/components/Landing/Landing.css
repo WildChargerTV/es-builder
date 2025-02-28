@@ -1,6 +1,6 @@
 /* * frontend/src/components/Landing/Landing.css */
+/* ? Site Landing Page: Global Definitions */
 
-/* Landing Page - Global Definitions */
 #site-landing {
     background-image: url('https://images3.alphacoders.com/912/912237.jpg');
     background-position: center;
@@ -36,12 +36,12 @@
     z-index: 1;
 }
 
-#site-landing-content h1 { 
+#site-landing-content h2 { 
     font-size: 3.5vw; 
     margin: 2% 0 1vw 0;
     width: 100%;
 }
-#site-landing-content h2 {
+#site-landing-content h3 {
     font-size: 2vw;
     margin-bottom: 0.5vw;
     width: 100%;

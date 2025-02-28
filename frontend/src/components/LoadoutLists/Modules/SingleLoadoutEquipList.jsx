@@ -4,9 +4,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
-import BucketImage from '../../Bucket/BucketImage';
 import * as dataFiles from '../../../data';
 import { readCustomEquippable } from '../../../store/customEquippable';
+import BucketImage from '../../../utils/BucketImage';
 
 /**
  * Renders a list of equipment, without names, for a single loadout inside the `LoadoutList`

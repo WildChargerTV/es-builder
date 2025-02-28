@@ -1,4 +1,5 @@
 // * frontend/src/components/LoadoutBuilder/Modals/MessageModal.jsx
+// TODO this whole thing is just unused right now.
 
 // Node Module Imports
 import { PiMouseLeftClickFill } from 'react-icons/pi';

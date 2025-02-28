@@ -8,13 +8,14 @@ import './Styles/enhancements.css';
 /**
  * Abstraction layer that renders the "Enhancements" tab in the Loadout Builder. Whether or not it
  * is loaded depends on if the `LoadoutBuilderMain` component is also loaded. This component
- * renders the `EnhancementList` and `EnhancementInfoSelect` compoenents, in that order.
+ * renders the {@linkcode EnhancementList} and {@linkcode EnhancementInfoSelect} compoenents, in 
+ * that order.
  * @component `EnhancementsTab`
- * @param {{ isLoaded: boolean }} 
- * @returns {null | ReactElement}
+ * @requires {@linkcode EnhancementList}, {@linkcode EnhancementInfo}
+ * @param {{ isLoaded: boolean }} props
  */
 export default function EnhancementsTab({ isLoaded }) {
-    /** If the loadout builder has successfully loaded, render the child components. */
+    /* If the loadout builder has successfully loaded, render the child components. */
     return isLoaded && (<>
         <EnhancementList />
         <EnhancementInfo />

@@ -1,4 +1,7 @@
 // * src/frontend/assets/svg.jsx
+// ? This file holds SVG data allowing React to render simple image icons en masse without AWS 
+// ? bucket calls.
+// TODO docs
 
 export function AddEquipIcon({ height }) {
     return (<svg

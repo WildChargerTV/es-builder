@@ -1,51 +1,71 @@
+/* * frontend/src/components/LoadoutBuilder/Modals/Modals.css */
+/* ? Loadout Builder: Modal Component Definitions */
+
 /* Preset Loadout Modal */
+#select-preset-modal {
+    width: 75vw;
+}
+
+.modal-preset-list {
+    display: flex;
+        column-gap: 1vw;
+        justify-content: center;
+    width: 100%;
+}
+
 .modal-ship-preset {
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: brightness(50%);
     border: 2px solid rgba(148, 180, 195, 0.7);
     color: #94b4c3;
     display: flex;
-    flex-direction: column;
-    margin-top: 16px;
-    width: 100%;
+        align-items: center;
+        flex-direction: column;
+    padding: 0.35vw 1.5vw 0.75vw 1.5vw;
+    width: 33%;
 }
 .modal-ship-preset:hover { background-color: rgba(148, 180, 195, 0.2); }
 .modal-ship-preset h3 { 
-    margin: 10px 0; 
+    font-size: 1.15vw;
+    line-height: 2;
+    margin: 0; 
     pointer-events: none;
+    text-wrap: nowrap;
+    width: 100%;
 }
 
 .modal-preset-grid {
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(148, 180, 195, 0.7);
-    column-gap: 10px;
+    box-sizing: border-box;
+    display: flex;
+        column-gap: 0.5vw;
+    margin-bottom: 0.5vw;
+    padding: 0.5vw;
     pointer-events: none;
-    display: grid;
-        grid-template-columns: repeat(4, 22%);
-    margin-bottom: 16px;
-    width: 92.5%;
+    width: 100%;
 }
 
 .modal-preset-grid-column {
-    display: grid;
+    display: flex;
+        flex-direction: column;
+        row-gap: 0.5vw;
     height: fit-content;
     list-style-type: none;
-    margin: 10px;
+    margin: 0;
     padding: 0;
-    row-gap: 10px;
-    width: 100%;
 }
-.modal-preset-grid-list {
+.modal-preset-grid-tile {
     aspect-ratio: 13 / 9;
     border: 1px solid rgba(148, 180, 195, 0.7);
     display: flex;
     flex-direction: column;
     position: relative;
 }
-.modal-preset-grid-list img { max-width: 100%; }
-.modal-preset-grid-list p { 
-    color: #94b4c3;
-    margin: 0 3px 0 0;
+.modal-preset-grid-tile img { width: 100%; }
+.modal-preset-grid-tile p { 
+    color: #abcdf9;
+    font-size: 0.85vw;
+    margin: 0 0.15vw 0 0;
     position: absolute;
         bottom: 0;
         right: 0;
@@ -53,7 +73,7 @@
 
 
 /* Select Equipment/Mod Modal */
-#site-modal-content.item-select-menu {
+#item-select-menu {
     display: flex;
         align-items: center;
         flex-direction: column;
@@ -101,10 +121,9 @@
 .modal-equip-icon img { width: 100%; }
 
 /* Enhance Primary/Device Modal */
-#site-modal-content.equip-enhance-modal {
+#equip-enhance-modal {
     backdrop-filter: brightness(20%);
-    width: 40%;
-        min-width: 875px;
+    width: 70vw;
 }
 
 #enhance-stats-form {
@@ -117,12 +136,23 @@
         align-items: center;
         justify-content: space-between;
 }
-.modal-form-equip-title h2, .modal-form-equip-title h4 { color: #abcdf9; margin: 0 0 10px 0; }
+.modal-form-equip-title h2, .modal-form-equip-title h4 { 
+    color: #abcdf9; 
+    margin: 0; 
+}
+.modal-form-equip-title h2 { font-size: 1.75vw; }
+.modal-form-equip-title h4 { font-size: 1.45vw; }
+
 .modal-form-stat {
     display: flex;
         justify-content: space-between;
     font-size: larger;
     text-align: left;
+}
+
+.modal-form .modal-stat-field { 
+    font-size: 1.05vw; 
+    width: 33%;
 }
 
 #enhance-stats-controls {

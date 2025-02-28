@@ -1,46 +1,44 @@
 // * frontend/src/components/LoadoutBuilder/Modals/EnhanceModal.jsx
 
 // Node Module Imports
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
 // Local Module Imports
-import { primaryWeaponData, deviceData } from '../../../data';
+import * as dataFiles from '../../../data';
 import { useModal } from '../../../context/Modal';
-import { updateDevice, updatePrimary } from '../../../store/builder';
+import * as builderActions from '../../../store/builder';
 import { createCustomEquippable } from '../../../store/customEquippable';
 
 /**
- * Renders a modal that allows the user to enhance a piece of eligible equipment. The modal will
- * present the user with a dynamic form element listing out the equipment's stats, allowing the
- * user to modify them at will. Upon confirming the enhances stats, the data will be submitted as a
- * Custom Equippable. Enhancement is irreversible.
+ * Modal component that allows the user to enhance a piece of eligible equipment. 
  * 
- * Each stat is rendered in its own sub-component. See {@linkcode SingleStat} for more information
- * on its functionality. 
+ * The modal will present the user with a form listing out the equipment's stats, all of which can
+ * be modified at will. Upon confirming the enhanced stats, the data will be submitted as a Custom
+ * Equippable. Equipment enhancement is irreversible.
+ * 
+ * TODO Define stats that cannot be changed during enhancement & restrict them
+ * TODO Maybe ask devs what the general enhancement process allows in terms of stat changes
  * @component `EnhanceModal`
- * @requires {@linkcode useModal} {@linkcode primaryWeaponData} {@linkcode deviceData}
- * @requires {@linkcode updatePrimary} {@linkcode updateDevice} {@linkcode createCustomEquippable}
+ * @requires {@linkcode useModal} {@linkcode dataFiles}
+ * @requires {@linkcode builderActions} {@linkcode createCustomEquippable}
  * @requires {@linkcode SingleStat}
- * @returns {ReactElement}
  */
 export default function EnhanceModal() {
     // React Hooks
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    // Redux State Values
     const { primaryWeapons, devices } = useSelector((state) => state.builder);
     const { category, id, index } = useSelector((state) => state.builder.focusedEquipment);
 
-    /** Get the stats from the appropriate datafile. */
-    const focusData = structuredClone(category === 'Primary'
-        ? primaryWeaponData[id]
-        : deviceData[id]
+    /* Reference the appropriate datafile. */
+    const dataFile = structuredClone(category === 'Primary'
+        ? dataFiles.primaryWeaponData[id]
+        : dataFiles.deviceData[id]
     );
 
-    /** Convert the stats into an array for easier iteration. */
-    const focusStats = Object.entries(focusData.stats);
-
-    /** When the Submit button is clicked, submit the modified stats to the backend. */
+    /* On form submission, create a new Custom Equippable containing the modified stats. */
     const onSubmit = (event) => {
         event.stopPropagation();
 
@@ -48,25 +46,21 @@ export default function EnhanceModal() {
         const customEquippableData = JSON.stringify({
             equippableType: category,
             equippableId: id,
-            stats: focusData.stats
+            stats: dataFile.stats
         })
         
         // Submit the data to the backend, then swap out the appropriate Primary/Device slot's ID
         // to reference the new Custom Equippable. Close the Modal afterward.
         dispatch(createCustomEquippable(customEquippableData))
         .then((res) => {
+            const { updatePrimary, updateDevice } = builderActions;
             category === 'Primary'
-            ? dispatch(updatePrimary(index, `c${res.id}`, primaryWeapons[index].mods))
-            : dispatch(updateDevice(index, `c${res.id}`, devices[index].mods))})
-        .then(closeModal());
+                ? dispatch(updatePrimary(index, `c${res.id}`, primaryWeapons[index].mods))
+                : dispatch(updateDevice(index, `c${res.id}`, devices[index].mods));
+        }).then(closeModal());
     };
 
-    /** Apply a custom class name to the Modal. Required for custom stylization. */
-    useEffect(() => {
-        document.getElementById('site-modal-content').className = 'equip-enhance-modal';
-    }, []);
-
-    /** Return the Modal content. */
+    /* Return the modal content. */
     return (<>
         {/* Modal Title */}
         <h2 className='modal-title'>Enhance {category === 'Primary' ? ' Weapon' : ' Device'}</h2>
@@ -95,11 +89,18 @@ export default function EnhanceModal() {
         <form id='enhance-stats-form' className='modal-form' onSubmit={onSubmit}>
             {/* Equipment Title & Type */}
             <div className='modal-form-equip-title'>
-                <h2>{focusData.name}</h2>
-                <h4>{focusData.type}</h4>
+                <h2>{dataFile.name}</h2>
+                <h4>{dataFile.type}</h4>
             </div>
+
             {/* Equipment Stats */}
-            {focusStats.map((stat) => <SingleStat key={`${stat[0].split(' ').join('-')}`} stat={stat} focusData={focusData} />)}
+            {Object.entries(dataFile.stats).map((stat) => 
+                <SingleStat 
+                    key={`${stat[0].split(' ').join('-')}`} 
+                    stat={stat} 
+                    equipStats={dataFile.stats} 
+                />
+            )}
         </form>
 
         {/* Modal Controls (Submit Button) */}
@@ -113,39 +114,41 @@ export default function EnhanceModal() {
 
 /**
  * Sub-component of {@linkcode EnhanceModal} that renders an input field (number/text type) that
- * represents one of the equipment's stats. The input field will update the passed-in data object
- * every time the field changes.
- * @param {{ stat: [string, number], focusData: object }} 
- * @returns {ReactElement}
+ * represents one of the equipment's stats. Requires a pointer to the parent stats object in order
+ * to update it whenever the field changes.
+ * @component `SingleStat`
+ * @param {{ stat: [string, number], equipStats: object }} props
  */
-function SingleStat({ stat, focusData }) {
+function SingleStat({ stat, equipStats }) {
     // Deconstructed Props
-    const [name, val] = stat;
+    const [statName, statVal] = stat;
     // Local State Values
-    const [fieldVal, setFieldVal] = useState(val);
+    const [fieldVal, setFieldVal] = useState(statVal);
     
-    /** Set the input field's type depending on the type of the stat value. */
-    const fieldType = (() => {
-        switch(typeof val) {
-            case 'number': return 'number';
-            case 'string': return 'text';
-        }
-    })();
-    /** Set the input field's name to reflect that of the actual stat name. */
-    const fieldName = name.toLowerCase().split(' ').join('-'); 
+    /* Set the input field's type depending on the type of the stat value. */
+    const fieldType = typeof statVal === 'number' ? 'number' : 'text';
 
-    /** When the field's value changes, apply that change to the passed-in data object. */
+    /*Set the input field's *internal* name to reflect that of the actual stat name. */
+    const fieldName = statName.toLowerCase().split(' ').join('-'); 
+
+    /* When the field's value changes, apply that change to `dataFile`. */
     const onChange = (event) => {
-        if(typeof val === 'number')
-            focusData.stats[name] = Number(event.target.value);
-        else
-            focusData.stats[name] = event.target.value;
+        equipStats[statName] = typeof statVal === 'number'
+            ? Number(event.target.value)
+            : event.target.value;
         setFieldVal(event.target.value);
-    }
+    };
     
-    /** Return the input field & its label. */
+    /* Return the input field & its label. */
     return (<div id={fieldName} className='modal-form-stat'>
-        <label htmlFor={fieldName}>{name} </label>
-        <input type={fieldType} className='modal-stat-field' name={fieldName} value={fieldVal} onChange={onChange} />
+        <label htmlFor={fieldName}>{statName}</label>
+        <input
+            type={fieldType} 
+            className='modal-stat-field' 
+            name={fieldName} 
+            value={fieldVal} 
+            onChange={onChange} 
+            disabled={fieldType === 'text'}
+        />
     </div>);
 }

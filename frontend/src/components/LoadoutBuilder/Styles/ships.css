@@ -4,17 +4,17 @@
 /* Ships Tab: Ship Selector */
 #builder-ship-select {
     display: grid;
-        column-gap: 10px;
-        grid-template-columns: calc(50% - 5px) calc(50% - 5px);
-        grid-template-rows: calc(50% - 5px) calc(50% - 5px);
-        row-gap: 10px;
+        column-gap: 0.75vw;
+        grid-template-columns: calc(50% - 0.375vw) calc(50% - 0.375vw);
+        grid-template-rows: calc(50% - 0.375vw) calc(50% - 0.375vw);
+        row-gap: 0.75vw;
+    min-height: 0;
 }
 #builder-ship-select button {
     border: 2px solid rgba(148, 180, 195, 0.7);
     display: flex;
         align-items: center;
         flex-direction: column;
-    font-size: clamp(16pt, 1.65vw, 32pt);
     padding: 5px;
     white-space: nowrap;
 }
@@ -29,8 +29,10 @@
     margin: 0;
     width: 100%;
 }
+.builder-ship-name { font-size: 1.75vw; }
 .builder-ship-class {
     align-items: flex-end;
+    font-size: 1.15vw;
     color: #94b4c3;
 }
 
@@ -45,7 +47,7 @@
 #builder-ship-info {
     border: 2px solid rgba(148, 180, 195, 0.7);
     overflow-y: scroll;
-    padding: 10px;
+    padding: 0.75vw;
 }
 
 #ship-info-name {
@@ -58,7 +60,7 @@
 }
 
 #ship-info-class {
-    color: #94b4c3;
+    color: #abcdf9;
     font-size: 1.25vw;
     margin: 0;
     text-align: center;

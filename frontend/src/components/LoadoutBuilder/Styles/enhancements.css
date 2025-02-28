@@ -7,7 +7,7 @@
     width: fit-content; 
 }
 .enhancement-group-title { 
-    font-size: clamp(16px, 1.25vw, 24px);
+    font-size: 1.25vw;
     letter-spacing: 0.6px;
     margin: 0 0 5px 0;
     text-transform: uppercase;
@@ -16,16 +16,16 @@
     backdrop-filter: brightness(30%);
     border: 2px solid rgba(148, 180, 195, 0.7);
     display: flex;
-        column-gap: 10px;
-    padding: clamp(7px, 0.5vw, 20px);
+        column-gap: 1vw;
+    padding: 0.5vw;
     width: min-content;
 }
 .enhancement-group-cell {
     aspect-ratio: 1 / 1;
     border: 2px solid rgba(148, 180, 195, 0.7);
         border-radius: 5px;
-    padding: 5px;
-    width: clamp(50px, 4vw, 125px);
+    padding: 0.33vw;
+    width: 4vw
 }
 .enhancement-group-cell img { 
     pointer-events: none;
@@ -37,45 +37,61 @@
     border: 2px solid rgba(148, 180, 195, 0.7);
     box-sizing: border-box;
     display: grid;
-        column-gap: 25px;
+        column-gap: 1.75vw;
         grid-template-areas:
             'a b b b b b b'
             'c d d e e f f'
             'g h h h i i i';
     overflow: hidden;
-    padding: 25px;
+    padding: 2.15vw 1.25vw 1.25vw 2.15vw;
     width: 100%;
 }
-#builder-enhancements-0 { grid-area: a; }
-#builder-enhancements-1 { grid-area: b; }
-#builder-enhancements-2 { grid-area: c; }
-#builder-enhancements-3 { grid-area: d; }
-#builder-enhancements-4 { grid-area: e; }
-#builder-enhancements-5 { grid-area: f; }
-#builder-enhancements-6 { grid-area: g; }
-#builder-enhancements-7 { grid-area: h; }
-#builder-enhancements-8 { grid-area: i; }
+#builder-enhancements-category-0 { grid-area: a; }
+#builder-enhancements-category-1 { grid-area: b; }
+#builder-enhancements-category-2 { grid-area: c; }
+#builder-enhancements-category-3 { grid-area: d; }
+#builder-enhancements-category-4 { grid-area: e; }
+#builder-enhancements-category-5 { grid-area: f; }
+#builder-enhancements-category-6 { grid-area: g; }
+#builder-enhancements-category-7 { grid-area: h; }
+#builder-enhancements-category-8 { grid-area: i; }
 
 /* Enhancements Tab: Currently Selected Enhancements */
 #builder-enhancement-info-select {
-    border: 2px solid rgba(148, 180, 195, 0.7);
-    box-sizing: border-box;
-    font-size: clamp(18pt, 1.65vw, 32pt);
+    /* border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box; */
     overflow-y: scroll;
-    padding: 10px;
-        padding-top: 25px;
+    /* padding: 0.75vw; */
     width: 100%;
 }
 
-#builder-selected-enhancements { margin: auto; }
+#builder-selected-enhancements { 
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    height: 30%;
+    margin: auto; 
+    overflow: hidden;
+    padding: 0 0.75vw 0.75vw 0.75vw;
+    width: 100%;
+}
 
 /* Enhancements Tab: Enhancement Information */
 #builder-enhancement-info {
-    margin-top: 20px;
+    border: 2px solid rgba(148, 180, 195, 0.7);
+    box-sizing: border-box;
+    height: calc(70% - 1vw);
+    margin-top: 1vw;
+    overflow-y: scroll;
+    padding: 0.75vw;
     width: 100%;
 }
 #enhancement-info-name {
     font-size: 1.75vw;
+    line-height: 2;
     margin: 0;
     text-align: center;
     text-wrap: balance;

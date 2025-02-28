@@ -5,32 +5,39 @@ import { PiMouseLeftClickFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 // Local Module Imports
+import SignUpModal from './Modals/SignUpModal';
+import OpenModal from '../../utils/OpenModal';
 import './Landing.css';
-import OpenModal from '../Modal/OpenModal';
-import SignUpModal from './SignUpModal';
 
 /**
- * Component to display a site landing page to all logged-out users. Logged-in users are redirected
- * to `/loadouts`.
- * @component LandingPage
+ * Renders the site's landing (aka 'splash') page to all logged-out users. Logged-in users are
+ * redirected to `/loadouts`.
+ * @component `LandingPage`
+ * @requires {@linkcode SignUpModal}, {@linkcode OpenModal}
  * @returns {ReactElement}
  */
 export default function LandingPage() {
     // React Hooks
     const sessionUser = useSelector((state) => state.session.user);
 
-    // If a user is currently logged in, redirect to `/loadouts`.
+    /* If a user is currently logged in, navigate to `/loadouts`. */
     if(sessionUser) return <Navigate to='/loadouts' />;
 
-    // Return the page content.
+    /* Return the page content. */
     return (<main id='site-landing'>
-        {/* This is a transparent black overlay rendered over the background image. */}
+        {/* Page Title (Hidden) - for search engines */}
+        <h1 style={{ display: 'none' }}>
+            ESBuilder: Build & Share EVERSPACE™ Loadouts
+        </h1>
+
+        {/* Background Image Overlay */}
         <div id='site-landing-bg' />
 
         {/* Main Content Box */ }
         <div id='site-landing-content'>
             {/* Page Title */}
-            <h1>Shoot. Loot. Share.</h1>
+            <h2>Shoot. Loot. Share.</h2>
+
             {/* Site Information */}
             <p>
                 ESBuilder is a new way to store, share, &amp; immortalize your most memorable 
@@ -39,13 +46,15 @@ export default function LandingPage() {
                 visualize your own perfect build? Our online loadout builder&apos;s got you 
                 covered. Sign up and create one today!
             </p>
+
             {/* Sign Up Button */}
             <OpenModal
                 elementText={<>Sign Up <span className='site-text-icon'><PiMouseLeftClickFill /></span></>}
                 modalComponent={<SignUpModal />}
             />
+
             {/* Message for Testers */}
-            <h2>Important Information for All Testers:</h2>
+            <h3>Important Information for All Testers:</h3>
             <p>
                 Thank you for giving ESBuilder a try! This web application is currently 
                 in <span className='yellow'>early beta</span>. This means that the core mechanics are

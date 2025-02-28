@@ -1,3 +1,6 @@
+/* * frontend/src/components/Footer/Footer-m.css */
+/* ? Site Footer: Mobile Definitions */
+
 @media screen and (max-width: 719px) {
     #site-footer {
         display: flex;

@@ -32,18 +32,18 @@ export default function UserLoadouts() {
     // Local State Values
     const [isLoaded, setIsLoaded] = useState(false);
 
-    /** Get user loadouts from the backend, and set the active user in the Redux state. */
+    /* Get user loadouts from the backend, and set the active user in the Redux state. */
     useEffect(() => { 
         dispatch(getUserLoadouts(params.userId)); 
         dispatch(updateActiveUser(params.userId));
     }, [dispatch, params]);
 
-    /** Allow the page to render if the active user & loadout list have loaded to the Redux state. */
+    /* Allow the page to render if the active user & loadout list have loaded to the Redux state. */
     useEffect(() => {
         setIsLoaded(activeUser?.id == params.userId && userLoadouts?.list);
     }, [activeUser, params, userLoadouts]);
 
-    /** Return the User Loadouts page. */
+    /* Return the User Loadouts page. */
     return isLoaded && (<main id='site-user-loadouts-container'>
         <div id='site-user-loadouts'>
             <h1>{activeUser.username}&apos;s Loadouts</h1>

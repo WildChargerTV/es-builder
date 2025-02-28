@@ -32,22 +32,22 @@ const shipData = [
         },
         "presets": {
             "a": {
-                "primary": [{ id: 15, mods: { 0: null, 1: null, 2: null } }, { id: 9, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null}],
-                "secondary": ["4x20", null, null],
-                "device": [{ id: 54, mods: { 0: null, 1: null, 2: null } }, { id: 81, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["25x2", null, null, null, null]
+                "primary": [{ id: 15, mods: { 0: null, 1: null, 2: null } }, { id: 9, mods: { 0: null, 1: null, 2: null } }],
+                "secondary": ["4x20"],
+                "device": [{ id: 54, mods: { 0: null, 1: null, 2: null } }, { id: 81, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["25x2"]
             },
             "b": {
-                "primary": [{ id: 2, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }],
-                "secondary": ["1x8", null, null],
-                "device": [{ id: 54, mods: { 0: null, 1: null, 2: null } }, { id: 21, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["2x3", null, null, null, null]
+                "primary": [{ id: 2, mods: { 0: null, 1: null, 2: null } }],
+                "secondary": ["1x8"],
+                "device": [{ id: 54, mods: { 0: null, 1: null, 2: null } }, { id: 21, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["2x3"]
             },
             "c": {
-                "primary": [{ id: 7, mods: { 0: null, 1: null, 2: null } }, { id: 18, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }],
-                "secondary": ["6x8", null, null],
-                "device": [{ id: 63, mods: { 0: null, 1: null, 2: null } }, { id: 55, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["5x4", null, null, null, null]
+                "primary": [{ id: 7, mods: { 0: null, 1: null, 2: null } }, { id: 18, mods: { 0: null, 1: null, 2: null } }],
+                "secondary": ["6x8"],
+                "device": [{ id: 63, mods: { 0: null, 1: null, 2: null } }, { id: 55, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["5x4"]
             }
         }
     },
@@ -82,21 +82,21 @@ const shipData = [
         "presets": {
             "a": {
                 "primary": [{ id: 20, mods: { 0: null, 1: null, 2: null } }, { id: 1, mods: { 0: null, 1: null, 2: null } }],
-                "secondary": ["9x10", null],
-                "device": [{ id: 63, mods: { 0: null, 1: null, 2: null } }, { id: 3, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["10x4", "9x2", null, null, null]
+                "secondary": ["9x10"],
+                "device": [{ id: 63, mods: { 0: null, 1: null, 2: null } }, { id: 3, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["10x4", "9x2"]
             },
             "b": {
                 "primary": [{ id: 22, mods: { 0: null, 1: null, 2: null } }, { id: 9, mods: { 0: null, 1: null, 2: null } }],
-                "secondary": ["8x10", null],
-                "device": [{ id: 54, mods: { 0: null, 1: null, 2: null } }, { id: 72, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["28x4", "5x4", null, null, null]
+                "secondary": ["8x10"],
+                "device": [{ id: 54, mods: { 0: null, 1: null, 2: null } }, { id: 72, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["28x4", "5x4"]
             },
             "c": {
-                "primary": [{ id: 3, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }],
-                "secondary": ["1x8", null],
-                "device": [{ id: 63, mods: { 0: null, 1: null, 2: null } }, { id: 75, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["19x1", "14x1", null, null, null]
+                "primary": [{ id: 3, mods: { 0: null, 1: null, 2: null } }],
+                "secondary": ["1x8"],
+                "device": [{ id: 63, mods: { 0: null, 1: null, 2: null } }, { id: 75, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["19x1", "14x1"]
             }
         }
     },
@@ -130,22 +130,22 @@ const shipData = [
         },
         "presets": {
             "a": {
-                "primary": [{ id: 7, mods: { 0: null, 1: null, 2: null } }, { id: 5, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }],
-                "secondary": ["3x10", "5x5", null, null, null],
-                "device": [{ id: 39, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["5x2", "1x4", null, null, null, null]
+                "primary": [{ id: 7, mods: { 0: null, 1: null, 2: null } }, { id: 5, mods: { 0: null, 1: null, 2: null } }],
+                "secondary": ["3x10", "5x5"],
+                "device": [{ id: 39, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["5x2", "1x4"]
             },
             "b": {
-                "primary": [{ id: 15, mods: { 0: null, 1: null, 2: null } }, { id: 19, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }],
-                "secondary": ["4x20", "0x1", null, null, null],
-                "device": [{ id: 40, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["5x2", "32x4", null, null, null, null]
+                "primary": [{ id: 15, mods: { 0: null, 1: null, 2: null } }, { id: 19, mods: { 0: null, 1: null, 2: null } }],
+                "secondary": ["4x20", "0x1"],
+                "device": [{ id: 40, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["5x2", "32x4"]
             },
             "c": {
-                "primary": [{ id: 2, mods: { 0: null, 1: null, 2: null } }, { id: 9, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }],
-                "secondary": ["1x8", "5x5", null, null, null],
-                "device": [{ id: 36, mods: { 0: null, 1: null, 2: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["0x4", "16x2", null, null, null, null]
+                "primary": [{ id: 2, mods: { 0: null, 1: null, 2: null } }, { id: 9, mods: { 0: null, 1: null, 2: null } }],
+                "secondary": ["1x8", "5x5"],
+                "device": [{ id: 36, mods: { 0: null, 1: null, 2: null } }],
+                "consumable": ["0x4", "16x2"]
             }
         }
     },
@@ -180,24 +180,24 @@ const shipData = [
         "presets": {
             "a": {
                 "primary": [{ id: 12, mods: { 0: null, 1: null, 2: null, 3: null } }],
-                "secondary": ["1x8", null],
-                "device": [{ id: 60, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: 15, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["8x4", "31x2", null, null]
+                "secondary": ["1x8"],
+                "device": [{ id: 60, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: 15, mods: { 0: null, 1: null, 2: null, 3: null } }],
+                "consumable": ["8x4", "31x2"]
             },
             "b": {
                 "primary": [{ id: 3, mods: { 0: null, 1: null, 2: null, 3: null } }],
-                "secondary": ["2x12", null],
-                "device": [{ id: 60, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: 12, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["13x1", "28x4", null, null]
+                "secondary": ["2x12"],
+                "device": [{ id: 60, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: 12, mods: { 0: null, 1: null, 2: null, 3: null } }],
+                "consumable": ["13x1", "28x4"]
             },
             "c": {
                 "primary": [{ id: 17, mods: { 0: null, 1: null, 2: null, 3: null } }],
-                "secondary": ["7x4", null],
-                "device": [{ id: 60, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: 66, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }, { id: null, mods: null }],
-                "consumable": ["25x3", "2x3", null, null]
+                "secondary": ["7x4"],
+                "device": [{ id: 60, mods: { 0: null, 1: null, 2: null, 3: null } }, { id: 66, mods: { 0: null, 1: null, 2: null, 3: null } }],
+                "consumable": ["25x3", "2x3"]
             }
         }
     }
-]
+];
 
 export default shipData;

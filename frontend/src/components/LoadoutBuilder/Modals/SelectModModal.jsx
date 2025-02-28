@@ -1,21 +1,38 @@
-// TODO docs
+// * frontend/src/components/LoadoutBuilder/Modals/SelectModModal.jsx
+// TODO docs & generally refactor (this one's a doozy)
 
+// Node Module Imports
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useFitText from 'use-fit-text';
-import BucketImage from '../../Bucket/BucketImage';
+// Local Module Imports
 import { useModal } from '../../../context/Modal';
 import * as dataFiles from '../../../data';
-import { updateDevice, updatePrimary } from '../../../store/builder';
+import * as builderActions from '../../../store/builder';
+import BucketImage from '../../../utils/BucketImage';
 
+/**
+ * Modal component that renders a list of available mods to be added to a selected piece of
+ * equipment in the Loadout Builder.
+ * @component `SelectEquipModal`
+ * @requires {@linkcode useModal}
+ * @requires {@linkcode dataFiles}
+ * @requires {@linkcode SingleMod}
+ * @param {{ currEquip: object }} props  
+ */
 export default function SelectModModal({ currEquip }) {
+    // Deconstructed Props
     const { eIndex, eType } = currEquip;
+    // React Hooks
     const { closeModal } = useModal();
     const { primaryWeapons, devices } = useSelector((state) => state.builder);
+    // Local State Values
     const [title, setTitle] = useState(eType);
 
-    const [presetData, eData, mIndex] = (() => {
-        const res = [];
+    /**
+     * 
+     */
+    const [presetData, eData, mIndex] = ((res=[]) => {
         if(eType === 'Primary')
             res.push(...[dataFiles.weaponMods, primaryWeapons[eIndex]]);
         else if(eType === 'Devices')
@@ -35,8 +52,6 @@ export default function SelectModModal({ currEquip }) {
     })();
 
     useEffect(() => {
-        const modal = document.getElementById('site-modal-content');
-        modal.className = 'item-select-menu';
         if(title === 'Primary')
             setTitle('Weapon Modification');
         else if(title === 'Devices')
@@ -60,24 +75,26 @@ function SingleMod({ data }) {
     
     
     const id = typeof eData.id === 'string'
-    ? loadedIds[eData.id.split('c')[1]].equippableId
-    : eData.id;
+        ? loadedIds[eData.id.split('c')[1]].equippableId
+        : eData.id;
 
     const pData = eType === 'Primary'
-    ? dataFiles.primaryWeaponData[id]
-    : dataFiles.deviceData[id];
+        ? dataFiles.primaryWeaponData[id]
+        : dataFiles.deviceData[id];
 
     const dir = mData.id < 28
-    ? '/weapon-mod.png'
-    : '/device-mod.png';
+        ? '/weapon-mod.png'
+        : '/device-mod.png';
 
     const onClick = (event) => {
         event.stopPropagation();
         eData.mods[mIndex] = mData.id;
         closeModal();
         switch(eType) {
-            case 'Primary': return dispatch(updatePrimary(eIndex, eData.id, eData.mods));
-            case 'Devices': return dispatch(updateDevice(eIndex, eData.id, eData.mods));
+            case 'Primary': 
+                return dispatch(builderActions.updatePrimary(eIndex, eData.id, eData.mods));
+            case 'Devices': 
+                return dispatch(builderActions.updateDevice(eIndex, eData.id, eData.mods));
         }
     }
 
